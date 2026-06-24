@@ -5,6 +5,7 @@ import { featuredWorks } from '@/content/works'
 import PageTransition from '@/components/PageTransition'
 import SectionLabel from '@/components/SectionLabel'
 import FeaturedWork from '@/components/FeaturedWork'
+import { CTAButton, LinkButton } from '@/components/CTAButton'
 
 export const metadata: Metadata = {
   title: 'Soul in Silence · John Patrick Lachica',
@@ -87,39 +88,22 @@ export default function Home() {
           >
             An art practice rooted in vulnerability, memory, and the quiet terrain of human emotion.
           </p>
-          <div
-            onMouseEnter={(e) => {
-              const el = e.currentTarget.querySelector('a') as HTMLElement
-              if (el) {
-                el.style.borderColor = '#C4A882'
-                el.style.color = '#C4A882'
-              }
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget.querySelector('a') as HTMLElement
-              if (el) {
-                el.style.borderColor = 'rgba(240,237,232,0.35)'
-                el.style.color = '#F0EDE8'
-              }
+          <CTAButton
+            href="/works"
+            style={{
+              display: 'inline-block',
+              fontSize: '10px',
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: '#F0EDE8',
+              border: '1px solid rgba(240,237,232,0.35)',
+              padding: '13px 30px',
+              textDecoration: 'none',
+              transition: 'border-color 0.2s, color 0.2s',
             }}
           >
-            <Link
-              href="/works"
-              style={{
-                display: 'inline-block',
-                fontSize: '10px',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: '#F0EDE8',
-                border: '1px solid rgba(240,237,232,0.35)',
-                padding: '13px 30px',
-                textDecoration: 'none',
-                transition: 'border-color 0.2s, color 0.2s',
-              }}
-            >
-              View the Works
-            </Link>
-          </div>
+            View the Works
+          </CTAButton>
         </div>
       </section>
 
@@ -143,18 +127,8 @@ export default function Home() {
           {featuredWorks[1] && <FeaturedWork artwork={featuredWorks[1]} />}
           {featuredWorks[2] && <FeaturedWork artwork={featuredWorks[2]} />}
         </div>
-        <div
-          style={{ marginTop: '48px', textAlign: 'right' }}
-          onMouseEnter={(e) => {
-            const link = e.currentTarget.querySelector('a') as HTMLElement
-            if (link) link.style.color = '#C4A882'
-          }}
-          onMouseLeave={(e) => {
-            const link = e.currentTarget.querySelector('a') as HTMLElement
-            if (link) link.style.color = '#8C8580'
-          }}
-        >
-          <Link
+        <div style={{ marginTop: '48px', textAlign: 'right' }}>
+          <LinkButton
             href="/works"
             style={{
               fontSize: '10px',
@@ -168,7 +142,7 @@ export default function Home() {
             }}
           >
             View All Works →
-          </Link>
+          </LinkButton>
         </div>
       </section>
 
