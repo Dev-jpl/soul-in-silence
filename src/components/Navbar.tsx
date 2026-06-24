@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Logo from './Logo'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -35,6 +36,9 @@ export default function Navbar() {
       <Link
         href="/"
         style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
           fontFamily: 'var(--font-cormorant), Georgia, serif',
           fontWeight: 300,
           fontSize: '15px',
@@ -44,6 +48,9 @@ export default function Navbar() {
           textDecoration: 'none',
         }}
       >
+        <div style={{ display: 'flex', alignItems: 'center', color: '#F0EDE8' }}>
+          <Logo />
+        </div>
         Soul in Silence
       </Link>
 
