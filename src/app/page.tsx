@@ -304,70 +304,90 @@ export default function Home() {
                 coming: true,
               },
             ].map((module, i) => (
-              <Link
+              <div
                 key={i}
-                href={module.link}
                 style={{
                   padding: '40px 32px',
                   background: module.coming ? 'rgba(20,18,15,0.6)' : 'rgba(25,23,20,0.8)',
                   border: '1px solid rgba(240,237,232,0.08)',
-                  textDecoration: 'none',
                   transition: 'all 0.3s',
                   opacity: module.coming ? 0.7 : 1,
                   pointerEvents: module.coming ? 'none' : 'auto',
                   cursor: module.coming ? 'default' : 'pointer',
-                }}
-                onMouseEnter={(e) => {
-                  if (!module.coming) {
-                    ;(e.currentTarget as HTMLElement).style.background = 'rgba(25,23,20,1)'
-                    ;(e.currentTarget as HTMLElement).style.borderColor = '#C4A882'
-                    ;(e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!module.coming) {
-                    ;(e.currentTarget as HTMLElement).style.background = 'rgba(25,23,20,0.8)'
-                    ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(240,237,232,0.08)'
-                    ;(e.currentTarget as HTMLElement).style.transform = 'translateY(0)'
-                  }
+                  textDecoration: 'none',
                 }}
               >
-                <div style={{ fontSize: '36px', marginBottom: '16px' }}>{module.icon}</div>
-                <h3
-                  style={{
-                    fontSize: '18px',
-                    fontFamily: 'var(--font-cormorant), Georgia, serif',
-                    fontWeight: 400,
-                    color: '#F0EDE8',
-                    marginBottom: '12px',
-                  }}
-                >
-                  {module.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: '13px',
-                    color: '#8C8580',
-                    lineHeight: 1.6,
-                    marginBottom: '16px',
-                  }}
-                >
-                  {module.description}
-                </p>
-                {module.coming && (
-                  <p
+                {!module.coming && (
+                  <Link
+                    href={module.link}
                     style={{
-                      fontSize: '11px',
-                      letterSpacing: '0.08em',
-                      color: '#666',
-                      textTransform: 'uppercase',
-                      fontWeight: 500,
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      display: 'block',
                     }}
                   >
-                    Coming Soon
-                  </p>
+                    <div style={{ fontSize: '36px', marginBottom: '16px' }}>{module.icon}</div>
+                    <h3
+                      style={{
+                        fontSize: '18px',
+                        fontFamily: 'var(--font-cormorant), Georgia, serif',
+                        fontWeight: 400,
+                        color: '#F0EDE8',
+                        marginBottom: '12px',
+                      }}
+                    >
+                      {module.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: '13px',
+                        color: '#8C8580',
+                        lineHeight: 1.6,
+                        marginBottom: '16px',
+                      }}
+                    >
+                      {module.description}
+                    </p>
+                  </Link>
                 )}
-              </Link>
+                {module.coming && (
+                  <>
+                    <div style={{ fontSize: '36px', marginBottom: '16px' }}>{module.icon}</div>
+                    <h3
+                      style={{
+                        fontSize: '18px',
+                        fontFamily: 'var(--font-cormorant), Georgia, serif',
+                        fontWeight: 400,
+                        color: '#F0EDE8',
+                        marginBottom: '12px',
+                      }}
+                    >
+                      {module.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: '13px',
+                        color: '#8C8580',
+                        lineHeight: 1.6,
+                        marginBottom: '16px',
+                      }}
+                    >
+                      {module.description}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: '11px',
+                        letterSpacing: '0.08em',
+                        color: '#666',
+                        textTransform: 'uppercase',
+                        fontWeight: 500,
+                      }}
+                    >
+                      Coming Soon
+                    </p>
+                  </>
+                )}
+              </div>
             ))}
           </div>
         </div>
