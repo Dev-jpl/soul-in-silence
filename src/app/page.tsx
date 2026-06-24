@@ -1,187 +1,477 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
-import { featuredWorks } from '@/content/works'
 import PageTransition from '@/components/PageTransition'
-import SectionLabel from '@/components/SectionLabel'
-import FeaturedWork from '@/components/FeaturedWork'
-import { CTAButton, LinkButton } from '@/components/CTAButton'
 
 export const metadata: Metadata = {
-  title: 'Soul in Silence · John Patrick Lachica',
+  title: 'Soul in Silence — Contemporary Fine Art by John Patrick Lachica',
   description:
-    'The art practice of John Patrick Lachica — a Filipino contemporary visual artist exploring vulnerability, resilience, and the emotional landscapes of human experience.',
+    'An art practice rooted in vulnerability, resilience, and the quiet terrain of human emotion. Explore the work of Filipino contemporary visual artist John Patrick Lachica.',
 }
 
 export default function Home() {
   return (
     <PageTransition>
-      {/* Hero */}
+      {/* Hero Section */}
       <section
         style={{
           position: 'relative',
-          height: '90vh',
-          minHeight: '560px',
+          height: '100vh',
+          minHeight: '680px',
           display: 'flex',
-          alignItems: 'flex-end',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
           overflow: 'hidden',
+          background: 'linear-gradient(135deg, rgba(10,10,10,1) 0%, rgba(20,18,15,0.95) 100%)',
         }}
       >
-        <div style={{ position: 'absolute', inset: 0 }}>
-          <Image
-            src="/images/hero.jpg"
-            alt="Soul in Silence — John Patrick Lachica"
-            fill
-            priority
-            style={{ objectFit: 'cover', opacity: 0.6 }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background:
-                'linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.1) 100%)',
-            }}
-          />
-        </div>
+        <style>{`
+          @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+          }
+          @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+          }
+        `}</style>
 
+        {/* Subtle animated background elements */}
         <div
           style={{
-            position: 'relative',
-            zIndex: 2,
-            padding: '0 48px 80px',
-            maxWidth: '700px',
+            position: 'absolute',
+            top: '10%',
+            right: '5%',
+            width: '400px',
+            height: '400px',
+            background: 'radial-gradient(circle, rgba(196,168,130,0.05) 0%, transparent 70%)',
+            borderRadius: '50%',
+            filter: 'blur(80px)',
+            animation: 'float 6s ease-in-out infinite',
           }}
-        >
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '5%',
+            left: '5%',
+            width: '300px',
+            height: '300px',
+            background: 'radial-gradient(circle, rgba(196,168,130,0.04) 0%, transparent 70%)',
+            borderRadius: '50%',
+            filter: 'blur(80px)',
+            animation: 'float 8s ease-in-out infinite reverse',
+          }}
+        />
+
+        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '900px', padding: '0 48px' }}>
+          {/* Subtitle */}
           <p
             style={{
-              fontSize: '10px',
-              letterSpacing: '0.24em',
+              fontSize: '11px',
+              letterSpacing: '0.3em',
               textTransform: 'uppercase',
               color: '#C4A882',
-              marginBottom: '20px',
+              marginBottom: '24px',
+              fontWeight: 400,
             }}
           >
-            John Patrick Lachica · Filipino Visual Artist
+            Contemporary Fine Art
           </p>
+
+          {/* Main Title */}
           <h1
             style={{
               fontFamily: 'var(--font-cormorant), Georgia, serif',
-              fontSize: 'clamp(56px, 9vw, 96px)',
+              fontSize: 'clamp(64px, 10vw, 120px)',
               fontWeight: 300,
-              lineHeight: 1.0,
-              letterSpacing: '-0.01em',
+              lineHeight: 1.1,
+              letterSpacing: '-0.02em',
               color: '#F0EDE8',
-              marginBottom: '24px',
+              marginBottom: '12px',
             }}
           >
-            Soul in<br />Silence
+            Soul in Silence
           </h1>
+
+          {/* Byline */}
           <p
             style={{
-              fontSize: '13px',
-              lineHeight: 1.9,
+              fontFamily: 'var(--font-cormorant), Georgia, serif',
+              fontSize: '24px',
+              fontWeight: 300,
+              letterSpacing: '0.05em',
               color: '#8C8580',
-              maxWidth: '400px',
-              marginBottom: '40px',
+              marginBottom: '48px',
             }}
           >
-            An art practice rooted in vulnerability, memory, and the quiet terrain of human emotion.
+            by John Patrick Lachica
           </p>
-          <CTAButton
-            href="/works"
+
+          {/* Description */}
+          <p
             style={{
-              display: 'inline-block',
-              fontSize: '10px',
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: '#F0EDE8',
-              border: '1px solid rgba(240,237,232,0.35)',
-              padding: '13px 30px',
-              textDecoration: 'none',
-              transition: 'border-color 0.2s, color 0.2s',
+              fontSize: '15px',
+              lineHeight: 2,
+              color: '#A8A8A8',
+              maxWidth: '600px',
+              margin: '0 auto 64px',
             }}
           >
-            View the Works
-          </CTAButton>
-        </div>
-      </section>
+            An art practice rooted in <span style={{ color: '#C4A882' }}>vulnerability</span>, <span style={{ color: '#C4A882' }}>resilience</span>, and the quiet terrain of human emotion. Exploring memory, symbolism, and the spaces where art speaks louder than words.
+          </p>
 
-      {/* Featured Works */}
-      <section style={{ padding: '96px 48px' }}>
-        <SectionLabel>Selected Works</SectionLabel>
+          {/* CTA Buttons */}
+          <div
+            style={{
+              display: 'flex',
+              gap: '24px',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+            }}
+          >
+            <Link
+              href="/works"
+              style={{
+                display: 'inline-block',
+                padding: '16px 40px',
+                background: '#C4A882',
+                color: '#0a0a0a',
+                textDecoration: 'none',
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                transition: 'all 0.3s',
+              }}
+              onMouseEnter={(e) => {
+                ;(e.target as HTMLElement).style.background = '#D4B892'
+                ;(e.target as HTMLElement).style.transform = 'scale(1.05)'
+              }}
+              onMouseLeave={(e) => {
+                ;(e.target as HTMLElement).style.background = '#C4A882'
+                ;(e.target as HTMLElement).style.transform = 'scale(1)'
+              }}
+            >
+              Explore Portfolio
+            </Link>
+            <Link
+              href="#modules"
+              style={{
+                display: 'inline-block',
+                padding: '16px 40px',
+                border: '2px solid rgba(240,237,232,0.3)',
+                color: '#F0EDE8',
+                textDecoration: 'none',
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                transition: 'all 0.3s',
+              }}
+              onMouseEnter={(e) => {
+                ;(e.target as HTMLElement).style.borderColor = '#C4A882'
+                ;(e.target as HTMLElement).style.color = '#C4A882'
+              }}
+              onMouseLeave={(e) => {
+                ;(e.target as HTMLElement).style.borderColor = 'rgba(240,237,232,0.3)'
+                ;(e.target as HTMLElement).style.color = '#F0EDE8'
+              }}
+            >
+              Explore More
+            </Link>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
         <div
           style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '2px',
+            position: 'absolute',
+            bottom: '40px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            textAlign: 'center',
+            animation: 'bounce 2s infinite',
           }}
         >
-          {/* Large left piece */}
-          {featuredWorks[0] && (
-            <div style={{ gridRow: 'span 2' }}>
-              <FeaturedWork artwork={featuredWorks[0]} tall />
-            </div>
-          )}
-          {/* Two right pieces stacked */}
-          {featuredWorks[1] && <FeaturedWork artwork={featuredWorks[1]} />}
-          {featuredWorks[2] && <FeaturedWork artwork={featuredWorks[2]} />}
-        </div>
-        <div style={{ marginTop: '48px', textAlign: 'right' }}>
-          <LinkButton
-            href="/works"
-            style={{
-              fontSize: '10px',
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: '#8C8580',
-              textDecoration: 'none',
-              borderBottom: '1px solid rgba(140,133,128,0.3)',
-              paddingBottom: '3px',
-              transition: 'color 0.2s',
-            }}
-          >
-            View All Works →
-          </LinkButton>
+          <p style={{ fontSize: '11px', color: '#8C8580', letterSpacing: '0.1em', marginBottom: '12px' }}>
+            SCROLL
+          </p>
+          <div style={{ fontSize: '20px', color: '#C4A882' }}>↓</div>
         </div>
       </section>
 
-      {/* Artist Statement pullquote */}
+      {/* Brand Philosophy */}
       <section
         style={{
-          padding: '80px 48px 96px',
-          borderTop: '1px solid rgba(240,237,232,0.08)',
-          display: 'flex',
-          gap: '80px',
-          alignItems: 'flex-start',
+          padding: '96px 48px',
+          borderBottom: '1px solid rgba(240,237,232,0.08)',
         }}
       >
-        <p
-          style={{
-            fontSize: '10px',
-            letterSpacing: '0.22em',
-            textTransform: 'uppercase',
-            color: '#C4A882',
-            minWidth: '120px',
-            marginTop: '8px',
-          }}
-        >
-          Statement
-        </p>
-        <blockquote
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <h2
+            style={{
+              fontFamily: 'var(--font-cormorant), Georgia, serif',
+              fontSize: '48px',
+              fontWeight: 300,
+              color: '#F0EDE8',
+              marginBottom: '60px',
+              textAlign: 'center',
+            }}
+          >
+            The Practice
+          </h2>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '48px',
+            }}
+          >
+            {[
+              {
+                label: 'Vulnerability',
+                description: 'Art as a space where emotional truth is rendered visible, inviting shared human experience.',
+              },
+              {
+                label: 'Resilience',
+                description: 'Exploring the quiet strength found in persistence, transformation, and acceptance.',
+              },
+              {
+                label: 'Memory',
+                description: 'Visual narratives that honor the spaces between what was felt and what can be articulated.',
+              },
+              {
+                label: 'Symbolism',
+                description: 'Using motif and metaphor to speak to the psychological and emotional landscape.',
+              },
+            ].map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    fontSize: '12px',
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
+                    color: '#C4A882',
+                    marginBottom: '16px',
+                    fontWeight: 500,
+                  }}
+                >
+                  {item.label}
+                </p>
+                <p
+                  style={{
+                    fontSize: '14px',
+                    lineHeight: 1.8,
+                    color: '#A8A8A8',
+                  }}
+                >
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Modules Section */}
+      <section
+        id="modules"
+        style={{
+          padding: '96px 48px',
+        }}
+      >
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2
+            style={{
+              fontFamily: 'var(--font-cormorant), Georgia, serif',
+              fontSize: '48px',
+              fontWeight: 300,
+              color: '#F0EDE8',
+              marginBottom: '60px',
+              textAlign: 'center',
+            }}
+          >
+            Explore Soul in Silence
+          </h2>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '32px',
+            }}
+          >
+            {[
+              {
+                title: 'Portfolio',
+                icon: '🎨',
+                description: 'Explore the complete artistic practice',
+                link: '/works',
+                coming: false,
+              },
+              {
+                title: 'Marketplace',
+                icon: '✨',
+                description: 'Collectible artworks and editions',
+                link: '#',
+                coming: true,
+              },
+              {
+                title: 'Shop',
+                icon: '🛍️',
+                description: 'Merchandise and limited editions',
+                link: '#',
+                coming: true,
+              },
+              {
+                title: 'Exhibitions',
+                icon: '🏛️',
+                description: 'Online gallery and exhibition showcase',
+                link: '#',
+                coming: true,
+              },
+              {
+                title: 'Events',
+                icon: '📅',
+                description: 'Upcoming shows and events',
+                link: '#',
+                coming: true,
+              },
+              {
+                title: 'Commissions',
+                icon: '🎭',
+                description: 'Custom artwork and collaboration',
+                link: '#',
+                coming: true,
+              },
+            ].map((module, i) => (
+              <Link
+                key={i}
+                href={module.link}
+                style={{
+                  padding: '40px 32px',
+                  background: module.coming ? 'rgba(20,18,15,0.6)' : 'rgba(25,23,20,0.8)',
+                  border: '1px solid rgba(240,237,232,0.08)',
+                  textDecoration: 'none',
+                  transition: 'all 0.3s',
+                  opacity: module.coming ? 0.7 : 1,
+                  pointerEvents: module.coming ? 'none' : 'auto',
+                  cursor: module.coming ? 'default' : 'pointer',
+                }}
+                onMouseEnter={(e) => {
+                  if (!module.coming) {
+                    ;(e.currentTarget as HTMLElement).style.background = 'rgba(25,23,20,1)'
+                    ;(e.currentTarget as HTMLElement).style.borderColor = '#C4A882'
+                    ;(e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!module.coming) {
+                    ;(e.currentTarget as HTMLElement).style.background = 'rgba(25,23,20,0.8)'
+                    ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(240,237,232,0.08)'
+                    ;(e.currentTarget as HTMLElement).style.transform = 'translateY(0)'
+                  }
+                }}
+              >
+                <div style={{ fontSize: '36px', marginBottom: '16px' }}>{module.icon}</div>
+                <h3
+                  style={{
+                    fontSize: '18px',
+                    fontFamily: 'var(--font-cormorant), Georgia, serif',
+                    fontWeight: 400,
+                    color: '#F0EDE8',
+                    marginBottom: '12px',
+                  }}
+                >
+                  {module.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: '13px',
+                    color: '#8C8580',
+                    lineHeight: 1.6,
+                    marginBottom: '16px',
+                  }}
+                >
+                  {module.description}
+                </p>
+                {module.coming && (
+                  <p
+                    style={{
+                      fontSize: '11px',
+                      letterSpacing: '0.08em',
+                      color: '#666',
+                      textTransform: 'uppercase',
+                      fontWeight: 500,
+                    }}
+                  >
+                    Coming Soon
+                  </p>
+                )}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section
+        style={{
+          padding: '80px 48px',
+          borderTop: '1px solid rgba(240,237,232,0.08)',
+          textAlign: 'center',
+          background: 'linear-gradient(135deg, rgba(20,18,15,0.5) 0%, rgba(25,23,20,0.3) 100%)',
+        }}
+      >
+        <h2
           style={{
             fontFamily: 'var(--font-cormorant), Georgia, serif',
-            fontSize: '28px',
+            fontSize: '40px',
             fontWeight: 300,
-            fontStyle: 'italic',
-            lineHeight: 1.65,
             color: '#F0EDE8',
-            maxWidth: '580px',
+            marginBottom: '24px',
           }}
         >
-          "I make art that speaks where words fall short — inviting viewers to find meaning within their own stories, their own{' '}
-          <em style={{ fontStyle: 'normal', color: '#C4A882' }}>silences.</em>"
-        </blockquote>
+          Begin the Journey
+        </h2>
+        <p
+          style={{
+            fontSize: '14px',
+            color: '#8C8580',
+            maxWidth: '500px',
+            margin: '0 auto 40px',
+            lineHeight: 1.8,
+          }}
+        >
+          Step into a space where art speaks where words fall short. Discover work rooted in vulnerability, resilience, and the profound beauty of human emotion.
+        </p>
+        <Link
+          href="/works"
+          style={{
+            display: 'inline-block',
+            padding: '16px 48px',
+            background: '#C4A882',
+            color: '#0a0a0a',
+            textDecoration: 'none',
+            fontSize: '12px',
+            fontWeight: 600,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            transition: 'all 0.3s',
+          }}
+          onMouseEnter={(e) => {
+            ;(e.target as HTMLElement).style.background = '#D4B892'
+            ;(e.target as HTMLElement).style.transform = 'scale(1.05)'
+          }}
+          onMouseLeave={(e) => {
+            ;(e.target as HTMLElement).style.background = '#C4A882'
+            ;(e.target as HTMLElement).style.transform = 'scale(1)'
+          }}
+        >
+          View Portfolio
+        </Link>
       </section>
     </PageTransition>
   )
