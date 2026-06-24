@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import PageTransition from '@/components/PageTransition'
+import { PremiumButton } from '@/components/PremiumButton'
 
 export const metadata: Metadata = {
   title: 'Soul in Silence — Contemporary Fine Art by John Patrick Lachica',
@@ -130,56 +131,12 @@ export default function Home() {
               flexWrap: 'wrap',
             }}
           >
-            <Link
-              href="/works"
-              style={{
-                display: 'inline-block',
-                padding: '16px 40px',
-                background: '#C4A882',
-                color: '#0a0a0a',
-                textDecoration: 'none',
-                fontSize: '12px',
-                fontWeight: 600,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                transition: 'all 0.3s',
-              }}
-              onMouseEnter={(e) => {
-                ;(e.target as HTMLElement).style.background = '#D4B892'
-                ;(e.target as HTMLElement).style.transform = 'scale(1.05)'
-              }}
-              onMouseLeave={(e) => {
-                ;(e.target as HTMLElement).style.background = '#C4A882'
-                ;(e.target as HTMLElement).style.transform = 'scale(1)'
-              }}
-            >
+            <PremiumButton href="/works" variant="primary">
               Explore Portfolio
-            </Link>
-            <Link
-              href="#modules"
-              style={{
-                display: 'inline-block',
-                padding: '16px 40px',
-                border: '2px solid rgba(240,237,232,0.3)',
-                color: '#F0EDE8',
-                textDecoration: 'none',
-                fontSize: '12px',
-                fontWeight: 600,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                transition: 'all 0.3s',
-              }}
-              onMouseEnter={(e) => {
-                ;(e.target as HTMLElement).style.borderColor = '#C4A882'
-                ;(e.target as HTMLElement).style.color = '#C4A882'
-              }}
-              onMouseLeave={(e) => {
-                ;(e.target as HTMLElement).style.borderColor = 'rgba(240,237,232,0.3)'
-                ;(e.target as HTMLElement).style.color = '#F0EDE8'
-              }}
-            >
+            </PremiumButton>
+            <PremiumButton href="#modules" variant="secondary">
               Explore More
-            </Link>
+            </PremiumButton>
           </div>
         </div>
 
@@ -447,31 +404,9 @@ export default function Home() {
         >
           Step into a space where art speaks where words fall short. Discover work rooted in vulnerability, resilience, and the profound beauty of human emotion.
         </p>
-        <Link
-          href="/works"
-          style={{
-            display: 'inline-block',
-            padding: '16px 48px',
-            background: '#C4A882',
-            color: '#0a0a0a',
-            textDecoration: 'none',
-            fontSize: '12px',
-            fontWeight: 600,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            transition: 'all 0.3s',
-          }}
-          onMouseEnter={(e) => {
-            ;(e.target as HTMLElement).style.background = '#D4B892'
-            ;(e.target as HTMLElement).style.transform = 'scale(1.05)'
-          }}
-          onMouseLeave={(e) => {
-            ;(e.target as HTMLElement).style.background = '#C4A882'
-            ;(e.target as HTMLElement).style.transform = 'scale(1)'
-          }}
-        >
+        <PremiumButton href="/works" variant="primary">
           View Portfolio
-        </Link>
+        </PremiumButton>
       </section>
     </PageTransition>
   )
