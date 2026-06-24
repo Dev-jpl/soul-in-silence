@@ -32,6 +32,7 @@ export default function FeaturedWork({
           src={artwork.image}
           alt={artwork.title}
           fill
+          priority
           style={{
             objectFit: 'cover',
             transform: hovered ? 'scale(1.03)' : 'scale(1)',

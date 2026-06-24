@@ -31,7 +31,8 @@ export default function ArtworkCard({ artwork, priority = false }: ArtworkCardPr
             src={artwork.image}
             alt={artwork.title}
             fill
-            priority={priority}
+            priority={priority || false}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{
               objectFit: 'cover',
               transform: hovered ? 'scale(1.03)' : 'scale(1)',
