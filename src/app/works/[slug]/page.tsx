@@ -1,3 +1,6 @@
+'use client'
+
+import { use } from 'react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -9,22 +12,12 @@ interface Props {
   params: Promise<{ slug: string }>
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return works.map((w) => ({ slug: w.slug }))
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const artwork = works.find((w) => w.slug === slug)
-  if (!artwork) return {}
-  return {
-    title: `${artwork.title} — Soul in Silence · John Patrick Lachica`,
-    description: artwork.description,
-  }
-}
-
-export default async function WorkPage({ params }: Props) {
-  const { slug } = await params
+export default function WorkPage({ params }: Props) {
+  const { slug } = use(params)
   const index = works.findIndex((w) => w.slug === slug)
   if (index === -1) notFound()
 
