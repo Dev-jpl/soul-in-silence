@@ -36,27 +36,32 @@ export default async function WorkPage({ params }: Props) {
     <PageTransition>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '64px 48px' }}>
         {/* Back */}
-        <Link
-          href="/works"
-          style={{
-            display: 'inline-block',
-            fontSize: '10px',
-            letterSpacing: '0.16em',
-            textTransform: 'uppercase',
-            color: '#8C8580',
-            textDecoration: 'none',
-            marginBottom: '48px',
-            transition: 'color 0.2s',
+        <div
+          style={{ display: 'inline-block', marginBottom: '48px' }}
+          onMouseEnter={(e) => {
+            const link = e.currentTarget.querySelector('a') as HTMLElement
+            if (link) link.style.color = '#C4A882'
           }}
-          onMouseEnter={(e) =>
-            ((e.currentTarget as HTMLAnchorElement).style.color = '#C4A882')
-          }
-          onMouseLeave={(e) =>
-            ((e.currentTarget as HTMLAnchorElement).style.color = '#8C8580')
-          }
+          onMouseLeave={(e) => {
+            const link = e.currentTarget.querySelector('a') as HTMLElement
+            if (link) link.style.color = '#8C8580'
+          }}
         >
-          ← All Works
-        </Link>
+          <Link
+            href="/works"
+            style={{
+              display: 'inline-block',
+              fontSize: '10px',
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              color: '#8C8580',
+              textDecoration: 'none',
+              transition: 'color 0.2s',
+            }}
+          >
+            ← All Works
+          </Link>
+        </div>
 
         <div
           style={{
@@ -159,32 +164,39 @@ export default async function WorkPage({ params }: Props) {
               {artwork.description}
             </p>
 
-            <Link
-              href="/contact"
-              style={{
-                display: 'inline-block',
-                fontSize: '10px',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: '#F0EDE8',
-                border: '1px solid rgba(240,237,232,0.25)',
-                padding: '13px 28px',
-                textDecoration: 'none',
-                transition: 'border-color 0.2s, color 0.2s',
-              }}
+            <div
               onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.borderColor = '#C4A882'
-                el.style.color = '#C4A882'
+                const link = e.currentTarget.querySelector('a') as HTMLElement
+                if (link) {
+                  link.style.borderColor = '#C4A882'
+                  link.style.color = '#C4A882'
+                }
               }}
               onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.borderColor = 'rgba(240,237,232,0.25)'
-                el.style.color = '#F0EDE8'
+                const link = e.currentTarget.querySelector('a') as HTMLElement
+                if (link) {
+                  link.style.borderColor = 'rgba(240,237,232,0.25)'
+                  link.style.color = '#F0EDE8'
+                }
               }}
             >
-              Inquire About This Work
-            </Link>
+              <Link
+                href="/contact"
+                style={{
+                  display: 'inline-block',
+                  fontSize: '10px',
+                  letterSpacing: '0.18em',
+                  textTransform: 'uppercase',
+                  color: '#F0EDE8',
+                  border: '1px solid rgba(240,237,232,0.25)',
+                  padding: '13px 28px',
+                  textDecoration: 'none',
+                  transition: 'border-color 0.2s, color 0.2s',
+                }}
+              >
+                Inquire About This Work
+              </Link>
+            </div>
           </div>
         </div>
 
