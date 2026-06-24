@@ -87,32 +87,39 @@ export default function Home() {
           >
             An art practice rooted in vulnerability, memory, and the quiet terrain of human emotion.
           </p>
-          <Link
-            href="/works"
-            style={{
-              display: 'inline-block',
-              fontSize: '10px',
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: '#F0EDE8',
-              border: '1px solid rgba(240,237,232,0.35)',
-              padding: '13px 30px',
-              textDecoration: 'none',
-              transition: 'border-color 0.2s, color 0.2s',
-            }}
+          <div
             onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement
-              el.style.borderColor = '#C4A882'
-              el.style.color = '#C4A882'
+              const el = e.currentTarget.querySelector('a') as HTMLElement
+              if (el) {
+                el.style.borderColor = '#C4A882'
+                el.style.color = '#C4A882'
+              }
             }}
             onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement
-              el.style.borderColor = 'rgba(240,237,232,0.35)'
-              el.style.color = '#F0EDE8'
+              const el = e.currentTarget.querySelector('a') as HTMLElement
+              if (el) {
+                el.style.borderColor = 'rgba(240,237,232,0.35)'
+                el.style.color = '#F0EDE8'
+              }
             }}
           >
-            View the Works
-          </Link>
+            <Link
+              href="/works"
+              style={{
+                display: 'inline-block',
+                fontSize: '10px',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: '#F0EDE8',
+                border: '1px solid rgba(240,237,232,0.35)',
+                padding: '13px 30px',
+                textDecoration: 'none',
+                transition: 'border-color 0.2s, color 0.2s',
+              }}
+            >
+              View the Works
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -136,7 +143,17 @@ export default function Home() {
           {featuredWorks[1] && <FeaturedWork artwork={featuredWorks[1]} />}
           {featuredWorks[2] && <FeaturedWork artwork={featuredWorks[2]} />}
         </div>
-        <div style={{ marginTop: '48px', textAlign: 'right' }}>
+        <div
+          style={{ marginTop: '48px', textAlign: 'right' }}
+          onMouseEnter={(e) => {
+            const link = e.currentTarget.querySelector('a') as HTMLElement
+            if (link) link.style.color = '#C4A882'
+          }}
+          onMouseLeave={(e) => {
+            const link = e.currentTarget.querySelector('a') as HTMLElement
+            if (link) link.style.color = '#8C8580'
+          }}
+        >
           <Link
             href="/works"
             style={{
@@ -149,12 +166,6 @@ export default function Home() {
               paddingBottom: '3px',
               transition: 'color 0.2s',
             }}
-            onMouseEnter={(e) =>
-              ((e.currentTarget as HTMLAnchorElement).style.color = '#C4A882')
-            }
-            onMouseLeave={(e) =>
-              ((e.currentTarget as HTMLAnchorElement).style.color = '#8C8580')
-            }
           >
             View All Works →
           </Link>
