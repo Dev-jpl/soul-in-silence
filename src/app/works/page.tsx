@@ -9,6 +9,7 @@ import PageTransition from '@/components/PageTransition'
 
 const filters = ['All', 'Painting', 'Mixed Media', 'Drawing'] as const
 type Filter = (typeof filters)[number]
+type ViewMode = 'grid' | 'list'
 
 function categoryMatch(artwork: Artwork, filter: Filter) {
   if (filter === 'All') return true
@@ -20,6 +21,7 @@ function categoryMatch(artwork: Artwork, filter: Filter) {
 
 export default function WorksPage() {
   const [active, setActive] = useState<Filter>('All')
+  const [viewMode, setViewMode] = useState<ViewMode>('grid')
   const filtered = works.filter((w) => categoryMatch(w, active))
 
   return (
@@ -29,48 +31,139 @@ export default function WorksPage() {
         description="A body of work exploring vulnerability, resilience, and the emotional landscapes of human experience."
       />
 
-      {/* Filter bar */}
+      {/* Filter and view toggle bar */}
       <div
         style={{
           display: 'flex',
-          gap: '28px',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           padding: '24px 48px',
           borderBottom: '1px solid rgba(240,237,232,0.08)',
         }}
       >
-        {filters.map((f) => (
+        <div style={{ display: 'flex', gap: '28px' }}>
+          {filters.map((f) => (
+            <button
+              key={f}
+              onClick={() => setActive(f)}
+              style={{
+                fontSize: '10px',
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                color: active === f ? '#F0EDE8' : '#8C8580',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '4px 0',
+                borderBottom: `1px solid ${active === f ? '#C4A882' : 'transparent'}`,
+                transition: 'color 0.2s, border-color 0.2s',
+              }}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
+        {/* View toggle */}
+        <div style={{ display: 'flex', gap: '8px' }}>
           <button
-            key={f}
-            onClick={() => setActive(f)}
+            onClick={() => setViewMode('grid')}
+            title="Grid view"
             style={{
-              fontSize: '10px',
-              letterSpacing: '0.16em',
-              textTransform: 'uppercase',
-              color: active === f ? '#F0EDE8' : '#8C8580',
-              background: 'transparent',
-              border: 'none',
+              padding: '6px 10px',
+              background: viewMode === 'grid' ? 'rgba(196,168,130,0.15)' : 'transparent',
+              border: `1px solid ${viewMode === 'grid' ? '#C4A882' : 'rgba(240,237,232,0.15)'}`,
+              color: viewMode === 'grid' ? '#C4A882' : '#8C8580',
               cursor: 'pointer',
-              padding: '4px 0',
-              borderBottom: `1px solid ${active === f ? '#C4A882' : 'transparent'}`,
-              transition: 'color 0.2s, border-color 0.2s',
+              fontSize: '14px',
+              transition: 'all 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            {f}
+            ⊞
           </button>
-        ))}
+          <button
+            onClick={() => setViewMode('list')}
+            title="List view"
+            style={{
+              padding: '6px 10px',
+              background: viewMode === 'list' ? 'rgba(196,168,130,0.15)' : 'transparent',
+              border: `1px solid ${viewMode === 'list' ? '#C4A882' : 'rgba(240,237,232,0.15)'}`,
+              color: viewMode === 'list' ? '#C4A882' : '#8C8580',
+              cursor: 'pointer',
+              fontSize: '14px',
+              transition: 'all 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            ≡
+          </button>
+        </div>
       </div>
 
-      {/* Gallery grid */}
+      {/* Gallery - Grid or List view */}
       <div
         style={{
           padding: '48px',
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '32px 24px',
+          gridTemplateColumns:
+            viewMode === 'grid'
+              ? 'repeat(auto-fill, minmax(280px, 1fr))'
+              : '1fr',
+          gap: viewMode === 'grid' ? '32px 24px' : '24px',
         }}
       >
         {filtered.map((artwork, i) => (
-          <ArtworkCard key={artwork.slug} artwork={artwork} priority={i < 3} />
+          <div
+            key={artwork.slug}
+            style={{
+              display: viewMode === 'list' ? 'flex' : 'block',
+              gap: viewMode === 'list' ? '24px' : undefined,
+            }}
+          >
+            <div style={{ flex: viewMode === 'list' ? '0 0 200px' : undefined }}>
+              <ArtworkCard artwork={artwork} priority={i < 3} />
+            </div>
+            {viewMode === 'list' && (
+              <div style={{ flex: 1, paddingTop: '8px' }}>
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-cormorant), Georgia, serif',
+                    fontSize: '18px',
+                    fontWeight: 400,
+                    color: '#F0EDE8',
+                    margin: '0 0 8px 0',
+                  }}
+                >
+                  {artwork.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: '12px',
+                    color: '#8C8580',
+                    margin: '0 0 12px 0',
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {artwork.medium} • {artwork.year}
+                </p>
+                <p
+                  style={{
+                    fontSize: '13px',
+                    color: '#A8A8A8',
+                    margin: 0,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {artwork.description}
+                </p>
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </PageTransition>
