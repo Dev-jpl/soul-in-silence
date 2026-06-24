@@ -52,25 +52,31 @@ export default function Navbar() {
           const isActive =
             href === '/' ? pathname === '/' : pathname.startsWith(href)
           return (
-            <li key={href}>
+            <li
+              key={href}
+              style={{
+                fontSize: '11px',
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+              }}
+              onMouseEnter={(e) => {
+                const link = e.currentTarget.querySelector('a') as HTMLElement
+                if (link) link.style.color = '#F0EDE8'
+              }}
+              onMouseLeave={(e) => {
+                const link = e.currentTarget.querySelector('a') as HTMLElement
+                if (link)
+                  link.style.color = isActive ? '#F0EDE8' : '#8C8580'
+              }}
+            >
               <Link
                 href={href}
                 style={{
-                  fontSize: '11px',
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
                   color: isActive ? '#F0EDE8' : '#8C8580',
                   textDecoration: 'none',
                   transition: 'color 0.2s',
+                  display: 'block',
                 }}
-                onMouseEnter={(e) =>
-                  ((e.target as HTMLElement).style.color = '#F0EDE8')
-                }
-                onMouseLeave={(e) =>
-                  ((e.target as HTMLElement).style.color = isActive
-                    ? '#F0EDE8'
-                    : '#8C8580')
-                }
               >
                 {label}
               </Link>

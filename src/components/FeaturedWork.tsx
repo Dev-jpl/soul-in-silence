@@ -15,13 +15,10 @@ export default function FeaturedWork({
   const [hovered, setHovered] = useState(false)
 
   return (
-    <Link
-      href={`/works/${artwork.slug}`}
-      style={{ display: 'block', textDecoration: 'none' }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+    <Link href={`/works/${artwork.slug}`} style={{ display: 'block', textDecoration: 'none' }}>
       <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         style={{
           position: 'relative',
           overflow: 'hidden',

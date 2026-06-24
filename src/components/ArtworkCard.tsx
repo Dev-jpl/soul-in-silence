@@ -14,13 +14,12 @@ export default function ArtworkCard({ artwork, priority = false }: ArtworkCardPr
   const [hovered, setHovered] = useState(false)
 
   return (
-    <Link
-      href={`/works/${artwork.slug}`}
-      style={{ textDecoration: 'none', display: 'block' }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <div style={{ position: 'relative', overflow: 'hidden', background: '#161616' }}>
+    <Link href={`/works/${artwork.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{ position: 'relative', overflow: 'hidden', background: '#161616' }}
+      >
         <div
           style={{
             aspectRatio: '4/5',
