@@ -7,6 +7,15 @@ export default function AdminDashboard() {
   const [isAuth, setIsAuth] = useState(false)
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    // Check if already authenticated
+    if (localStorage.getItem('admin_auth')) {
+      setIsAuth(true)
+    }
+    setMounted(true)
+  }, [])
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
@@ -21,9 +30,8 @@ export default function AdminDashboard() {
     }
   }
 
-  // Check if already authenticated
-  if (typeof window !== 'undefined' && !isAuth && localStorage.getItem('admin_auth')) {
-    return <AdminNav />
+  if (!mounted) {
+    return null
   }
 
   if (!isAuth) {
