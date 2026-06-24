@@ -1,4 +1,4 @@
-import { initializeDatabase, getDatabase } from '@/lib/db'
+import { initializeDatabase, getArtwork, updateArtwork, deleteArtwork } from '@/lib/jsondb'
 
 initializeDatabase()
 
@@ -9,24 +9,7 @@ export async function PUT(
   try {
     const { id } = await params
     const body = await request.json()
-    const db = getDatabase()
-
-    db.prepare(
-      `UPDATE artworks
-       SET title = ?, year = ?, medium = ?, dimensions = ?, category = ?, description = ?, image = ?, featured = ?, updated_at = CURRENT_TIMESTAMP
-       WHERE id = ?`
-    ).run(
-      body.title,
-      body.year,
-      body.medium,
-      body.dimensions,
-      body.category,
-      body.description,
-      body.image,
-      body.featured ? 1 : 0,
-      id
-    )
-
+    updateArtwork(parseInt(id), body)
     return Response.json({ success: true })
   } catch (error) {
     console.error('Error updating artwork:', error)
@@ -40,10 +23,7 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params
-    const db = getDatabase()
-
-    db.prepare('DELETE FROM artworks WHERE id = ?').run(id)
-
+    deleteArtwork(parseInt(id))
     return Response.json({ success: true })
   } catch (error) {
     console.error('Error deleting artwork:', error)
@@ -57,9 +37,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params
-    const db = getDatabase()
-
-    const artwork = db.prepare('SELECT * FROM artworks WHERE id = ?').get(id)
+    const artwork = getArtwork(parseInt(id))
 
     if (!artwork) {
       return Response.json({ error: 'Artwork not found' }, { status: 404 })
