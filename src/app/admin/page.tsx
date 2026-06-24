@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function AdminDashboard() {
   const [isAuth, setIsAuth] = useState(false)
@@ -244,6 +244,39 @@ function DashboardPage() {
 }
 
 function ArtworksPage() {
+  const [artworks, setArtworks] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    fetchArtworks()
+  }, [])
+
+  async function fetchArtworks() {
+    try {
+      const res = await fetch('/api/artworks')
+      const data = await res.json()
+      setArtworks(data)
+    } catch (err) {
+      setError('Failed to load artworks')
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function deleteArtwork(id: number) {
+    if (!confirm('Are you sure you want to delete this artwork?')) return
+
+    try {
+      await fetch(`/api/artworks/${id}`, { method: 'DELETE' })
+      setArtworks(artworks.filter((a) => a.id !== id))
+    } catch (err) {
+      setError('Failed to delete artwork')
+      console.error(err)
+    }
+  }
+
   return (
     <div>
       <div style={{ marginBottom: '32px' }}>
@@ -252,6 +285,21 @@ function ArtworksPage() {
         </h2>
         <p style={{ color: '#8C8580', margin: 0 }}>Add, edit, or delete your artwork entries</p>
       </div>
+
+      {error && (
+        <div
+          style={{
+            padding: '12px 16px',
+            background: 'rgba(255,107,107,0.1)',
+            border: '1px solid rgba(255,107,107,0.3)',
+            color: '#ff6b6b',
+            marginBottom: '24px',
+            fontSize: '13px',
+          }}
+        >
+          {error}
+        </div>
+      )}
 
       <button
         style={{
@@ -270,140 +318,198 @@ function ArtworksPage() {
         + Add New Artwork
       </button>
 
-      <div
-        style={{
-          border: '1px solid rgba(240,237,232,0.08)',
-          borderRadius: '4px',
-          overflow: 'hidden',
-        }}
-      >
-        <table
+      {loading ? (
+        <p style={{ color: '#8C8580' }}>Loading artworks...</p>
+      ) : (
+        <div
           style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            fontSize: '13px',
+            border: '1px solid rgba(240,237,232,0.08)',
+            borderRadius: '4px',
+            overflow: 'hidden',
           }}
         >
-          <thead>
-            <tr
-              style={{
-                background: 'rgba(240,237,232,0.02)',
-                borderBottom: '1px solid rgba(240,237,232,0.08)',
-              }}
-            >
-              <th
-                style={{
-                  padding: '16px',
-                  textAlign: 'left',
-                  fontWeight: 500,
-                  color: '#C4A882',
-                }}
-              >
-                Title
-              </th>
-              <th
-                style={{
-                  padding: '16px',
-                  textAlign: 'left',
-                  fontWeight: 500,
-                  color: '#C4A882',
-                }}
-              >
-                Year
-              </th>
-              <th
-                style={{
-                  padding: '16px',
-                  textAlign: 'left',
-                  fontWeight: 500,
-                  color: '#C4A882',
-                }}
-              >
-                Category
-              </th>
-              <th
-                style={{
-                  padding: '16px',
-                  textAlign: 'center',
-                  fontWeight: 500,
-                  color: '#C4A882',
-                }}
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              { title: 'Untitled Series I', year: 2024, category: 'painting' },
-              { title: 'Untitled Series II', year: 2024, category: 'painting' },
-              { title: 'Untitled Series III', year: 2024, category: 'painting' },
-            ].map((artwork, idx) => (
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              fontSize: '13px',
+            }}
+          >
+            <thead>
               <tr
-                key={idx}
                 style={{
+                  background: 'rgba(240,237,232,0.02)',
                   borderBottom: '1px solid rgba(240,237,232,0.08)',
                 }}
               >
-                <td style={{ padding: '16px', color: '#F0EDE8' }}>{artwork.title}</td>
-                <td style={{ padding: '16px', color: '#8C8580' }}>{artwork.year}</td>
-                <td style={{ padding: '16px', color: '#8C8580' }}>
-                  <span
-                    style={{
-                      padding: '4px 12px',
-                      background: 'rgba(196,168,130,0.1)',
-                      borderRadius: '2px',
-                      fontSize: '11px',
-                      textTransform: 'capitalize',
-                    }}
-                  >
-                    {artwork.category}
-                  </span>
-                </td>
-                <td
+                <th
+                  style={{
+                    padding: '16px',
+                    textAlign: 'left',
+                    fontWeight: 500,
+                    color: '#C4A882',
+                  }}
+                >
+                  Title
+                </th>
+                <th
+                  style={{
+                    padding: '16px',
+                    textAlign: 'left',
+                    fontWeight: 500,
+                    color: '#C4A882',
+                  }}
+                >
+                  Year
+                </th>
+                <th
+                  style={{
+                    padding: '16px',
+                    textAlign: 'left',
+                    fontWeight: 500,
+                    color: '#C4A882',
+                  }}
+                >
+                  Category
+                </th>
+                <th
                   style={{
                     padding: '16px',
                     textAlign: 'center',
-                    display: 'flex',
-                    gap: '8px',
-                    justifyContent: 'center',
+                    fontWeight: 500,
+                    color: '#C4A882',
                   }}
                 >
-                  <button
-                    style={{
-                      padding: '4px 12px',
-                      background: 'transparent',
-                      border: '1px solid rgba(196,168,130,0.3)',
-                      color: '#C4A882',
-                      fontSize: '11px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    style={{
-                      padding: '4px 12px',
-                      background: 'transparent',
-                      border: '1px solid rgba(255,107,107,0.3)',
-                      color: '#ff6b6b',
-                      fontSize: '11px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {artworks.map((artwork) => (
+                <tr
+                  key={artwork.id}
+                  style={{
+                    borderBottom: '1px solid rgba(240,237,232,0.08)',
+                  }}
+                >
+                  <td style={{ padding: '16px', color: '#F0EDE8' }}>{artwork.title}</td>
+                  <td style={{ padding: '16px', color: '#8C8580' }}>{artwork.year}</td>
+                  <td style={{ padding: '16px', color: '#8C8580' }}>
+                    <span
+                      style={{
+                        padding: '4px 12px',
+                        background: 'rgba(196,168,130,0.1)',
+                        borderRadius: '2px',
+                        fontSize: '11px',
+                        textTransform: 'capitalize',
+                      }}
+                    >
+                      {artwork.category}
+                    </span>
+                  </td>
+                  <td
+                    style={{
+                      padding: '16px',
+                      textAlign: 'center',
+                      display: 'flex',
+                      gap: '8px',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <button
+                      style={{
+                        padding: '4px 12px',
+                        background: 'transparent',
+                        border: '1px solid rgba(196,168,130,0.3)',
+                        color: '#C4A882',
+                        fontSize: '11px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => deleteArtwork(artwork.id)}
+                      style={{
+                        padding: '4px 12px',
+                        background: 'transparent',
+                        border: '1px solid rgba(255,107,107,0.3)',
+                        color: '#ff6b6b',
+                        fontSize: '11px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   )
 }
 
 function ArtistPage() {
+  const [artist, setArtist] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    fetchArtist()
+  }, [])
+
+  async function fetchArtist() {
+    try {
+      const res = await fetch('/api/artist')
+      const data = await res.json()
+      setArtist(data)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function saveArtist() {
+    if (!artist) return
+
+    setSaving(true)
+    try {
+      const res = await fetch('/api/artist', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(artist),
+      })
+
+      if (res.ok) {
+        setMessage('Changes saved successfully!')
+        setTimeout(() => setMessage(''), 3000)
+      } else {
+        setMessage('Failed to save changes')
+      }
+    } catch (err) {
+      setMessage('Error saving changes')
+      console.error(err)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div>
+        <h2 style={{ fontSize: '28px', marginBottom: '32px', fontWeight: 400 }}>
+          Artist Information
+        </h2>
+        <p style={{ color: '#8C8580' }}>Loading...</p>
+      </div>
+    )
+  }
+
   return (
     <div>
       <div style={{ marginBottom: '32px' }}>
@@ -412,6 +518,25 @@ function ArtistPage() {
         </h2>
         <p style={{ color: '#8C8580', margin: 0 }}>Edit your artist bio and details</p>
       </div>
+
+      {message && (
+        <div
+          style={{
+            padding: '12px 16px',
+            background: message.includes('successfully')
+              ? 'rgba(76,175,80,0.1)'
+              : 'rgba(255,107,107,0.1)',
+            border: message.includes('successfully')
+              ? '1px solid rgba(76,175,80,0.3)'
+              : '1px solid rgba(255,107,107,0.3)',
+            color: message.includes('successfully') ? '#4caf50' : '#ff6b6b',
+            marginBottom: '24px',
+            fontSize: '13px',
+          }}
+        >
+          {message}
+        </div>
+      )}
 
       <div style={{ maxWidth: '600px' }}>
         <div style={{ marginBottom: '24px' }}>
@@ -430,7 +555,8 @@ function ArtistPage() {
           </label>
           <input
             type="text"
-            defaultValue="John Patrick Lachica"
+            value={artist?.name || ''}
+            onChange={(e) => setArtist({ ...artist, name: e.target.value })}
             style={{
               width: '100%',
               padding: '12px 16px',
@@ -459,7 +585,8 @@ function ArtistPage() {
             Bio
           </label>
           <textarea
-            defaultValue="Contemporary Filipino visual artist exploring vulnerability, resilience, and the emotional landscapes of human experience."
+            value={artist?.bio || ''}
+            onChange={(e) => setArtist({ ...artist, bio: e.target.value })}
             style={{
               width: '100%',
               padding: '12px 16px',
@@ -490,7 +617,8 @@ function ArtistPage() {
             Artist Statement
           </label>
           <textarea
-            defaultValue="Soul in Silence is a creative practice rooted in the belief that some truths are best understood through feeling rather than explanation."
+            value={artist?.statement || ''}
+            onChange={(e) => setArtist({ ...artist, statement: e.target.value })}
             style={{
               width: '100%',
               padding: '12px 16px',
@@ -507,19 +635,22 @@ function ArtistPage() {
         </div>
 
         <button
+          onClick={saveArtist}
+          disabled={saving}
           style={{
             padding: '12px 24px',
-            background: '#C4A882',
+            background: saving ? '#666666' : '#C4A882',
             color: '#0a0a0a',
             border: 'none',
             fontSize: '13px',
             fontWeight: 500,
             letterSpacing: '0.06em',
             textTransform: 'uppercase',
-            cursor: 'pointer',
+            cursor: saving ? 'not-allowed' : 'pointer',
+            opacity: saving ? 0.6 : 1,
           }}
         >
-          Save Changes
+          {saving ? 'Saving...' : 'Save Changes'}
         </button>
       </div>
     </div>
