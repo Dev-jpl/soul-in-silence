@@ -255,6 +255,8 @@ function ArtworksPage() {
   const [artworks, setArtworks] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editForm, setEditForm] = useState<any>(null)
 
   useEffect(() => {
     fetchArtworks()
@@ -271,6 +273,39 @@ function ArtworksPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  function startEdit(artwork: any) {
+    setEditingId(artwork.id)
+    setEditForm({ ...artwork })
+  }
+
+  async function saveEdit() {
+    if (!editForm) return
+
+    try {
+      const res = await fetch(`/api/artworks/${editingId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editForm),
+      })
+
+      if (res.ok) {
+        setArtworks(
+          artworks.map((a) => (a.id === editingId ? editForm : a))
+        )
+        setEditingId(null)
+        setEditForm(null)
+      }
+    } catch (err) {
+      setError('Failed to save artwork')
+      console.error(err)
+    }
+  }
+
+  function cancelEdit() {
+    setEditingId(null)
+    setEditForm(null)
   }
 
   async function deleteArtwork(id: number) {
@@ -425,6 +460,7 @@ function ArtworksPage() {
                     }}
                   >
                     <button
+                      onClick={() => startEdit(artwork)}
                       style={{
                         padding: '4px 12px',
                         background: 'transparent',
@@ -454,6 +490,212 @@ function ArtworksPage() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {editingId && editForm && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+          }}
+          onClick={cancelEdit}
+        >
+          <div
+            style={{
+              background: '#111111',
+              border: '1px solid rgba(240,237,232,0.08)',
+              padding: '32px',
+              maxWidth: '600px',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              borderRadius: '4px',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 style={{ fontSize: '20px', color: '#F0EDE8', marginBottom: '24px', fontWeight: 400 }}>
+              Edit Artwork
+            </h2>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
+                  Title
+                </label>
+                <input
+                  type="text"
+                  value={editForm.title}
+                  onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px',
+                    background: '#0a0a0a',
+                    border: '1px solid rgba(240,237,232,0.15)',
+                    color: '#F0EDE8',
+                    fontSize: '13px',
+                    boxSizing: 'border-box',
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
+                    Year
+                  </label>
+                  <input
+                    type="number"
+                    value={editForm.year}
+                    onChange={(e) => setEditForm({ ...editForm, year: parseInt(e.target.value) })}
+                    style={{
+                      width: '100%',
+                      padding: '8px 12px',
+                      background: '#0a0a0a',
+                      border: '1px solid rgba(240,237,232,0.15)',
+                      color: '#F0EDE8',
+                      fontSize: '13px',
+                      boxSizing: 'border-box',
+                    }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
+                    Category
+                  </label>
+                  <select
+                    value={editForm.category}
+                    onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
+                    style={{
+                      width: '100%',
+                      padding: '8px 12px',
+                      background: '#0a0a0a',
+                      border: '1px solid rgba(240,237,232,0.15)',
+                      color: '#F0EDE8',
+                      fontSize: '13px',
+                      boxSizing: 'border-box',
+                    }}
+                  >
+                    <option value="painting">Painting</option>
+                    <option value="mixed-media">Mixed Media</option>
+                    <option value="drawing">Drawing</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
+                  Medium
+                </label>
+                <input
+                  type="text"
+                  value={editForm.medium}
+                  onChange={(e) => setEditForm({ ...editForm, medium: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px',
+                    background: '#0a0a0a',
+                    border: '1px solid rgba(240,237,232,0.15)',
+                    color: '#F0EDE8',
+                    fontSize: '13px',
+                    boxSizing: 'border-box',
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
+                  Dimensions
+                </label>
+                <input
+                  type="text"
+                  value={editForm.dimensions}
+                  onChange={(e) => setEditForm({ ...editForm, dimensions: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px',
+                    background: '#0a0a0a',
+                    border: '1px solid rgba(240,237,232,0.15)',
+                    color: '#F0EDE8',
+                    fontSize: '13px',
+                    boxSizing: 'border-box',
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
+                  Description
+                </label>
+                <textarea
+                  value={editForm.description}
+                  onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px',
+                    background: '#0a0a0a',
+                    border: '1px solid rgba(240,237,232,0.15)',
+                    color: '#F0EDE8',
+                    fontSize: '13px',
+                    boxSizing: 'border-box',
+                    minHeight: '80px',
+                    resize: 'vertical',
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <input
+                  type="checkbox"
+                  checked={editForm.featured}
+                  onChange={(e) => setEditForm({ ...editForm, featured: e.target.checked })}
+                  style={{ cursor: 'pointer' }}
+                />
+                <label style={{ fontSize: '12px', color: '#8C8580', cursor: 'pointer' }}>
+                  Featured on homepage
+                </label>
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                <button
+                  onClick={saveEdit}
+                  style={{
+                    flex: 1,
+                    padding: '10px 16px',
+                    background: '#C4A882',
+                    color: '#0a0a0a',
+                    border: 'none',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Save Changes
+                </button>
+                <button
+                  onClick={cancelEdit}
+                  style={{
+                    flex: 1,
+                    padding: '10px 16px',
+                    background: 'transparent',
+                    color: '#8C8580',
+                    border: '1px solid rgba(240,237,232,0.15)',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
