@@ -37,9 +37,8 @@ export default function Home() {
             priority
             style={{
               objectFit: 'cover',
-              objectPosition: 'center 60%',
+              objectPosition: 'center center',
               opacity: 0.92,
-              transform: 'translateX(20%)',
             }}
           />
           {/* Directional scrims: dark-left for text legibility, soft bottom,
