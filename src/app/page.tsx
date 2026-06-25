@@ -58,7 +58,7 @@ export default function Home() {
           }
         `}</style>
 
-        <div style={{ position: 'relative', zIndex: 2, padding: '0 48px 96px', maxWidth: '560px' }}>
+        <div style={{ position: 'relative', zIndex: 2, padding: '0 48px 160px', maxWidth: '560px' }}>
           {/* Eyebrow with accent rule */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '30px' }}>
             <span style={{ width: '44px', height: '1px', background: '#C4A882', opacity: 0.7 }} />
