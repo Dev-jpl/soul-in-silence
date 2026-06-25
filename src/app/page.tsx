@@ -35,7 +35,12 @@ export default function Home() {
             alt="Soul in Silence"
             fill
             priority
-            style={{ objectFit: 'cover', opacity: 0.92 }}
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center 60%',
+              opacity: 0.92,
+              transform: 'translateX(9%)',
+            }}
           />
           {/* Directional scrims: dark-left for text legibility, soft bottom,
               letting the luminous center-right of the artwork breathe */}
