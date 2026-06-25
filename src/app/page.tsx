@@ -23,7 +23,7 @@ export default function Home() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          justifyContent: 'flex-end',
+          justifyContent: 'center',
           overflow: 'hidden',
           background: 'linear-gradient(135deg, rgba(10,10,10,1) 0%, rgba(20,18,15,0.95) 100%)',
         }}
@@ -63,7 +63,7 @@ export default function Home() {
           }
         `}</style>
 
-        <div style={{ position: 'relative', zIndex: 2, padding: '0 48px 160px', maxWidth: '560px' }}>
+        <div style={{ position: 'relative', zIndex: 2, padding: '0 48px', maxWidth: '560px' }}>
           {/* Eyebrow with accent rule */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '30px' }}>
             <span style={{ width: '44px', height: '1px', background: '#C4A882', opacity: 0.7 }} />
