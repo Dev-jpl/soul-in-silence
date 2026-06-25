@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import PageTransition from '@/components/PageTransition'
 import { OutlineButton } from '@/components/OutlineButton'
+import { PremiumButton } from '@/components/PremiumButton'
 
 export const metadata: Metadata = {
   title: 'Soul in Silence — Contemporary Fine Art by John Patrick Lachica',
