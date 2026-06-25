@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 const navLinks = [
@@ -35,6 +36,9 @@ export default function Navbar() {
       <Link
         href="/"
         style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
           fontFamily: 'var(--font-cormorant), Georgia, serif',
           fontWeight: 300,
           fontSize: '15px',
@@ -44,6 +48,14 @@ export default function Navbar() {
           textDecoration: 'none',
         }}
       >
+        <Image
+          src="/images/logos/logo.png"
+          alt="Soul in Silence owl mark"
+          width={36}
+          height={36}
+          priority
+          style={{ display: 'block' }}
+        />
         Soul in Silence
       </Link>
 
