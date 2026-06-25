@@ -39,7 +39,7 @@ export default function Home() {
               objectFit: 'cover',
               objectPosition: 'center 60%',
               opacity: 0.92,
-              transform: 'translateX(9%)',
+              transform: 'translateX(20%)',
             }}
           />
           {/* Directional scrims: dark-left for text legibility, soft bottom,
@@ -84,17 +84,33 @@ export default function Home() {
           <h1
             style={{
               fontFamily: 'var(--font-cormorant), Georgia, serif',
-              fontSize: 'clamp(60px, 9vw, 108px)',
+              fontSize: 'clamp(44px, 7vw, 92px)',
               fontWeight: 300,
               lineHeight: 1.05,
               letterSpacing: '-0.015em',
               color: '#F0EDE8',
-              marginBottom: '32px',
+              marginBottom: '16px',
+              whiteSpace: 'nowrap',
               textShadow: '0 2px 40px rgba(0,0,0,0.5)',
             }}
           >
             Soul in Silence
           </h1>
+
+          {/* Byline */}
+          <p
+            style={{
+              fontFamily: 'var(--font-cormorant), Georgia, serif',
+              fontSize: 'clamp(18px, 2vw, 24px)',
+              fontWeight: 300,
+              fontStyle: 'italic',
+              letterSpacing: '0.04em',
+              color: '#8C8580',
+              marginBottom: '36px',
+            }}
+          >
+            by John Patrick Lachica
+          </p>
 
           {/* Description */}
           <p
