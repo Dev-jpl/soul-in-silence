@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import PageTransition from '@/components/PageTransition'
-import { PremiumButton } from '@/components/PremiumButton'
+import { OutlineButton } from '@/components/OutlineButton'
 
 export const metadata: Metadata = {
   title: 'Soul in Silence — Contemporary Fine Art by John Patrick Lachica',
@@ -95,30 +95,9 @@ export default function Home() {
           </p>
 
           {/* CTA Button */}
-          <Link
-            href="/works"
-            style={{
-              display: 'inline-block',
-              fontSize: '10px',
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: '#F0EDE8',
-              border: '1px solid rgba(240,237,232,0.35)',
-              padding: '13px 30px',
-              textDecoration: 'none',
-              transition: 'all 0.3s',
-            }}
-            onMouseEnter={(e) => {
-              ;(e.target as HTMLElement).style.borderColor = '#C4A882'
-              ;(e.target as HTMLElement).style.color = '#C4A882'
-            }}
-            onMouseLeave={(e) => {
-              ;(e.target as HTMLElement).style.borderColor = 'rgba(240,237,232,0.35)'
-              ;(e.target as HTMLElement).style.color = '#F0EDE8'
-            }}
-          >
+          <OutlineButton href="/works">
             View the Works
-          </Link>
+          </OutlineButton>
         </div>
 
         {/* Scroll indicator */}
