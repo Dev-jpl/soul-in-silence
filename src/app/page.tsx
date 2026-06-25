@@ -35,49 +35,57 @@ export default function Home() {
             alt="Soul in Silence"
             fill
             priority
-            style={{ objectFit: 'cover', opacity: 0.5 }}
+            style={{ objectFit: 'cover', opacity: 0.92 }}
           />
+          {/* Directional scrims: dark-left for text legibility, soft bottom,
+              letting the luminous center-right of the artwork breathe */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to top, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.2) 40%, rgba(10,10,10,0.1) 100%)',
+              background:
+                'linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.72) 22%, rgba(10,10,10,0.28) 46%, rgba(10,10,10,0) 68%), linear-gradient(to top, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0.12) 34%, rgba(10,10,10,0) 58%)',
             }}
           />
         </div>
 
         <style>{`
-          @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
+          @keyframes scrollLine {
+            0%   { transform: scaleY(0); transform-origin: top; }
+            45%  { transform: scaleY(1); transform-origin: top; }
+            55%  { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
           }
         `}</style>
 
-        <div style={{ position: 'relative', zIndex: 2, padding: '0 48px 80px', maxWidth: '560px' }}>
-          {/* Subtitle */}
-          <p
-            style={{
-              fontSize: '11px',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: '#C4A882',
-              marginBottom: '24px',
-              fontWeight: 400,
-            }}
-          >
-            Contemporary Fine Art
-          </p>
+        <div style={{ position: 'relative', zIndex: 2, padding: '0 48px 96px', maxWidth: '560px' }}>
+          {/* Eyebrow with accent rule */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '30px' }}>
+            <span style={{ width: '44px', height: '1px', background: '#C4A882', opacity: 0.7 }} />
+            <p
+              style={{
+                fontSize: '11px',
+                letterSpacing: '0.32em',
+                textTransform: 'uppercase',
+                color: '#C4A882',
+                fontWeight: 400,
+              }}
+            >
+              Contemporary Fine Art
+            </p>
+          </div>
 
           {/* Main Title */}
           <h1
             style={{
               fontFamily: 'var(--font-cormorant), Georgia, serif',
-              fontSize: 'clamp(64px, 10vw, 120px)',
+              fontSize: 'clamp(60px, 9vw, 108px)',
               fontWeight: 300,
-              lineHeight: 1.1,
-              letterSpacing: '-0.02em',
+              lineHeight: 1.05,
+              letterSpacing: '-0.015em',
               color: '#F0EDE8',
               marginBottom: '32px',
+              textShadow: '0 2px 40px rgba(0,0,0,0.5)',
             }}
           >
             Soul in Silence
@@ -87,10 +95,10 @@ export default function Home() {
           <p
             style={{
               fontSize: '15px',
-              lineHeight: 1.8,
-              color: '#A8A8A8',
-              maxWidth: '420px',
-              marginBottom: '40px',
+              lineHeight: 1.85,
+              color: '#B4ADA6',
+              maxWidth: '430px',
+              marginBottom: '44px',
             }}
           >
             An art practice rooted in <span style={{ color: '#C4A882' }}>vulnerability</span>, <span style={{ color: '#C4A882' }}>resilience</span>, and the quiet terrain of human emotion.
@@ -102,21 +110,48 @@ export default function Home() {
           </OutlineButton>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator — bottom-right, away from the subject */}
         <div
           style={{
             position: 'absolute',
-            bottom: '40px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            textAlign: 'center',
-            animation: 'bounce 2s infinite',
+            bottom: '48px',
+            right: '48px',
+            zIndex: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '18px',
           }}
         >
-          <p style={{ fontSize: '11px', color: '#8C8580', letterSpacing: '0.1em', marginBottom: '12px' }}>
-            SCROLL
-          </p>
-          <div style={{ fontSize: '20px', color: '#C4A882' }}>↓</div>
+          <span
+            style={{
+              writingMode: 'vertical-rl',
+              fontSize: '10px',
+              letterSpacing: '0.28em',
+              textTransform: 'uppercase',
+              color: '#8C8580',
+            }}
+          >
+            Scroll
+          </span>
+          <span
+            style={{
+              position: 'relative',
+              width: '1px',
+              height: '60px',
+              background: 'rgba(240,237,232,0.14)',
+              overflow: 'hidden',
+            }}
+          >
+            <span
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: '#C4A882',
+                animation: 'scrollLine 2.4s ease-in-out infinite',
+              }}
+            />
+          </span>
         </div>
       </section>
 

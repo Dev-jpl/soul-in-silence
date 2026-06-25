@@ -18,7 +18,7 @@ export function OutlineButton({ href, children }: OutlineButtonProps) {
         textTransform: 'uppercase',
         color: '#F0EDE8',
         border: '1px solid rgba(240,237,232,0.35)',
-        padding: '13px 30px',
+        padding: '16px 40px',
         textDecoration: 'none',
         transition: 'all 0.3s',
       }}
