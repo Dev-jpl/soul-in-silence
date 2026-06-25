@@ -31,7 +31,7 @@ export default function Home() {
         {/* Background Image */}
         <div style={{ position: 'absolute', inset: 0 }}>
           <Image
-            src="/artworks/71959559_2852338481461608_7816082447057027072_n.jpg"
+            src="/images/hero.png"
             alt="Soul in Silence"
             fill
             priority
