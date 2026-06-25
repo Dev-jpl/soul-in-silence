@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import PageTransition from '@/components/PageTransition'
 import { PremiumButton } from '@/components/PremiumButton'
 
@@ -20,52 +21,37 @@ export default function Home() {
           minHeight: '680px',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-end',
           overflow: 'hidden',
-          background: 'linear-gradient(135deg, rgba(10,10,10,1) 0%, rgba(20,18,15,0.95) 100%)',
         }}
       >
+        {/* Background Image */}
+        <div style={{ position: 'absolute', inset: 0 }}>
+          <Image
+            src="/images/hero.jpg"
+            alt="Soul in Silence"
+            fill
+            priority
+            style={{ objectFit: 'cover', opacity: 0.5 }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to top, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.2) 40%, rgba(10,10,10,0.1) 100%)',
+            }}
+          />
+        </div>
+
         <style>{`
-          @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(30px); }
-          }
           @keyframes bounce {
             0%, 100% { transform: translateX(-50%) translateY(0); }
             50% { transform: translateX(-50%) translateY(10px); }
           }
         `}</style>
 
-        {/* Subtle animated background elements */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '10%',
-            right: '5%',
-            width: '400px',
-            height: '400px',
-            background: 'radial-gradient(circle, rgba(196,168,130,0.05) 0%, transparent 70%)',
-            borderRadius: '50%',
-            filter: 'blur(80px)',
-            animation: 'float 6s ease-in-out infinite',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '5%',
-            left: '5%',
-            width: '300px',
-            height: '300px',
-            background: 'radial-gradient(circle, rgba(196,168,130,0.04) 0%, transparent 70%)',
-            borderRadius: '50%',
-            filter: 'blur(80px)',
-            animation: 'float 8s ease-in-out infinite reverse',
-          }}
-        />
-
-        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '900px', padding: '0 48px' }}>
+        <div style={{ position: 'relative', zIndex: 2, padding: '0 48px 80px', maxWidth: '560px' }}>
           {/* Subtitle */}
           <p
             style={{
@@ -89,55 +75,50 @@ export default function Home() {
               lineHeight: 1.1,
               letterSpacing: '-0.02em',
               color: '#F0EDE8',
-              marginBottom: '12px',
+              marginBottom: '32px',
             }}
           >
             Soul in Silence
           </h1>
 
-          {/* Byline */}
-          <p
-            style={{
-              fontFamily: 'var(--font-cormorant), Georgia, serif',
-              fontSize: '24px',
-              fontWeight: 300,
-              letterSpacing: '0.05em',
-              color: '#8C8580',
-              marginBottom: '48px',
-            }}
-          >
-            by John Patrick Lachica
-          </p>
-
           {/* Description */}
           <p
             style={{
               fontSize: '15px',
-              lineHeight: 2,
+              lineHeight: 1.8,
               color: '#A8A8A8',
-              maxWidth: '600px',
-              margin: '0 auto 64px',
+              maxWidth: '420px',
+              marginBottom: '40px',
             }}
           >
-            An art practice rooted in <span style={{ color: '#C4A882' }}>vulnerability</span>, <span style={{ color: '#C4A882' }}>resilience</span>, and the quiet terrain of human emotion. Exploring memory, symbolism, and the spaces where art speaks louder than words.
+            An art practice rooted in <span style={{ color: '#C4A882' }}>vulnerability</span>, <span style={{ color: '#C4A882' }}>resilience</span>, and the quiet terrain of human emotion.
           </p>
 
-          {/* CTA Buttons */}
-          <div
+          {/* CTA Button */}
+          <Link
+            href="/works"
             style={{
-              display: 'flex',
-              gap: '24px',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
+              display: 'inline-block',
+              fontSize: '10px',
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: '#F0EDE8',
+              border: '1px solid rgba(240,237,232,0.35)',
+              padding: '13px 30px',
+              textDecoration: 'none',
+              transition: 'all 0.3s',
+            }}
+            onMouseEnter={(e) => {
+              ;(e.target as HTMLElement).style.borderColor = '#C4A882'
+              ;(e.target as HTMLElement).style.color = '#C4A882'
+            }}
+            onMouseLeave={(e) => {
+              ;(e.target as HTMLElement).style.borderColor = 'rgba(240,237,232,0.35)'
+              ;(e.target as HTMLElement).style.color = '#F0EDE8'
             }}
           >
-            <PremiumButton href="/works" variant="primary">
-              Explore Portfolio
-            </PremiumButton>
-            <PremiumButton href="#modules" variant="secondary">
-              Explore More
-            </PremiumButton>
-          </div>
+            View the Works
+          </Link>
         </div>
 
         {/* Scroll indicator */}
