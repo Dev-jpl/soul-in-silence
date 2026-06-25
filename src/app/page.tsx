@@ -25,12 +25,13 @@ export default function Home() {
           alignItems: 'flex-start',
           justifyContent: 'flex-end',
           overflow: 'hidden',
+          background: 'linear-gradient(135deg, rgba(10,10,10,1) 0%, rgba(20,18,15,0.95) 100%)',
         }}
       >
         {/* Background Image */}
         <div style={{ position: 'absolute', inset: 0 }}>
           <Image
-            src="/images/hero.jpg"
+            src="/artworks/71959559_2852338481461608_7816082447057027072_n.jpg"
             alt="Soul in Silence"
             fill
             priority
