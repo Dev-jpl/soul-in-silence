@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import PageTransition from '@/components/PageTransition'
+import ContactForm from '@/components/ContactForm'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -153,7 +154,7 @@ export default function ContactPage() {
         </span>
 
         <div
-          className="pad-x"
+          className="pad-x stack-mobile contact-grid"
           style={{
             position: 'relative',
             zIndex: 1,
@@ -161,9 +162,14 @@ export default function ContactPage() {
             margin: '0 auto',
             padding: '64px 48px 120px',
             minHeight: '50vh',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '72px',
+            alignItems: 'start',
           }}
         >
-          <div style={{ maxWidth: '560px' }}>
+          {/* Left — contact channels */}
+          <div>
             {channels.map(({ icon, label, value, href, external }) => (
               <a
                 key={label}
@@ -222,6 +228,9 @@ export default function ContactPage() {
               </a>
             ))}
           </div>
+
+          {/* Right — carded form */}
+          <ContactForm />
         </div>
       </section>
     </PageTransition>
