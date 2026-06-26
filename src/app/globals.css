@@ -210,6 +210,11 @@ body {
   }
 }
 
+/* Contact channels — hover shifts the value to the accent gold */
+.contact-channel:hover {
+  color: #C4A882;
+}
+
 /* Contact banner — desktop height is set inline (so Next's fill image
    always sees a non-zero parent height); mobile overrides here. */
 @media (max-width: 640px) {
