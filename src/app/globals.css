@@ -256,10 +256,6 @@ body {
   flex-wrap: wrap;
 }
 
-/* Line break that only applies on mobile */
-.br-mobile {
-  display: none;
-}
 
 /* Hero — raise the text block above dead-center on desktop */
 @media (min-width: 641px) {
@@ -297,9 +293,10 @@ body {
     display: block !important;
   }
 
-  /* Mobile-only line break in the hero tagline */
-  .br-mobile {
-    display: inline;
+  /* Mobile: first sentence of the tagline sits on its own line */
+  .tagline-lead {
+    display: block;
+    margin-bottom: 4px;
   }
 
   /* Anchor the hero text below the top, in the dark negative space */
