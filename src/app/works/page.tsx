@@ -111,7 +111,7 @@ export default function WorksPage() {
 
       {/* Gallery - Grid or List view */}
       <div
-        className="pad-x works-grid"
+        className={`pad-x works-grid ${viewMode === 'grid' ? 'works-grid--grid' : 'works-grid--list'}`}
         style={{
           padding: '48px',
           maxWidth: '1320px',

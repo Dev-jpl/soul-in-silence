@@ -363,8 +363,13 @@ body {
     gap: 16px;
   }
 
-  /* Gallery grid → single column on phones */
-  .works-grid {
+  /* Gallery on phones: grid view → 3 columns, list view → 1 */
+  .works-grid--grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .works-grid--list {
     grid-template-columns: 1fr !important;
   }
 
