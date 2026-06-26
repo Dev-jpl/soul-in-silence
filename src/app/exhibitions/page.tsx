@@ -52,7 +52,7 @@ export default function CVPage() {
               zIndex: 1,
               maxWidth: '1320px',
               margin: '0 auto',
-              padding: '56px 48px',
+              padding: '56px 0',
             }}
           >
             {cvData.exhibitions.map(({ year, title, venue }, i) => (
@@ -62,11 +62,13 @@ export default function CVPage() {
                   display: 'grid',
                   gridTemplateColumns: '72px 1fr',
                   gap: '32px',
-                  padding: '24px 28px',
+                  padding: '24px 48px',
                   background:
                     'linear-gradient(to right, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.7) 45%, rgba(10,10,10,0) 100%)',
-                  borderTop: i === 0 ? '1px solid rgba(240,237,232,0.12)' : undefined,
-                  borderBottom: '1px solid rgba(240,237,232,0.1)',
+                  borderStyle: 'solid',
+                  borderWidth: i === cvData.exhibitions.length - 1 ? '0' : '0 0 1px',
+                  borderImage:
+                    'linear-gradient(to right, rgba(240,237,232,0.22) 0%, rgba(240,237,232,0.1) 50%, rgba(240,237,232,0) 100%) 1',
                 }}
               >
                 <span
