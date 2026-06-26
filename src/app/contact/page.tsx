@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import PageHeader from '@/components/PageHeader'
 import PageTransition from '@/components/PageTransition'
 
 const inputStyle = {
@@ -23,45 +22,28 @@ export default function ContactPage() {
 
   return (
     <PageTransition>
-      <PageHeader
-        title="Contact"
-        eyebrow="Get in Touch"
-        description="Inquiries, commissions, collaborations, and press."
-      />
       <div
         className="pad-x stack-mobile contact-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: '96px',
+          gap: '72px',
           padding: '80px 48px 120px',
           minHeight: '60vh',
         }}
       >
         {/* Left: contact info */}
         <div>
-          <h2
-            style={{
-              fontFamily: 'var(--font-cormorant), Georgia, serif',
-              fontSize: '36px',
-              fontWeight: 300,
-              lineHeight: 1.3,
-              color: '#F0EDE8',
-              marginBottom: '28px',
-            }}
-          >
-            Inquiries,<br />Commissions &<br />Collaborations
-          </h2>
           <p
             style={{
-              fontSize: '13px',
-              color: '#8C8580',
-              lineHeight: 2.0,
+              fontSize: '10px',
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: '#C4A882',
               marginBottom: '48px',
-              maxWidth: '360px',
             }}
           >
-            Whether you are a collector, curator, gallery, or simply someone moved by the work — I welcome your correspondence.
+            Get in Touch
           </p>
 
           {[
@@ -129,7 +111,6 @@ export default function ContactPage() {
           {[
             { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
             { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
-            { id: 'subject', label: 'Subject', type: 'text', placeholder: 'Commission · Acquisition · Press · Other' },
           ].map(({ id, label, type, placeholder }) => (
             <div key={id} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label
@@ -207,7 +188,7 @@ export default function ContactPage() {
                 ((e.currentTarget as HTMLButtonElement).style.background = '#F0EDE8')
               }
             >
-              Send Message
+              Send
             </button>
           </div>
         </form>
