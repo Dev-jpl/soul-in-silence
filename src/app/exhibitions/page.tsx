@@ -15,6 +15,7 @@ export default function CVPage() {
       {/* Exhibits — background panel with the title on top */}
       <div className="pad-x" style={{ maxWidth: '1320px', margin: '0 auto' }}>
         <div
+          className="exhibits-panel"
           style={{
             position: 'relative',
             overflow: 'hidden',
@@ -28,10 +29,12 @@ export default function CVPage() {
             aria-hidden
             fill
             sizes="(max-width: 1320px) 100vw, 1320px"
+            className="exhibit-bg"
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
           {/* Sides fade dark → transparent toward the center */}
           <div
+            className="exhibit-bg"
             style={{
               position: 'absolute',
               inset: 0,
@@ -41,6 +44,7 @@ export default function CVPage() {
           />
           {/* Top fade: strong black → transparent */}
           <div
+            className="exhibit-bg"
             style={{
               position: 'absolute',
               top: 0,
