@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import PageTransition from '@/components/PageTransition'
 
 const inputStyle = {
@@ -39,6 +40,53 @@ export default function ContactPage() {
 
   return (
     <PageTransition>
+      {/* BANNER */}
+      <div className="contact-banner" style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
+        <Image
+          src="/images/contact-banner.webp"
+          alt="Soul in Silence"
+          fill
+          priority
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center center' }}
+        />
+        {/* Gradient overlay */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.4) 50%, rgba(10,10,10,0.7) 100%)',
+          }}
+        />
+        {/* Bottom-left text */}
+        <div style={{ position: 'absolute', left: '48px', bottom: '48px', zIndex: 1 }}>
+          <p
+            style={{
+              fontSize: '10px',
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: '#C4A882',
+              marginBottom: '12px',
+            }}
+          >
+            Get in Touch
+          </p>
+          <h1
+            style={{
+              fontFamily: 'var(--font-cormorant), Georgia, serif',
+              fontSize: 'clamp(32px, 4vw, 48px)',
+              fontWeight: 300,
+              fontStyle: 'italic',
+              color: '#F0EDE8',
+              margin: 0,
+            }}
+          >
+            Every silence deserves a response.
+          </h1>
+        </div>
+      </div>
+
       {/* SECTION 1 + 2 — ghost watermark behind the two-column content */}
       <section style={{ position: 'relative', overflow: 'hidden' }}>
         {/* Ghost watermark */}
@@ -74,41 +122,13 @@ export default function ContactPage() {
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
             gap: '72px',
-            padding: '120px 48px',
+            padding: '48px 48px 120px',
             minHeight: '60vh',
             alignItems: 'start',
           }}
         >
           {/* Left — contact info */}
           <div>
-            <p
-              style={{
-                fontSize: '10px',
-                letterSpacing: '0.22em',
-                textTransform: 'uppercase',
-                color: '#C4A882',
-                marginBottom: '28px',
-              }}
-            >
-              Get in Touch
-            </p>
-            <h1
-              style={{
-                fontFamily: 'var(--font-cormorant), Georgia, serif',
-                fontSize: '42px',
-                fontWeight: 300,
-                lineHeight: 1.15,
-                color: '#F0EDE8',
-                marginBottom: '48px',
-              }}
-            >
-              Every silence
-              <br />
-              deserves
-              <br />
-              a response.
-            </h1>
-
             {contactDetails.map(({ label, value, href }) => {
               const valueStyle = {
                 fontFamily: 'var(--font-cormorant), Georgia, serif',

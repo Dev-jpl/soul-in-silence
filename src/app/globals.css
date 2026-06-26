@@ -210,6 +210,17 @@ body {
   }
 }
 
+/* Contact banner height */
+.contact-banner {
+  height: 380px;
+}
+
+@media (max-width: 640px) {
+  .contact-banner {
+    height: 240px;
+  }
+}
+
 /* Footer content capped to match the rest of the site on large screens */
 .footer-inner {
   width: 100%;
