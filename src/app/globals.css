@@ -247,6 +247,13 @@ body {
   flex-wrap: wrap;
 }
 
+/* Hero — raise the text block above dead-center on desktop */
+@media (min-width: 641px) {
+  .hero-container {
+    transform: translateY(-15vh);
+  }
+}
+
 /* Artist statement — portrait sticks alongside the text */
 .statement-portrait {
   position: sticky;

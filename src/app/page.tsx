@@ -78,15 +78,6 @@ export default function Home() {
           />
         </div>
 
-        <style>{`
-          @keyframes scrollLine {
-            0%   { transform: scaleY(0); transform-origin: top; }
-            45%  { transform: scaleY(1); transform-origin: top; }
-            55%  { transform: scaleY(1); transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
-          }
-        `}</style>
-
         <div className="hero-container" style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: '1320px', margin: '0 auto' }}>
         <div className="hero-content" style={{ padding: '0 48px', maxWidth: '560px' }}>
           {/* Eyebrow with accent rule */}
@@ -115,7 +106,7 @@ export default function Home() {
               lineHeight: 1.05,
               letterSpacing: '-0.015em',
               color: '#F0EDE8',
-              marginBottom: '16px',
+              // marginBottom: '16px',
               whiteSpace: 'nowrap',
               textShadow: '0 2px 40px rgba(0,0,0,0.5)',
             }}
@@ -158,161 +149,8 @@ export default function Home() {
         </div>
         </div>
 
-        {/* Scroll indicator — bottom-right, away from the subject */}
-        <div
-          className="hero-scroll"
-          style={{
-            position: 'absolute',
-            bottom: '48px',
-            right: '48px',
-            zIndex: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '18px',
-          }}
-        >
-          <span
-            style={{
-              writingMode: 'vertical-rl',
-              fontSize: '10px',
-              letterSpacing: '0.28em',
-              textTransform: 'uppercase',
-              color: '#8C8580',
-            }}
-          >
-            Scroll
-          </span>
-          <span
-            style={{
-              position: 'relative',
-              width: '1px',
-              height: '60px',
-              background: 'rgba(240,237,232,0.14)',
-              overflow: 'hidden',
-            }}
-          >
-            <span
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: '#C4A882',
-                animation: 'scrollLine 2.4s ease-in-out infinite',
-              }}
-            />
-          </span>
-        </div>
       </section>
 
-      {/* Brand Philosophy */}
-      <section
-        className="pad-x"
-        style={{
-          padding: '96px 48px',
-          borderBottom: '1px solid rgba(240,237,232,0.08)',
-        }}
-      >
-        <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
-          {/* Section eyebrow + heading */}
-          <div style={{ textAlign: 'center', marginBottom: '72px' }}>
-            <p
-              style={{
-                fontSize: '10px',
-                letterSpacing: '0.32em',
-                textTransform: 'uppercase',
-                color: '#C4A882',
-                marginBottom: '18px',
-              }}
-            >
-              The Practice
-            </p>
-            <h2
-              style={{
-                fontFamily: 'var(--font-cormorant), Georgia, serif',
-                fontSize: 'clamp(32px, 4vw, 44px)',
-                fontWeight: 300,
-                fontStyle: 'italic',
-                lineHeight: 1.4,
-                color: '#F0EDE8',
-                maxWidth: '720px',
-                margin: '0 auto',
-              }}
-            >
-              Where words fall short, the work speaks — in vulnerability, resilience, memory, and symbol.
-            </h2>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-              gap: '1px',
-              background: 'rgba(240,237,232,0.08)',
-              border: '1px solid rgba(240,237,232,0.08)',
-            }}
-          >
-            {[
-              {
-                label: 'Vulnerability',
-                description: 'Art as a space where emotional truth is rendered visible, inviting shared human experience.',
-              },
-              {
-                label: 'Resilience',
-                description: 'Exploring the quiet strength found in persistence, transformation, and acceptance.',
-              },
-              {
-                label: 'Memory',
-                description: 'Visual narratives that honor the spaces between what was felt and what can be articulated.',
-              },
-              {
-                label: 'Symbolism',
-                description: 'Using motif and metaphor to speak to the psychological and emotional landscape.',
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                style={{
-                  background: '#0A0A0A',
-                  padding: '40px 32px',
-                }}
-              >
-                <p
-                  style={{
-                    fontFamily: 'var(--font-cormorant), Georgia, serif',
-                    fontSize: '24px',
-                    fontWeight: 300,
-                    color: 'rgba(196,168,130,0.5)',
-                    marginBottom: '24px',
-                  }}
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </p>
-                <p
-                  style={{
-                    fontSize: '12px',
-                    letterSpacing: '0.14em',
-                    textTransform: 'uppercase',
-                    color: '#F0EDE8',
-                    marginBottom: '16px',
-                    fontWeight: 500,
-                  }}
-                >
-                  {item.label}
-                </p>
-                <p
-                  style={{
-                    fontSize: '13.5px',
-                    lineHeight: 1.8,
-                    color: '#8C8580',
-                  }}
-                >
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
 
     </PageTransition>
