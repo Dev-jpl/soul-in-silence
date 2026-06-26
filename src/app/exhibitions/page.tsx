@@ -34,10 +34,17 @@ export default function CVPage() {
             sizes="(max-width: 1320px) 100vw, 1320px"
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
-          {/* Dim over the whole image */}
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.72)' }} />
+          {/* Sides fade dark → transparent toward the center */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'linear-gradient(to right, rgba(10,10,10,1) 0%, rgba(10,10,10,0.45) 28%, rgba(10,10,10,0.45) 72%, rgba(10,10,10,1) 100%)',
+            }}
+          />
 
-          {/* List view — darker background on the list only */}
+          {/* List view */}
           <div
             className="pad-x"
             style={{
@@ -46,7 +53,6 @@ export default function CVPage() {
               maxWidth: '1320px',
               margin: '0 auto',
               padding: '56px 48px',
-              background: 'rgba(10,10,10,0.9)',
             }}
           >
             {cvData.exhibitions.map(({ year, title, venue }, i) => (
