@@ -293,10 +293,10 @@ body {
     display: block !important;
   }
 
-  /* Anchor the hero text to the top, in the dark negative space */
+  /* Anchor the hero text below the top, in the dark negative space */
   .hero-section {
     justify-content: flex-start !important;
-    padding-top: 56px !important;
+    padding-top: 130px !important;
   }
   /* Reduce heavy section side padding */
   .pad-x {

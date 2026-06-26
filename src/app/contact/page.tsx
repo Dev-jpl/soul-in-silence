@@ -165,13 +165,13 @@ export default function ContactPage() {
             sizes="(max-width: 1320px) 100vw, 1320px"
             style={{ objectFit: 'cover', objectPosition: 'center bottom' }}
           />
-          {/* Gradient overlay */}
+          {/* Edge fades — strong dark on all sides easing to a clearer center */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
               background:
-                'linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.4) 50%, rgba(10,10,10,0.7) 100%)',
+                'linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0) 35%, rgba(10,10,10,0) 65%, rgba(10,10,10,0.95) 100%), linear-gradient(to bottom, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0) 45%, rgba(10,10,10,0) 55%, rgba(10,10,10,0.9) 100%)',
             }}
           />
           {/* Bottom-left text */}
