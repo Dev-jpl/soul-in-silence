@@ -56,6 +56,14 @@ export default function Home() {
               opacity: 0.95,
             }}
           />
+          {/* Uniform dim so the artwork never overpowers the text */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(10,10,10,0.42)',
+            }}
+          />
           {/* Desktop scrim: dark-left for text legibility, soft bottom,
               letting the luminous center-right of the artwork breathe */}
           <div
