@@ -62,7 +62,9 @@ export default function CVPage() {
                   display: 'grid',
                   gridTemplateColumns: '72px 1fr',
                   gap: '32px',
-                  padding: '24px 0',
+                  padding: '24px 28px',
+                  background:
+                    'linear-gradient(to right, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.7) 45%, rgba(10,10,10,0) 100%)',
                   borderTop: i === 0 ? '1px solid rgba(240,237,232,0.12)' : undefined,
                   borderBottom: '1px solid rgba(240,237,232,0.1)',
                 }}
