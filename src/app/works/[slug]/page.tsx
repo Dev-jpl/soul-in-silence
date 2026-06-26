@@ -165,26 +165,9 @@ export default async function WorkPage({ params }: Props) {
               ))}
             </div>
 
-            <p style={{ fontSize: '13px', lineHeight: 2.0, color: '#8C8580', marginBottom: '40px' }}>
+            <p style={{ fontSize: '13px', lineHeight: 2.0, color: '#8C8580' }}>
               {artwork.description}
             </p>
-
-            <Link
-              href="/contact"
-              style={{
-                display: 'inline-block',
-                fontSize: '10px',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: '#F0EDE8',
-                border: '1px solid rgba(240,237,232,0.25)',
-                padding: '13px 28px',
-                textDecoration: 'none',
-                transition: 'border-color 0.2s, color 0.2s',
-              }}
-            >
-              Inquire About This Work
-            </Link>
           </div>
         </div>
 

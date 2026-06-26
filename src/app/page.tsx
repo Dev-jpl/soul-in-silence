@@ -141,7 +141,18 @@ export default function Home() {
               marginBottom: '44px',
             }}
           >
-            <span className="tagline-lead">Not everything we carry can be spoken.</span> Turning <span style={{ color: '#C4A882' }}>silence</span> into language. Giving form to <span style={{ color: '#C4A882' }}>emotion</span>.
+            <span className="tagline-web">
+              Not everything we carry can be spoken. Turning{' '}
+              <span style={{ color: '#C4A882' }}>silence</span> into language. Giving form to{' '}
+              <span style={{ color: '#C4A882' }}>emotion</span>.
+            </span>
+            <span className="tagline-mobile">
+              Not everything we carry can be spoken.
+              <br />
+              Turning <span style={{ color: '#C4A882' }}>silence</span> into language. 
+               <br />
+              Giving form to <span style={{ color: '#C4A882' }}>emotion</span>.
+            </span>
           </p>
 
           {/* CTA Button */}

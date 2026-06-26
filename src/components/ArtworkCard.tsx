@@ -28,28 +28,6 @@ export default function ArtworkCard({ artwork, priority = false }: ArtworkCardPr
           />
         </div>
       </div>
-      <div style={{ padding: '14px 0 6px' }}>
-        <p
-          style={{
-            fontFamily: 'var(--font-cormorant), Georgia, serif',
-            fontSize: '17px',
-            fontWeight: 400,
-            color: '#F0EDE8',
-          }}
-        >
-          {artwork.title}
-        </p>
-        <p
-          style={{
-            fontSize: '11px',
-            color: '#8C8580',
-            marginTop: '3px',
-            letterSpacing: '0.06em',
-          }}
-        >
-          {artwork.medium} — {artwork.year}
-        </p>
-      </div>
     </Link>
   )
 }

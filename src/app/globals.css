@@ -257,6 +257,11 @@ body {
 }
 
 
+/* Hero tagline: web version by default, mobile version hidden until <=640px */
+.tagline-mobile {
+  display: none;
+}
+
 /* Hero — raise the text block above dead-center on desktop */
 @media (min-width: 641px) {
   .hero-container {
@@ -293,10 +298,12 @@ body {
     display: block !important;
   }
 
-  /* Mobile: first sentence of the tagline sits on its own line */
-  .tagline-lead {
-    display: block;
-    margin-bottom: 4px;
+  /* Mobile tagline (with the line break) shows; web version hidden */
+  .tagline-web {
+    display: none;
+  }
+  .tagline-mobile {
+    display: inline;
   }
 
   /* Anchor the hero text below the top, in the dark negative space */
@@ -407,6 +414,30 @@ body {
   /* Contact form card — looser inner padding so it can breathe */
   .contact-card {
     padding: 32px 22px !important;
+  }
+
+  /* Admin → mobile friendly */
+  .admin-header {
+    padding: 18px 20px !important;
+  }
+
+  .admin-body {
+    flex-direction: column !important;
+  }
+
+  .admin-sidebar {
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(240, 237, 232, 0.08) !important;
+    padding: 0 !important;
+  }
+
+  .admin-nav {
+    flex-direction: row !important;
+  }
+
+  .admin-content {
+    padding: 28px 20px !important;
   }
 
   /* Drop the exhibitions background on mobile — list on plain dark page */

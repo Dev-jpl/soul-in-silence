@@ -99,6 +99,7 @@ function AdminNav() {
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0a', fontFamily: 'Inter, sans-serif', color: '#F0EDE8' }}>
       <div
+        className="admin-header"
         style={{
           borderBottom: '1px solid rgba(240,237,232,0.08)',
           padding: '24px 48px',
@@ -125,9 +126,9 @@ function AdminNav() {
         </button>
       </div>
 
-      <div style={{ display: 'flex' }}>
-        <div style={{ width: '200px', borderRight: '1px solid rgba(240,237,232,0.08)', padding: '32px 0' }}>
-          <nav style={{ display: 'flex', flexDirection: 'column' }}>
+      <div className="admin-body" style={{ display: 'flex' }}>
+        <div className="admin-sidebar" style={{ width: '200px', borderRight: '1px solid rgba(240,237,232,0.08)', padding: '32px 0' }}>
+          <nav className="admin-nav" style={{ display: 'flex', flexDirection: 'column' }}>
             {[
               { id: 'dashboard' as const, label: 'Dashboard' },
               { id: 'artworks' as const, label: 'Artworks' },
@@ -153,7 +154,7 @@ function AdminNav() {
           </nav>
         </div>
 
-        <div style={{ flex: 1, padding: '48px' }}>
+        <div className="admin-content" style={{ flex: 1, padding: '48px', minWidth: 0 }}>
           {currentPage === 'dashboard' && <DashboardPage />}
           {currentPage === 'artworks' && <ArtworksPage />}
         </div>
@@ -311,8 +312,8 @@ function ArtworksPage() {
         </button>
       </div>
 
-      <div style={{ border: '1px solid rgba(240,237,232,0.08)', borderRadius: '4px', overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+      <div style={{ border: '1px solid rgba(240,237,232,0.08)', borderRadius: '4px', overflowX: 'auto' }}>
+        <table style={{ width: '100%', minWidth: '480px', borderCollapse: 'collapse', fontSize: '13px' }}>
           <thead>
             <tr style={{ background: 'rgba(240,237,232,0.02)', borderBottom: '1px solid rgba(240,237,232,0.08)' }}>
               {['Title', 'Year', 'Category', 'Actions'].map((h, i) => (
