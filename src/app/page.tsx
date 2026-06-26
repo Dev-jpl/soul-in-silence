@@ -148,7 +148,7 @@ export default function Home() {
               marginBottom: '44px',
             }}
           >
-            An art practice exploring the quiet landscapes of <span style={{ color: '#C4A882' }}>memory</span> and the <span style={{ color: '#C4A882' }}>human experience</span>—where silence becomes a language and emotion finds its form.
+            Turning <span style={{ color: '#C4A882' }}>silence</span> into language, giving form to <span style={{ color: '#C4A882' }}>emotion</span>.
           </p>
 
           {/* CTA Button */}
