@@ -223,10 +223,7 @@ export default function ContactPage() {
           {/* Left — Information + Socials */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
             <div>
-              <p style={{ ...groupLabelStyle, marginBottom: '8px' }}>Information</p>
-              <p style={{ fontSize: '13px', color: '#8C8580', lineHeight: 1.6, marginBottom: '28px' }}>
-                Information to contact me through.
-              </p>
+              <p style={groupLabelStyle}>Contact Information</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
                 {information.map((item) => (
                   <ContactItem key={item.title} {...item} />
@@ -244,8 +241,10 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right — carded form */}
-          <ContactForm />
+          {/* Right — carded form, floating over the banner */}
+          <div className="contact-form-float">
+            <ContactForm />
+          </div>
         </div>
       </section>
     </PageTransition>

@@ -215,6 +215,18 @@ body {
   color: #F0EDE8;
 }
 
+/* Contact form card floats up over the banner on desktop */
+.contact-form-float {
+  position: relative;
+  z-index: 2;
+}
+
+@media (min-width: 641px) {
+  .contact-form-float {
+    margin-top: -180px;
+  }
+}
+
 /* Contact banner — desktop height is set inline (so Next's fill image
    always sees a non-zero parent height); mobile overrides here. */
 @media (max-width: 640px) {
