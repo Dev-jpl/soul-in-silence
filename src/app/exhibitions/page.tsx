@@ -16,9 +16,15 @@ export default function CVPage() {
       {/* Header — normal dark background, no image */}
       <PageHeader title="Exhibitions" eyebrow="John Patrick Lachica" />
 
-      {/* Exhibits — background sits exactly behind the list, fading dark at the sides */}
-      <div className="pad-x" style={{ maxWidth: '1320px', margin: '0 auto', padding: '48px 48px 80px' }}>
-        <div style={{ position: 'relative', overflow: 'hidden' }}>
+      {/* Exhibits — background panel contained to the page width */}
+      <div className="pad-x" style={{ maxWidth: '1320px', margin: '0 auto' }}>
+        <div
+          style={{
+            position: 'relative',
+            overflow: 'hidden',
+            minHeight: 'calc(100vh - 200px)',
+          }}
+        >
           {/* Background image */}
           <Image
             src="/images/contact-banner.webp"
@@ -28,22 +34,19 @@ export default function CVPage() {
             sizes="(max-width: 1320px) 100vw, 1320px"
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
-          {/* Sides fade dark → transparent toward the center */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background:
-                'linear-gradient(to right, rgba(10,10,10,1) 0%, rgba(10,10,10,0.4) 30%, rgba(10,10,10,0.4) 70%, rgba(10,10,10,1) 100%)',
-            }}
-          />
+          {/* Dim over the whole image */}
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.72)' }} />
 
-          {/* List view */}
+          {/* List view — darker background on the list only */}
           <div
+            className="pad-x"
             style={{
               position: 'relative',
               zIndex: 1,
-              padding: '48px',
+              maxWidth: '1320px',
+              margin: '0 auto',
+              padding: '56px 48px',
+              background: 'rgba(10,10,10,0.9)',
             }}
           >
             {cvData.exhibitions.map(({ year, title, venue }, i) => (
