@@ -121,7 +121,7 @@ export default function WorksPage() {
             viewMode === 'grid'
               ? 'repeat(auto-fill, minmax(280px, 1fr))'
               : '1fr',
-          gap: viewMode === 'grid' ? '32px 24px' : '24px',
+          gap: viewMode === 'grid' ? '4px' : '24px',
         }}
       >
         {filtered.map((artwork, i) => (

@@ -373,7 +373,7 @@ body {
   /* Gallery on phones: grid view → 3 columns, list view → 1 */
   .works-grid--grid {
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 10px !important;
+    gap: 4px !important;
   }
 
   .works-grid--list {
