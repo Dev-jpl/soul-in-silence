@@ -141,7 +141,7 @@ export default function Home() {
               marginBottom: '44px',
             }}
           >
-            Turning <span style={{ color: '#C4A882' }}>silence</span> into language, giving form to <span style={{ color: '#C4A882' }}>emotion</span>.
+            Not everything we carry can be spoken. Turning <span style={{ color: '#C4A882' }}>silence</span> into language.<br />Giving form to <span style={{ color: '#C4A882' }}>emotion</span>.
           </p>
 
           {/* CTA Button */}
