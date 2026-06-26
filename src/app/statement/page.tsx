@@ -16,7 +16,7 @@ export default function StatementPage() {
 
   return (
     <PageTransition>
-      <PageHeader title="Artist Statement" eyebrow="Soul in Silence" />
+      <PageHeader title="Artist Statement" />
       <div
         className="pad-x"
         style={{
