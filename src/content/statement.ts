@@ -2,10 +2,10 @@ export const artistStatement = {
   title: 'Artist Statement',
   body: [
     'I make art that speaks where words fall short.',
-    'My work begins in the body — in the tightness of unexpressed grief, in the warmth of a memory that resurfaces without warning, in the strange tenderness of recognizing your own pain in someone else\'s face. I paint from that place. Not to explain it, but to hold it.',
-    'Soul in Silence is the name I gave to this practice because silence is not emptiness. It is where the most important things live — the feelings we carry without names, the experiences we return to without resolution, the connections that form between strangers in the presence of a painting.',
-    'I am interested in vulnerability as a form of strength. In the courage it takes to feel fully. In the shared human experience that exists beneath the surface of our separate lives.',
-    'I invite you to stand before these works not as a viewer, but as a participant. Bring your own stories. Bring your silences. Find what is yours within them.',
+    'My work begins in the body — in the weight of unspoken grief, in the warmth of a memory that returns without warning, in the strange tenderness of recognizing fragments of yourself in the lives of others. I paint from that place — not to explain it, but to give it space to exist.',
+    'Soul in Silence is the name I gave to this practice because silence is not emptiness. It is where the most essential things remain: the feelings we cannot name, the memories we revisit without resolution, and the quiet connections that emerge between strangers in the presence of a painting.',
+    'I am drawn to vulnerability as a form of strength — to the quiet courage of feeling deeply, and to the shared humanity that exists beneath the surface of our individual lives.',
+    'My hope is that these works become more than images to observe. I invite you to enter them with your own memories, your own questions, and your own silence — to discover what belongs to you within them.',
   ],
   closing: '— John Patrick Lachica, Manila',
 }
