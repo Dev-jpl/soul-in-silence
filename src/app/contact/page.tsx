@@ -41,7 +41,7 @@ export default function ContactPage() {
   return (
     <PageTransition>
       {/* BANNER */}
-      <div className="contact-banner" style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
+      <div className="contact-banner" style={{ position: 'relative', width: '100%', height: '380px', overflow: 'hidden' }}>
         <Image
           src="/images/contact-banner.webp"
           alt="Soul in Silence"

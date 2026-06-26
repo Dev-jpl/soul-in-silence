@@ -210,14 +210,11 @@ body {
   }
 }
 
-/* Contact banner height */
-.contact-banner {
-  height: 380px;
-}
-
+/* Contact banner — desktop height is set inline (so Next's fill image
+   always sees a non-zero parent height); mobile overrides here. */
 @media (max-width: 640px) {
   .contact-banner {
-    height: 240px;
+    height: 240px !important;
   }
 }
 
