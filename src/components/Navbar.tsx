@@ -36,6 +36,7 @@ export default function Navbar() {
 
   return (
     <nav className="site-nav">
+      <div className="site-nav__inner">
       <Link href="/" className="site-nav__brand">
         <Image
           src="/images/logos/logo.png"
@@ -77,6 +78,7 @@ export default function Navbar() {
         <span className={open ? 'site-nav__bar is-open-mid' : 'site-nav__bar'} />
         <span className={open ? 'site-nav__bar is-open-bot' : 'site-nav__bar'} />
       </button>
+      </div>
 
       {/* Mobile menu overlay */}
       <div className={open ? 'site-nav__menu is-open' : 'site-nav__menu'}>

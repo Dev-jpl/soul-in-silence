@@ -57,8 +57,18 @@ body {
   padding: 0 48px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   height: 64px;
+}
+
+/* Cap the bar's content on large screens so it doesn't stretch edge-to-edge */
+.site-nav__inner {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .site-nav__brand {
@@ -200,6 +210,18 @@ body {
   }
 }
 
+/* Footer content capped to match the rest of the site on large screens */
+.footer-inner {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
 /* Artist statement — portrait sticks alongside the text */
 .statement-portrait {
   position: sticky;
@@ -282,7 +304,7 @@ body {
   }
 
   /* Footer stacks and centers */
-  .footer-bar {
+  .footer-inner {
     justify-content: center !important;
     text-align: center;
   }

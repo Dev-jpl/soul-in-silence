@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { useWorks, type Artwork } from '@/lib/worksStore'
+import { works } from '@/content/works'
+import type { Artwork } from '@/content/works'
 import ArtworkCard from '@/components/ArtworkCard'
 import PageHeader from '@/components/PageHeader'
 import PageTransition from '@/components/PageTransition'
@@ -21,7 +22,6 @@ function categoryMatch(artwork: Artwork, filter: Filter) {
 export default function WorksPage() {
   const [active, setActive] = useState<Filter>('All')
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
-  const { works } = useWorks()
   const filtered = works.filter((w) => categoryMatch(w, active))
 
   return (
@@ -33,15 +33,23 @@ export default function WorksPage() {
 
       {/* Filter and view toggle bar */}
       <div
-        className="pad-x works-bar"
+        className="pad-x"
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
           padding: '24px 48px',
           borderBottom: '1px solid rgba(240,237,232,0.08)',
         }}
       >
+        <div
+          className="works-bar"
+          style={{
+            maxWidth: '1320px',
+            margin: '0 auto',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
         <div style={{ display: 'flex', gap: '28px' }}>
           {filters.map((f) => (
             <button
@@ -104,6 +112,7 @@ export default function WorksPage() {
             ≡
           </button>
         </div>
+        </div>
       </div>
 
       {/* Gallery - Grid or List view */}
@@ -111,6 +120,8 @@ export default function WorksPage() {
         className="pad-x works-grid"
         style={{
           padding: '48px',
+          maxWidth: '1320px',
+          margin: '0 auto',
           display: 'grid',
           gridTemplateColumns:
             viewMode === 'grid'

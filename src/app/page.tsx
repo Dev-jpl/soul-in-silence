@@ -87,7 +87,8 @@ export default function Home() {
           }
         `}</style>
 
-        <div className="hero-content" style={{ position: 'relative', zIndex: 2, padding: '0 48px', maxWidth: '560px' }}>
+        <div className="hero-container" style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: '1320px', margin: '0 auto' }}>
+        <div className="hero-content" style={{ padding: '0 48px', maxWidth: '560px' }}>
           {/* Eyebrow with accent rule */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '30px' }}>
             <span style={{ width: '44px', height: '1px', background: '#C4A882', opacity: 0.7 }} />
@@ -154,6 +155,7 @@ export default function Home() {
           <OutlineButton href="/works">
             View the Works
           </OutlineButton>
+        </div>
         </div>
 
         {/* Scroll indicator — bottom-right, away from the subject */}

@@ -13,7 +13,7 @@ export default function AboutPage() {
   return (
     <PageTransition>
       {/* Two-column: portrait + bio */}
-      <div className="stack-mobile" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '80vh' }}>
+      <div className="stack-mobile" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '80vh', maxWidth: '1320px', margin: '0 auto', width: '100%' }}>
         <div
           style={{
             position: 'relative',
@@ -130,6 +130,9 @@ export default function AboutPage() {
           gridTemplateColumns: 'repeat(3, 1fr)',
           background: 'rgba(240,237,232,0.06)',
           borderTop: '1px solid rgba(240,237,232,0.08)',
+          maxWidth: '1320px',
+          margin: '0 auto',
+          width: '100%',
         }}
       >
         {[

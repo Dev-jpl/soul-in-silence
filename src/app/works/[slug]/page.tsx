@@ -1,20 +1,43 @@
-'use client'
-
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useParams, notFound } from 'next/navigation'
-import { useWorks } from '@/lib/worksStore'
+import { notFound } from 'next/navigation'
+import { works } from '@/content/works'
 import PageTransition from '@/components/PageTransition'
 
-export default function WorkPage() {
-  const params = useParams<{ slug: string }>()
-  const slug = params?.slug
-  const { works, ready } = useWorks()
+interface Props {
+  params: Promise<{ slug: string }>
+}
 
-  if (!ready) {
-    return <div style={{ minHeight: '60vh' }} />
+export function generateStaticParams() {
+  return works.map((w) => ({ slug: w.slug }))
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const artwork = works.find((w) => w.slug === slug)
+  if (!artwork) return {}
+  return {
+    title: artwork.title,
+    description: artwork.description,
+    alternates: { canonical: `/works/${artwork.slug}` },
+    openGraph: {
+      title: `${artwork.title} · Soul in Silence`,
+      description: artwork.description,
+      type: 'article',
+      images: [{ url: artwork.image, alt: artwork.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${artwork.title} · Soul in Silence`,
+      description: artwork.description,
+      images: [artwork.image],
+    },
   }
+}
 
+export default async function WorkPage({ params }: Props) {
+  const { slug } = await params
   const index = works.findIndex((w) => w.slug === slug)
   if (index === -1) notFound()
 
@@ -22,8 +45,24 @@ export default function WorkPage() {
   const prev = index > 0 ? works[index - 1] : null
   const next = index < works.length - 1 ? works[index + 1] : null
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'VisualArtwork',
+    name: artwork.title,
+    image: artwork.image,
+    artform: artwork.medium,
+    artMedium: artwork.medium,
+    dateCreated: String(artwork.year),
+    description: artwork.description,
+    creator: { '@type': 'Person', name: 'John Patrick Lachica' },
+  }
+
   return (
     <PageTransition>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="pad-x" style={{ maxWidth: '1200px', margin: '0 auto', padding: '64px 48px' }}>
         {/* Back */}
         <Link
