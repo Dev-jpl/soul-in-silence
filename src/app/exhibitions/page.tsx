@@ -34,16 +34,7 @@ export default function CVPage() {
             sizes="(max-width: 1320px) 100vw, 1320px"
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
-          {/* ~90% black overlay over the image */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'rgba(10,10,10,0.9)',
-            }}
-          />
-
-          {/* List view */}
+          {/* List view — dark background on the list only */}
           <div
             className="pad-x"
             style={{
@@ -52,6 +43,7 @@ export default function CVPage() {
               maxWidth: '1320px',
               margin: '0 auto',
               padding: '56px 48px',
+              background: 'rgba(10,10,10,0.9)',
             }}
           >
             {cvData.exhibitions.map(({ year, title, venue }, i) => (
