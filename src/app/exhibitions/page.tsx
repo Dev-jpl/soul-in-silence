@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { cvData } from '@/content/statement'
-import PageHeader from '@/components/PageHeader'
 import PageTransition from '@/components/PageTransition'
 
 export const metadata: Metadata = {
@@ -13,10 +12,7 @@ export const metadata: Metadata = {
 export default function CVPage() {
   return (
     <PageTransition>
-      {/* Header — normal dark background, no image */}
-      <PageHeader title="Exhibitions" eyebrow="John Patrick Lachica" />
-
-      {/* Exhibits — background panel contained to the page width */}
+      {/* Exhibits — background panel with the title on top */}
       <div className="pad-x" style={{ maxWidth: '1320px', margin: '0 auto' }}>
         <div
           style={{
@@ -43,6 +39,17 @@ export default function CVPage() {
                 'linear-gradient(to right, rgba(10,10,10,1) 0%, rgba(10,10,10,0.62) 28%, rgba(10,10,10,0.62) 72%, rgba(10,10,10,1) 100%)',
             }}
           />
+          {/* Top fade: black → transparent */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '220px',
+              background: 'linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0) 100%)',
+            }}
+          />
 
           {/* List view */}
           <div
@@ -55,6 +62,32 @@ export default function CVPage() {
               padding: '56px 0',
             }}
           >
+            {/* Title */}
+            <div style={{ padding: '0 48px', marginBottom: '48px' }}>
+              <p
+                style={{
+                  fontSize: '10px',
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: '#C4A882',
+                  marginBottom: '16px',
+                }}
+              >
+                John Patrick Lachica
+              </p>
+              <h1
+                style={{
+                  fontFamily: 'var(--font-cormorant), Georgia, serif',
+                  fontSize: 'clamp(34px, 5vw, 48px)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.01em',
+                  color: '#F0EDE8',
+                  margin: 0,
+                }}
+              >
+                Exhibitions
+              </h1>
+            </div>
             {cvData.exhibitions.map(({ year, title, venue }, i) => (
               <div
                 key={i}
