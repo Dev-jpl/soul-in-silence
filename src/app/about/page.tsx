@@ -74,17 +74,21 @@ export default function AboutPage() {
           >
             <p>
               John Patrick Lachica is a contemporary Filipino visual artist whose work
-              explores the emotional landscapes of human experience — vulnerability,
+              explores the emotional landscapes of the human experience—vulnerability,
               resilience, memory, and the quiet courage it takes to feel.
             </p>
             <p style={{ marginTop: '18px' }}>
-              Through expressive painting and symbolic storytelling, he creates
-              emotionally charged works that blur the boundaries between personal
-              memory and collective reflection.
+              His artistic practice emerged not from formal institutions but from
+              necessity: a desire to express what language alone could not contain.
+              Through expressive painting and symbolic storytelling, he creates works
+              that invite quiet reflection, blurring the boundaries between personal
+              memory and shared human experience.
             </p>
             <p style={{ marginTop: '18px' }}>
-              He is the founder of Soul in Silence, an art practice rooted in
-              introspection and the belief that art can speak where words fall short.
+              He is the founder of{' '}
+              <span style={{ fontStyle: 'italic' }}>Soul in Silence</span>, an
+              independent art practice rooted in introspection and the belief that art
+              can speak where words fall short.
             </p>
           </div>
 
