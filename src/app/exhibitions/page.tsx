@@ -16,14 +16,13 @@ export default function CVPage() {
       {/* Header — normal dark background, no image */}
       <PageHeader title="Exhibitions" eyebrow="John Patrick Lachica" />
 
-      {/* Exhibits — full-height background panel with the list on top */}
-      <div className="pad-x" style={{ maxWidth: '1320px', margin: '0 auto', padding: '48px 48px 80px' }}>
+      {/* Exhibits — full-bleed background panel with the contained list on top */}
+      <div style={{ padding: '24px 0 48px' }}>
         <div
           style={{
             position: 'relative',
             overflow: 'hidden',
-            minHeight: 'calc(100vh - 260px)',
-            border: '1px solid rgba(240,237,232,0.08)',
+            minHeight: 'calc(100vh - 220px)',
           }}
         >
           {/* Background image */}
@@ -32,21 +31,29 @@ export default function CVPage() {
             alt=""
             aria-hidden
             fill
-            sizes="(max-width: 1080px) 100vw, 1080px"
+            sizes="(max-width: 1320px) 100vw, 1320px"
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
-          {/* Dim overlay */}
+          {/* ~90% black overlay over the image */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
-              background:
-                'linear-gradient(to bottom, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0.88) 100%)',
+              background: 'rgba(10,10,10,0.9)',
             }}
           />
 
           {/* List view */}
-          <div style={{ position: 'relative', zIndex: 1, padding: '56px' }}>
+          <div
+            className="pad-x"
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              maxWidth: '1320px',
+              margin: '0 auto',
+              padding: '56px 48px',
+            }}
+          >
             {cvData.exhibitions.map(({ year, title, venue }, i) => (
               <div
                 key={i}
