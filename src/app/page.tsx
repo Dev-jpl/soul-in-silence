@@ -76,6 +76,8 @@ export default function Home() {
                 'linear-gradient(to bottom, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.7) 22%, rgba(10,10,10,0.2) 42%, rgba(10,10,10,0) 60%), linear-gradient(to top, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0) 30%)',
             }}
           />
+          {/* Overall dim */}
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.45)' }} />
         </div>
 
         <div className="hero-container" style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: '1320px', margin: '0 auto' }}>
@@ -148,6 +150,35 @@ export default function Home() {
           </OutlineButton>
         </div>
         </div>
+
+        {/* Top gradient — navbar bleeds into the hero */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '180px',
+            zIndex: 3,
+            background:
+              'linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.4) 40%, transparent 100%)',
+            pointerEvents: 'none',
+          }}
+        />
+        {/* Bottom gradient — hero melts into the next section */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '200px',
+            zIndex: 3,
+            background:
+              'linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.6) 50%, transparent 100%)',
+            pointerEvents: 'none',
+          }}
+        />
 
       </section>
 
