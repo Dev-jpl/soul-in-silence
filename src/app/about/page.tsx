@@ -23,11 +23,12 @@ export default function AboutPage() {
           }}
         >
           <Image
-            src="/images/artist-portrait.jpg"
+            src="/images/about-portrait.webp"
             alt="John Patrick Lachica"
             fill
             priority
-            style={{ objectFit: 'cover', opacity: 0.85 }}
+            sizes="(max-width: 640px) 100vw, 50vw"
+            style={{ objectFit: 'cover', objectPosition: 'center top', opacity: 0.9 }}
           />
         </div>
 
@@ -123,6 +124,7 @@ export default function AboutPage() {
 
       {/* Detail blocks */}
       <div
+        className="about-details"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
