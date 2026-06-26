@@ -13,6 +13,7 @@ export default function PageHeader({ title, description, eyebrow }: PageHeaderPr
         borderBottom: '1px solid rgba(240,237,232,0.08)',
       }}
     >
+      <div style={{ maxWidth: '1320px', margin: '0 auto', width: '100%' }}>
       {eyebrow && (
         <p
           style={{
@@ -50,6 +51,7 @@ export default function PageHeader({ title, description, eyebrow }: PageHeaderPr
           {description}
         </p>
       )}
+      </div>
     </div>
   )
 }
