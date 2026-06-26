@@ -50,13 +50,13 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  /* Top-down fade rather than a solid bar with a hard divider */
-  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.55) 100%);
-  padding: 0 48px;
+  /* Solid black where the text sits, then fades downward */
+  background: linear-gradient(to bottom, rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 1) 55%, rgba(10, 10, 10, 0.45) 100%);
+  padding: 10px 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 64px;
+  height: 72px;
 }
 
 /* Continue the fade below the bar into the content */
@@ -67,7 +67,7 @@ body {
   left: 0;
   right: 0;
   height: 64px;
-  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0) 100%);
+  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.45) 0%, rgba(10, 10, 10, 0) 100%);
   pointer-events: none;
 }
 
@@ -173,7 +173,7 @@ body {
   .site-nav__menu {
     display: block;
     position: fixed;
-    top: 64px;
+    top: 72px;
     left: 0;
     right: 0;
     bottom: 0;
