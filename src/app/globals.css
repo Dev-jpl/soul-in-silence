@@ -59,8 +59,12 @@ body {
   height: 72px;
 }
 
-/* Continue the fade below the bar into the content */
-.site-nav::after {
+/* Home only: transparent bar that fades into the hero (no solid bar, no line) */
+.site-nav--home {
+  background: transparent;
+}
+
+.site-nav--home::after {
   content: '';
   position: absolute;
   top: 100%;

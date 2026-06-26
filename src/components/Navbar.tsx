@@ -35,7 +35,7 @@ export default function Navbar() {
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
-    <nav className="site-nav">
+    <nav className={pathname === '/' ? 'site-nav site-nav--home' : 'site-nav'}>
       <div className="site-nav__inner">
       <Link href="/" className="site-nav__brand">
         <Image
