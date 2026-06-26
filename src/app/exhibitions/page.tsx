@@ -16,9 +16,16 @@ export default function CVPage() {
       {/* Header — normal dark background, no image */}
       <PageHeader title="Exhibitions" eyebrow="John Patrick Lachica" />
 
-      {/* Exhibits — background image contained to this panel only */}
-      <div className="pad-x" style={{ maxWidth: '1080px', margin: '0 auto', padding: '64px 48px 120px' }}>
-        <div style={{ position: 'relative', overflow: 'hidden', border: '1px solid rgba(240,237,232,0.08)' }}>
+      {/* Exhibits — full-height background panel with the list on top */}
+      <div className="pad-x" style={{ maxWidth: '1320px', margin: '0 auto', padding: '48px 48px 80px' }}>
+        <div
+          style={{
+            position: 'relative',
+            overflow: 'hidden',
+            minHeight: 'calc(100vh - 260px)',
+            border: '1px solid rgba(240,237,232,0.08)',
+          }}
+        >
           {/* Background image */}
           <Image
             src="/images/contact-banner.webp"
@@ -38,52 +45,46 @@ export default function CVPage() {
             }}
           />
 
-          {/* Carded list */}
-          <div
-            style={{
-              position: 'relative',
-              zIndex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '20px',
-              padding: '48px',
-            }}
-          >
+          {/* List view */}
+          <div style={{ position: 'relative', zIndex: 1, padding: '56px' }}>
             {cvData.exhibitions.map(({ year, title, venue }, i) => (
               <div
                 key={i}
                 style={{
-                  background: 'rgba(17,17,17,0.62)',
-                  backdropFilter: 'blur(6px)',
-                  WebkitBackdropFilter: 'blur(6px)',
-                  border: '1px solid rgba(240,237,232,0.1)',
-                  padding: '28px 32px',
+                  display: 'grid',
+                  gridTemplateColumns: '72px 1fr',
+                  gap: '32px',
+                  padding: '24px 0',
+                  borderTop: i === 0 ? '1px solid rgba(240,237,232,0.12)' : undefined,
+                  borderBottom: '1px solid rgba(240,237,232,0.1)',
                 }}
               >
-                <p
+                <span
                   style={{
-                    fontSize: '10px',
-                    letterSpacing: '0.22em',
-                    textTransform: 'uppercase',
+                    fontFamily: 'var(--font-cormorant), Georgia, serif',
+                    fontSize: '15px',
+                    fontWeight: 300,
                     color: '#C4A882',
-                    marginBottom: '12px',
+                    paddingTop: '2px',
                   }}
                 >
                   {year}
-                </p>
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-cormorant), Georgia, serif',
-                    fontSize: '22px',
-                    fontWeight: 400,
-                    color: '#F0EDE8',
-                    lineHeight: 1.25,
-                    marginBottom: '6px',
-                  }}
-                >
-                  {title}
-                </h3>
-                <p style={{ fontSize: '13px', color: '#8C8580', lineHeight: 1.6 }}>{venue}</p>
+                </span>
+                <div>
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-cormorant), Georgia, serif',
+                      fontSize: '20px',
+                      fontWeight: 400,
+                      color: '#F0EDE8',
+                      lineHeight: 1.3,
+                      marginBottom: '4px',
+                    }}
+                  >
+                    {title}
+                  </p>
+                  <p style={{ fontSize: '12px', color: '#8C8580', lineHeight: 1.6 }}>{venue}</p>
+                </div>
               </div>
             ))}
           </div>
