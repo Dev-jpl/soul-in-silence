@@ -59,7 +59,6 @@ export default function StatementPage() {
             style={{
               objectFit: 'cover',
               objectPosition: 'center',
-              filter: 'grayscale(100%)',
               opacity: 0.95,
             }}
           />
