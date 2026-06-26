@@ -63,7 +63,7 @@ type ContactItemData = {
 const information: ContactItemData[] = [
   {
     icon: 'email',
-    title: 'Email me in',
+    title: 'Email me at',
     value: 'soulinsilence@gmail.com',
     href: 'mailto:soulinsilence@gmail.com',
   },
@@ -117,9 +117,10 @@ function ContactItem({ icon, title, value, href }: ContactItemData) {
       <div>
         <p
           style={{
-            fontFamily: 'var(--font-cormorant), Georgia, serif',
-            fontSize: '20px',
-            fontWeight: 400,
+            fontFamily: 'var(--font-inter), sans-serif',
+            fontSize: '14px',
+            fontWeight: 500,
+            letterSpacing: '0.02em',
             color: '#F0EDE8',
             marginBottom: '8px',
           }}
@@ -163,6 +164,7 @@ export default function ContactPage() {
             fill
             priority
             sizes="(max-width: 1320px) 100vw, 1320px"
+            className="contact-banner-img"
             style={{ objectFit: 'cover', objectPosition: 'center bottom' }}
           />
           {/* Edge fades — strong dark on all sides easing to a clearer center */}
@@ -235,9 +237,42 @@ export default function ContactPage() {
 
             <div style={{ borderTop: '1px solid rgba(240,237,232,0.08)', paddingTop: '48px' }}>
               <p style={groupLabelStyle}>Socials</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-                {socialLinks.map((item) => (
-                  <ContactItem key={item.title} {...item} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                {socialLinks.map(({ icon, title, value, href }) => (
+                  <a
+                    key={title}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={title}
+                    className="contact-channel"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '14px',
+                      color: '#C4A882',
+                      textDecoration: 'none',
+                      fontSize: '15px',
+                    }}
+                  >
+                    <span
+                      aria-hidden
+                      style={{
+                        flex: '0 0 42px',
+                        width: '42px',
+                        height: '42px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        border: '1px solid rgba(240,237,232,0.15)',
+                        borderRadius: '50%',
+                        color: '#C4A882',
+                      }}
+                    >
+                      {icons[icon]}
+                    </span>
+                    {value}
+                  </a>
                 ))}
               </div>
             </div>

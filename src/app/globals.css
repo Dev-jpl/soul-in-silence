@@ -59,20 +59,14 @@ body {
   height: 72px;
 }
 
-/* Home only: transparent bar that fades into the hero (no solid bar, no line) */
+/* Home only: a single clean top-down fade into the hero (no solid bar, no band) */
 .site-nav--home {
-  background: transparent;
-}
-
-.site-nav--home::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  height: 64px;
-  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0) 100%);
-  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.9) 0%,
+    rgba(10, 10, 10, 0.5) 55%,
+    rgba(10, 10, 10, 0) 100%
+  );
 }
 
 /* Cap the bar's content on large screens so it doesn't stretch edge-to-edge */
@@ -390,6 +384,16 @@ body {
   .exhibit-title {
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+
+  /* Contact banner — zoom the image in on mobile */
+  .contact-banner-img {
+    transform: scale(1.4);
+  }
+
+  /* Contact form card — looser inner padding so it can breathe */
+  .contact-card {
+    padding: 32px 22px !important;
   }
 
   /* Drop the exhibitions background on mobile — list on plain dark page */
