@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { works } from '@/content/works'
 import type { Artwork } from '@/content/works'
 import ArtworkCard from '@/components/ArtworkCard'
-import PageHeader from '@/components/PageHeader'
 import PageTransition from '@/components/PageTransition'
 
 const filters = ['All', 'Painting', 'Mixed Media', 'Drawing'] as const
@@ -26,11 +25,6 @@ export default function WorksPage() {
 
   return (
     <PageTransition>
-      <PageHeader
-        title="Works"
-        description="A body of work exploring vulnerability, resilience, and the emotional landscapes of human experience."
-      />
-
       {/* Filter and view toggle bar */}
       <div
         className="pad-x"
