@@ -151,17 +151,17 @@ export default function Home() {
         </div>
         </div>
 
-        {/* Top gradient — navbar bleeds into the hero */}
+        {/* Top gradient — solid black fading down, blends with the navbar */}
         <div
           style={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
-            height: '180px',
+            height: '240px',
             zIndex: 3,
             background:
-              'linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.4) 40%, transparent 100%)',
+              'linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.7) 32%, rgba(10,10,10,0) 100%)',
             pointerEvents: 'none',
           }}
         />
