@@ -65,40 +65,59 @@ export default function ContactPage() {
           </p>
 
           {[
-            { label: 'Email', value: 'hello@soulinsilence.art' },
+            { label: 'Email', value: 'sns@gmail.com', href: 'mailto:sns@gmail.com' },
             { label: 'Based in', value: 'Manila, Philippines' },
-            { label: 'Instagram', value: '@soulinsilence' },
-          ].map(({ label, value }) => (
-            <div
-              key={label}
-              style={{
-                borderTop: '1px solid rgba(240,237,232,0.08)',
-                padding: '20px 0',
-              }}
-            >
-              <p
+            {
+              label: 'Instagram',
+              value: '@soul.n.silence',
+              href: 'https://www.instagram.com/soul.n.silence/',
+            },
+          ].map(({ label, value, href }) => {
+            const valueStyle = {
+              fontFamily: 'var(--font-cormorant), Georgia, serif',
+              fontSize: '20px',
+              fontWeight: 300,
+              color: '#F0EDE8',
+              textDecoration: 'none',
+              transition: 'color 0.2s',
+            } as const
+            return (
+              <div
+                key={label}
                 style={{
-                  fontSize: '10px',
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: '#C4A882',
-                  marginBottom: '8px',
+                  borderTop: '1px solid rgba(240,237,232,0.08)',
+                  padding: '20px 0',
                 }}
               >
-                {label}
-              </p>
-              <p
-                style={{
-                  fontFamily: 'var(--font-cormorant), Georgia, serif',
-                  fontSize: '20px',
-                  fontWeight: 300,
-                  color: '#F0EDE8',
-                }}
-              >
-                {value}
-              </p>
-            </div>
-          ))}
+                <p
+                  style={{
+                    fontSize: '10px',
+                    letterSpacing: '0.16em',
+                    textTransform: 'uppercase',
+                    color: '#C4A882',
+                    marginBottom: '8px',
+                  }}
+                >
+                  {label}
+                </p>
+                {href ? (
+                  <a
+                    href={href}
+                    {...(href.startsWith('http')
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                    style={valueStyle}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#C4A882')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = '#F0EDE8')}
+                  >
+                    {value}
+                  </a>
+                ) : (
+                  <p style={valueStyle}>{value}</p>
+                )}
+              </div>
+            )
+          })}
           <div style={{ borderTop: '1px solid rgba(240,237,232,0.08)' }} />
         </div>
 
