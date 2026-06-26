@@ -17,12 +17,12 @@ export default function CVPage() {
       <PageHeader title="Exhibitions" eyebrow="John Patrick Lachica" />
 
       {/* Exhibits — full-bleed background panel with the contained list on top */}
-      <div style={{ padding: '24px 0 48px' }}>
+      <div>
         <div
           style={{
             position: 'relative',
             overflow: 'hidden',
-            minHeight: 'calc(100vh - 220px)',
+            minHeight: 'calc(100vh - 200px)',
           }}
         >
           {/* Background image */}
@@ -34,7 +34,10 @@ export default function CVPage() {
             sizes="(max-width: 1320px) 100vw, 1320px"
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
-          {/* List view — dark background on the list only */}
+          {/* Dim over the whole image */}
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.55)' }} />
+
+          {/* List view — darker background on the list only */}
           <div
             className="pad-x"
             style={{
