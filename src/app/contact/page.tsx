@@ -56,7 +56,6 @@ const icons: Record<string, React.ReactNode> = {
 type ContactItemData = {
   icon: string
   title: string
-  description: string
   value: string
   href?: string
 }
@@ -64,21 +63,18 @@ type ContactItemData = {
 const information: ContactItemData[] = [
   {
     icon: 'email',
-    title: 'Write to me',
-    description: 'I read and reply to every message personally.',
+    title: 'Email me in',
     value: 'soulinsilence@gmail.com',
     href: 'mailto:soulinsilence@gmail.com',
   },
   {
     icon: 'location',
     title: 'Based in',
-    description: 'Working from the studio.',
     value: 'Manila, Philippines',
   },
   {
     icon: 'phone',
-    title: 'Call',
-    description: 'Mon–Sat, by appointment.',
+    title: 'Call me at',
     value: '0912 345 6789',
     href: 'tel:+639123456789',
   },
@@ -88,20 +84,18 @@ const socialLinks: ContactItemData[] = [
   {
     icon: 'instagram',
     title: 'Instagram',
-    description: 'Daily work and process.',
     value: '@soul.n.silence',
     href: 'https://www.instagram.com/soul.n.silence/',
   },
   {
     icon: 'facebook',
     title: 'Facebook',
-    description: 'Updates and exhibitions.',
     value: 'Soul in Silence',
     href: 'https://web.facebook.com/profile.php?id=61575343887300',
   },
 ]
 
-function ContactItem({ icon, title, description, value, href }: ContactItemData) {
+function ContactItem({ icon, title, value, href }: ContactItemData) {
   return (
     <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
       <span
@@ -127,13 +121,10 @@ function ContactItem({ icon, title, description, value, href }: ContactItemData)
             fontSize: '20px',
             fontWeight: 400,
             color: '#F0EDE8',
-            marginBottom: '4px',
+            marginBottom: '8px',
           }}
         >
           {title}
-        </p>
-        <p style={{ fontSize: '13px', color: '#8C8580', lineHeight: 1.6, marginBottom: '10px' }}>
-          {description}
         </p>
         {href ? (
           <a
@@ -172,7 +163,7 @@ export default function ContactPage() {
             fill
             priority
             sizes="(max-width: 1320px) 100vw, 1320px"
-            style={{ objectFit: 'cover', objectPosition: 'center center' }}
+            style={{ objectFit: 'cover', objectPosition: 'center bottom' }}
           />
           {/* Gradient overlay */}
           <div
@@ -232,7 +223,10 @@ export default function ContactPage() {
           {/* Left — Information + Socials */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
             <div>
-              <p style={groupLabelStyle}>Information</p>
+              <p style={{ ...groupLabelStyle, marginBottom: '8px' }}>Information</p>
+              <p style={{ fontSize: '13px', color: '#8C8580', lineHeight: 1.6, marginBottom: '28px' }}>
+                Information to contact me through.
+              </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
                 {information.map((item) => (
                   <ContactItem key={item.title} {...item} />
