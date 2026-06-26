@@ -12,25 +12,9 @@ export const artistStatement = {
 
 export const cvData = {
   exhibitions: [
-    { year: '2024', title: 'Emotional Geographies', venue: 'Group Exhibition, Art Fair Philippines, Manila' },
-    { year: '2024', title: 'Interior Landscapes', venue: 'Solo Exhibition, Silverlens Galleries, Manila' },
-    { year: '2023', title: 'New Voices', venue: 'Group Exhibition, Artinformal, Mandaluyong' },
-    { year: '2023', title: 'Threshold', venue: 'Two-Person Show, West Gallery, Quezon City' },
-    { year: '2022', title: 'Emerging Filipino Artists', venue: 'Group Exhibition, Ateneo Art Gallery, Manila' },
-    { year: '2022', title: 'What Remains', venue: 'Solo Debut, Underground Gallery, Manila' },
-  ],
-  education: [
-    { year: '2020', title: 'Bachelor of Fine Arts, Painting', venue: 'University of the Philippines College of Fine Arts, Diliman' },
-    { year: '2019', title: 'Artist Residency', venue: 'Sining Kamalig Residency Program, Manila' },
-  ],
-  press: [
-    { year: '2024', title: '"The Quiet Weight of John Patrick Lachica\'s Paintings"', venue: 'Philippine Star' },
-    { year: '2024', title: '"Soul in Silence: Art That Speaks in Absence"', venue: 'CNN Philippines Life' },
-    { year: '2023', title: '"Five Filipino Artists to Watch"', venue: 'Tatler Asia' },
-    { year: '2022', title: '"Debut and Discovery: New Filipino Painters"', venue: 'Art & Culture Magazine' },
-  ],
-  collections: [
-    { year: '', title: 'Ayala Museum Collection', venue: 'Makati, Philippines' },
-    { year: '', title: 'Private Collections', venue: 'Manila, Singapore, Hong Kong, Los Angeles' },
+    { year: '2019', title: 'PASASALAMAT 2019', venue: 'Group Exhibition, Cevio Art House Gallery, Makati' },
+    { year: '2018', title: 'Art in the Park (under Cevio Art House Gallery)', venue: 'Group Exhibition, Makati' },
+    { year: '2017', title: 'Odiongan Night Market', venue: 'Group Exhibition, Odiongan, Romblon' },
+    { year: '2016', title: 'RSU Week — Art Exhibit', venue: 'Group Exhibition, Odiongan, Romblon' },
   ],
 }

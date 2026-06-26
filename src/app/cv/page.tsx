@@ -4,9 +4,9 @@ import PageHeader from '@/components/PageHeader'
 import PageTransition from '@/components/PageTransition'
 
 export const metadata: Metadata = {
-  title: 'CV — Soul in Silence · John Patrick Lachica',
+  title: 'Exhibitions — Soul in Silence · John Patrick Lachica',
   description:
-    'Curriculum vitae of John Patrick Lachica — exhibitions, education, press, and collections.',
+    'Selected exhibitions of John Patrick Lachica.',
 }
 
 function CVSection({
@@ -24,17 +24,19 @@ function CVSection({
         marginBottom: '64px',
       }}
     >
-      <p
-        style={{
-          fontSize: '10px',
-          letterSpacing: '0.22em',
-          textTransform: 'uppercase',
-          color: '#C4A882',
-          marginBottom: '36px',
-        }}
-      >
-        {title}
-      </p>
+      {title && (
+        <p
+          style={{
+            fontSize: '10px',
+            letterSpacing: '0.22em',
+            textTransform: 'uppercase',
+            color: '#C4A882',
+            marginBottom: '36px',
+          }}
+        >
+          {title}
+        </p>
+      )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
         {items.map(({ year, title: itemTitle, venue }, i) => (
           <div
@@ -86,7 +88,7 @@ function CVSection({
 export default function CVPage() {
   return (
     <PageTransition>
-      <PageHeader title="Curriculum Vitae" eyebrow="John Patrick Lachica" />
+      <PageHeader title="Exhibitions" eyebrow="John Patrick Lachica" />
       <div
         className="pad-x"
         style={{
@@ -95,10 +97,7 @@ export default function CVPage() {
           padding: '80px 48px 120px',
         }}
       >
-        <CVSection title="Exhibitions" items={cvData.exhibitions} />
-        <CVSection title="Education & Residencies" items={cvData.education} />
-        <CVSection title="Press" items={cvData.press} />
-        <CVSection title="Collections" items={cvData.collections} />
+        <CVSection title="" items={cvData.exhibitions} />
       </div>
     </PageTransition>
   )

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { artistStatement } from '@/content/statement'
 import PageHeader from '@/components/PageHeader'
 import PageTransition from '@/components/PageTransition'
@@ -21,6 +22,24 @@ export default function StatementPage() {
           padding: '80px 48px 120px',
         }}
       >
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            aspectRatio: '3 / 4',
+            marginBottom: '64px',
+            overflow: 'hidden',
+            background: '#111111',
+          }}
+        >
+          <Image
+            src="/images/about-portrait-2.webp"
+            alt="John Patrick Lachica"
+            fill
+            sizes="(max-width: 680px) 100vw, 680px"
+            style={{ objectFit: 'cover', objectPosition: 'center top', opacity: 0.9 }}
+          />
+        </div>
         {artistStatement.body.map((paragraph, i) => (
           <p
             key={i}

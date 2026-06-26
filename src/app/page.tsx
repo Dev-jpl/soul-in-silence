@@ -3,7 +3,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import PageTransition from '@/components/PageTransition'
 import { OutlineButton } from '@/components/OutlineButton'
-import { PremiumButton } from '@/components/PremiumButton'
 
 export const metadata: Metadata = {
   title: 'Soul in Silence — Contemporary Fine Art by John Patrick Lachica',
@@ -524,42 +523,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section
-        className="pad-x"
-        style={{
-          padding: '80px 48px',
-          borderTop: '1px solid rgba(240,237,232,0.08)',
-          textAlign: 'center',
-          background: 'linear-gradient(135deg, rgba(20,18,15,0.5) 0%, rgba(25,23,20,0.3) 100%)',
-        }}
-      >
-        <h2
-          style={{
-            fontFamily: 'var(--font-cormorant), Georgia, serif',
-            fontSize: '40px',
-            fontWeight: 300,
-            color: '#F0EDE8',
-            marginBottom: '24px',
-          }}
-        >
-          Begin the Journey
-        </h2>
-        <p
-          style={{
-            fontSize: '14px',
-            color: '#8C8580',
-            maxWidth: '500px',
-            margin: '0 auto 40px',
-            lineHeight: 1.8,
-          }}
-        >
-          Step into a space where art speaks where words fall short. Discover work rooted in vulnerability, resilience, and the profound beauty of human emotion.
-        </p>
-        <PremiumButton href="/works" variant="primary">
-          View Portfolio
-        </PremiumButton>
-      </section>
     </PageTransition>
   )
 }
