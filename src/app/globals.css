@@ -201,9 +201,33 @@ body {
 }
 
 /* ============================================================
+   Hero responsive artwork (portrait on mobile, landscape on desktop)
+   ============================================================ */
+.hero-img-mobile,
+.hero-scrim-mobile {
+  display: none;
+}
+
+/* ============================================================
    Mobile layout fixes (inline styles overridden with !important)
    ============================================================ */
 @media (max-width: 640px) {
+  /* Swap to the portrait artwork + top-down scrim */
+  .hero-img-desktop,
+  .hero-scrim-desktop {
+    display: none !important;
+  }
+
+  .hero-img-mobile,
+  .hero-scrim-mobile {
+    display: block !important;
+  }
+
+  /* Anchor the hero text to the top, in the dark negative space */
+  .hero-section {
+    justify-content: flex-start !important;
+    padding-top: 56px !important;
+  }
   /* Reduce heavy section side padding */
   .pad-x {
     padding-left: 24px !important;

@@ -16,6 +16,7 @@ export default function Home() {
     <PageTransition>
       {/* Hero Section */}
       <section
+        className="hero-section"
         style={{
           position: 'relative',
           height: '100vh',
@@ -30,25 +31,51 @@ export default function Home() {
       >
         {/* Background Image */}
         <div style={{ position: 'absolute', inset: 0 }}>
+          {/* Desktop / landscape artwork */}
           <Image
             src="/images/hero.webp"
             alt="Soul in Silence"
             fill
             priority
+            className="hero-img-desktop"
             style={{
               objectFit: 'cover',
               objectPosition: 'center center',
               opacity: 0.92,
             }}
           />
-          {/* Directional scrims: dark-left for text legibility, soft bottom,
+          {/* Mobile / portrait artwork */}
+          <Image
+            src="/images/hero-mobile.webp"
+            alt="Soul in Silence"
+            fill
+            priority
+            className="hero-img-mobile"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center center',
+              opacity: 0.95,
+            }}
+          />
+          {/* Desktop scrim: dark-left for text legibility, soft bottom,
               letting the luminous center-right of the artwork breathe */}
           <div
+            className="hero-scrim-desktop"
             style={{
               position: 'absolute',
               inset: 0,
               background:
                 'linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.72) 22%, rgba(10,10,10,0.28) 46%, rgba(10,10,10,0) 68%), linear-gradient(to top, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0.12) 34%, rgba(10,10,10,0) 58%)',
+            }}
+          />
+          {/* Mobile scrim: dark top for the title, clearing the figure below */}
+          <div
+            className="hero-scrim-mobile"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'linear-gradient(to bottom, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.7) 22%, rgba(10,10,10,0.2) 42%, rgba(10,10,10,0) 60%), linear-gradient(to top, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0) 30%)',
             }}
           />
         </div>
