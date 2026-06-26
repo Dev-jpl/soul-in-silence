@@ -53,7 +53,15 @@ const icons: Record<string, React.ReactNode> = {
   ),
 }
 
-const contactItems = [
+type ContactItemData = {
+  icon: string
+  title: string
+  description: string
+  value: string
+  href?: string
+}
+
+const information: ContactItemData[] = [
   {
     icon: 'email',
     title: 'Write to me',
@@ -76,36 +84,107 @@ const contactItems = [
   },
 ]
 
-const socials = [
-  { icon: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/soul.n.silence/' },
-  { icon: 'facebook', label: 'Facebook', href: 'https://web.facebook.com/profile.php?id=61575343887300' },
+const socialLinks: ContactItemData[] = [
+  {
+    icon: 'instagram',
+    title: 'Instagram',
+    description: 'Daily work and process.',
+    value: '@soul.n.silence',
+    href: 'https://www.instagram.com/soul.n.silence/',
+  },
+  {
+    icon: 'facebook',
+    title: 'Facebook',
+    description: 'Updates and exhibitions.',
+    value: 'Soul in Silence',
+    href: 'https://web.facebook.com/profile.php?id=61575343887300',
+  },
 ]
+
+function ContactItem({ icon, title, description, value, href }: ContactItemData) {
+  return (
+    <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+      <span
+        aria-hidden
+        style={{
+          flex: '0 0 44px',
+          height: '44px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          border: '1px solid rgba(240,237,232,0.15)',
+          borderRadius: '50%',
+          color: '#C4A882',
+          marginTop: '2px',
+        }}
+      >
+        {icons[icon]}
+      </span>
+      <div>
+        <p
+          style={{
+            fontFamily: 'var(--font-cormorant), Georgia, serif',
+            fontSize: '20px',
+            fontWeight: 400,
+            color: '#F0EDE8',
+            marginBottom: '4px',
+          }}
+        >
+          {title}
+        </p>
+        <p style={{ fontSize: '13px', color: '#8C8580', lineHeight: 1.6, marginBottom: '10px' }}>
+          {description}
+        </p>
+        {href ? (
+          <a
+            href={href}
+            {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            className="contact-channel"
+            style={{ fontSize: '15px', color: '#C4A882', textDecoration: 'none' }}
+          >
+            {value}
+          </a>
+        ) : (
+          <p style={{ fontSize: '15px', color: '#F0EDE8' }}>{value}</p>
+        )}
+      </div>
+    </div>
+  )
+}
+
+const groupLabelStyle: React.CSSProperties = {
+  fontSize: '10px',
+  letterSpacing: '0.22em',
+  textTransform: 'uppercase',
+  color: '#C4A882',
+  marginBottom: '28px',
+}
 
 export default function ContactPage() {
   return (
     <PageTransition>
-      {/* BANNER */}
-      <div className="contact-banner" style={{ position: 'relative', width: '100%', height: '380px', overflow: 'hidden' }}>
-        <Image
-          src="/images/contact-banner.webp"
-          alt="Soul in Silence"
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: 'cover', objectPosition: 'center center' }}
-        />
-        {/* Gradient overlay */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.4) 50%, rgba(10,10,10,0.7) 100%)',
-          }}
-        />
-        {/* Bottom-left text, aligned to the page container */}
-        <div className="pad-x" style={{ position: 'absolute', left: 0, right: 0, bottom: '48px', zIndex: 1, padding: '0 48px' }}>
-          <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
+      {/* BANNER — contained to the page width */}
+      <div className="pad-x" style={{ maxWidth: '1320px', margin: '0 auto', padding: '48px 48px 0' }}>
+        <div className="contact-banner" style={{ position: 'relative', width: '100%', height: '260px', overflow: 'hidden' }}>
+          <Image
+            src="/images/contact-banner.webp"
+            alt="Soul in Silence"
+            fill
+            priority
+            sizes="(max-width: 1320px) 100vw, 1320px"
+            style={{ objectFit: 'cover', objectPosition: 'center center' }}
+          />
+          {/* Gradient overlay */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.4) 50%, rgba(10,10,10,0.7) 100%)',
+            }}
+          />
+          {/* Bottom-left text */}
+          <div style={{ position: 'absolute', left: '40px', bottom: '40px', zIndex: 1 }}>
             <p
               style={{
                 fontSize: '10px',
@@ -120,7 +199,7 @@ export default function ContactPage() {
             <h1
               style={{
                 fontFamily: 'var(--font-cormorant), Georgia, serif',
-                fontSize: 'clamp(32px, 4vw, 48px)',
+                fontSize: 'clamp(28px, 3.5vw, 40px)',
                 fontWeight: 300,
                 fontStyle: 'italic',
                 color: '#F0EDE8',
@@ -133,29 +212,8 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* CONTACT CHANNELS — ghost watermark behind */}
-      <section style={{ position: 'relative', overflow: 'hidden' }}>
-        <span
-          aria-hidden
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 0,
-            fontFamily: 'var(--font-cormorant), Georgia, serif',
-            fontWeight: 300,
-            fontSize: 'clamp(120px, 20vw, 240px)',
-            lineHeight: 1,
-            color: 'rgba(240,237,232,0.04)',
-            whiteSpace: 'nowrap',
-            pointerEvents: 'none',
-            userSelect: 'none',
-          }}
-        >
-          Silence
-        </span>
-
+      {/* CONTACT CHANNELS + FORM */}
+      <section style={{ position: 'relative' }}>
         <div
           className="pad-x stack-mobile contact-grid"
           style={{
@@ -171,77 +229,24 @@ export default function ContactPage() {
             alignItems: 'start',
           }}
         >
-          {/* Left — contact channels */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
-            {contactItems.map(({ icon, title, description, value, href }) => (
-              <div key={title} style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                <span
-                  aria-hidden
-                  style={{
-                    flex: '0 0 44px',
-                    height: '44px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: '1px solid rgba(240,237,232,0.15)',
-                    borderRadius: '50%',
-                    color: '#C4A882',
-                    marginTop: '2px',
-                  }}
-                >
-                  {icons[icon]}
-                </span>
-                <div>
-                  <p
-                    style={{
-                      fontFamily: 'var(--font-cormorant), Georgia, serif',
-                      fontSize: '20px',
-                      fontWeight: 400,
-                      color: '#F0EDE8',
-                      marginBottom: '4px',
-                    }}
-                  >
-                    {title}
-                  </p>
-                  <p style={{ fontSize: '13px', color: '#8C8580', lineHeight: 1.6, marginBottom: '10px' }}>
-                    {description}
-                  </p>
-                  {href ? (
-                    <a href={href} className="contact-channel" style={{ fontSize: '15px', color: '#C4A882', textDecoration: 'none' }}>
-                      {value}
-                    </a>
-                  ) : (
-                    <p style={{ fontSize: '15px', color: '#F0EDE8' }}>{value}</p>
-                  )}
-                </div>
+          {/* Left — Information + Socials */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
+            <div>
+              <p style={groupLabelStyle}>Information</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                {information.map((item) => (
+                  <ContactItem key={item.title} {...item} />
+                ))}
               </div>
-            ))}
+            </div>
 
-            {/* Social links */}
-            <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
-              {socials.map(({ icon, label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="social-icon"
-                  style={{
-                    width: '42px',
-                    height: '42px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: '1px solid rgba(240,237,232,0.15)',
-                    borderRadius: '50%',
-                    color: '#8C8580',
-                    transition: 'color 0.2s, border-color 0.2s',
-                  }}
-                >
-                  {icons[icon]}
-                </a>
-              ))}
+            <div style={{ borderTop: '1px solid rgba(240,237,232,0.08)', paddingTop: '48px' }}>
+              <p style={groupLabelStyle}>Socials</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                {socialLinks.map((item) => (
+                  <ContactItem key={item.title} {...item} />
+                ))}
+              </div>
             </div>
           </div>
 

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { artistStatement } from '@/content/statement'
-import PageHeader from '@/components/PageHeader'
 import PageTransition from '@/components/PageTransition'
 
 export const metadata: Metadata = {
@@ -16,7 +15,6 @@ export default function StatementPage() {
 
   return (
     <PageTransition>
-      <PageHeader title="Artist Statement" />
       <div
         className="pad-x"
         style={{
@@ -25,22 +23,21 @@ export default function StatementPage() {
           padding: '80px 48px 120px',
         }}
       >
-        {/* Opening line */}
-        <p
+        {/* Title */}
+        <h1
           style={{
             fontFamily: 'var(--font-cormorant), Georgia, serif',
-            fontSize: '28px',
-            fontStyle: 'italic',
+            fontSize: 'clamp(34px, 5vw, 48px)',
             fontWeight: 300,
-            lineHeight: 1.6,
+            letterSpacing: '-0.01em',
             color: '#F0EDE8',
-            marginBottom: '48px',
+            marginBottom: '40px',
           }}
         >
-          {opening}
-        </p>
+          Artist Statement
+        </h1>
 
-        {/* Portrait (profile-3, black & white) */}
+        {/* Portrait (profile-3) */}
         <div
           style={{
             position: 'relative',
@@ -48,7 +45,7 @@ export default function StatementPage() {
             aspectRatio: '3 / 2',
             overflow: 'hidden',
             background: '#111111',
-            marginBottom: '56px',
+            marginBottom: '48px',
           }}
         >
           <Image
@@ -63,6 +60,21 @@ export default function StatementPage() {
             }}
           />
         </div>
+
+        {/* Opening line */}
+        <p
+          style={{
+            fontFamily: 'var(--font-cormorant), Georgia, serif',
+            fontSize: '28px',
+            fontStyle: 'italic',
+            fontWeight: 300,
+            lineHeight: 1.6,
+            color: '#F0EDE8',
+            marginBottom: '40px',
+          }}
+        >
+          {opening}
+        </p>
 
         {/* Description */}
         {rest.map((paragraph, i) => (

@@ -215,17 +215,11 @@ body {
   color: #F0EDE8;
 }
 
-/* Social icon buttons */
-.social-icon:hover {
-  color: #C4A882;
-  border-color: rgba(196, 168, 130, 0.5) !important;
-}
-
 /* Contact banner — desktop height is set inline (so Next's fill image
    always sees a non-zero parent height); mobile overrides here. */
 @media (max-width: 640px) {
   .contact-banner {
-    height: 240px !important;
+    height: 180px !important;
   }
 }
 
