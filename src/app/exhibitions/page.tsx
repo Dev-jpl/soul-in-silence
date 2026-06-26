@@ -39,15 +39,16 @@ export default function CVPage() {
                 'linear-gradient(to right, rgba(10,10,10,1) 0%, rgba(10,10,10,0.62) 28%, rgba(10,10,10,0.62) 72%, rgba(10,10,10,1) 100%)',
             }}
           />
-          {/* Top fade: black → transparent */}
+          {/* Top fade: strong black → transparent */}
           <div
             style={{
               position: 'absolute',
               top: 0,
               left: 0,
               right: 0,
-              height: '220px',
-              background: 'linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0) 100%)',
+              height: '320px',
+              background:
+                'linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,1) 30%, rgba(10,10,10,0.6) 60%, rgba(10,10,10,0) 100%)',
             }}
           />
 
@@ -59,11 +60,11 @@ export default function CVPage() {
               zIndex: 1,
               maxWidth: '1320px',
               margin: '0 auto',
-              padding: '56px 0',
+              padding: '96px 0 56px',
             }}
           >
             {/* Title */}
-            <div style={{ padding: '0 48px', marginBottom: '48px' }}>
+            <div style={{ padding: '0 48px', marginBottom: '72px' }}>
               <p
                 style={{
                   fontSize: '10px',
