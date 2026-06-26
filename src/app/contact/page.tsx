@@ -29,12 +29,6 @@ const contactDetails = [
   { label: 'Based in', value: 'Manila, Philippines' },
 ]
 
-const bottomStrip = [
-  { label: 'Email', value: 'soulinsilence@gmail.com' },
-  { label: 'Instagram', value: '@soul.n.silence' },
-  { label: 'Location', value: 'Manila, Philippines' },
-]
-
 export default function ContactPage() {
   const [focused, setFocused] = useState<string | null>(null)
 
@@ -59,31 +53,33 @@ export default function ContactPage() {
               'linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.4) 50%, rgba(10,10,10,0.7) 100%)',
           }}
         />
-        {/* Bottom-left text */}
-        <div style={{ position: 'absolute', left: '48px', bottom: '48px', zIndex: 1 }}>
-          <p
-            style={{
-              fontSize: '10px',
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              color: '#C4A882',
-              marginBottom: '12px',
-            }}
-          >
-            Get in Touch
-          </p>
-          <h1
-            style={{
-              fontFamily: 'var(--font-cormorant), Georgia, serif',
-              fontSize: 'clamp(32px, 4vw, 48px)',
-              fontWeight: 300,
-              fontStyle: 'italic',
-              color: '#F0EDE8',
-              margin: 0,
-            }}
-          >
-            Every silence deserves a response.
-          </h1>
+        {/* Bottom-left text, aligned to the page container */}
+        <div className="pad-x" style={{ position: 'absolute', left: 0, right: 0, bottom: '48px', zIndex: 1, padding: '0 48px' }}>
+          <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
+            <p
+              style={{
+                fontSize: '10px',
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                color: '#C4A882',
+                marginBottom: '12px',
+              }}
+            >
+              Get in Touch
+            </p>
+            <h1
+              style={{
+                fontFamily: 'var(--font-cormorant), Georgia, serif',
+                fontSize: 'clamp(32px, 4vw, 48px)',
+                fontWeight: 300,
+                fontStyle: 'italic',
+                color: '#F0EDE8',
+                margin: 0,
+              }}
+            >
+              Every silence deserves a response.
+            </h1>
+          </div>
         </div>
       </div>
 
@@ -263,49 +259,6 @@ export default function ContactPage() {
           </form>
         </div>
       </section>
-
-      {/* SECTION 3 — bottom strip */}
-      <div
-        className="about-details"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          borderTop: '1px solid rgba(240,237,232,0.08)',
-          background: 'rgba(240,237,232,0.03)',
-        }}
-      >
-        {bottomStrip.map(({ label, value }, i) => (
-          <div
-            key={label}
-            style={{
-              padding: '40px',
-              borderRight: i < 2 ? '1px solid rgba(240,237,232,0.08)' : undefined,
-            }}
-          >
-            <p
-              style={{
-                fontSize: '10px',
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: '#C4A882',
-                marginBottom: '12px',
-              }}
-            >
-              {label}
-            </p>
-            <p
-              style={{
-                fontFamily: 'var(--font-cormorant), Georgia, serif',
-                fontSize: '18px',
-                fontWeight: 300,
-                color: '#F0EDE8',
-              }}
-            >
-              {value}
-            </p>
-          </div>
-        ))}
-      </div>
     </PageTransition>
   )
 }
