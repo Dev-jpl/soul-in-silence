@@ -73,11 +73,12 @@ export default function CVPage() {
               >
                 <span
                   style={{
-                    fontFamily: 'var(--font-cormorant), Georgia, serif',
-                    fontSize: '15px',
-                    fontWeight: 300,
+                    fontFamily: 'var(--font-inter), sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 400,
+                    letterSpacing: '0.04em',
                     color: '#C4A882',
-                    paddingTop: '2px',
+                    paddingTop: '4px',
                   }}
                 >
                   {year}
