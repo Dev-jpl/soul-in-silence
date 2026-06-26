@@ -386,9 +386,10 @@ body {
     padding-right: 0 !important;
   }
 
-  /* Contact banner — zoom the image in on mobile */
+  /* Contact banner — zoom in 60%, anchored to the bottom, on mobile */
   .contact-banner-img {
-    transform: scale(1.4);
+    transform: scale(1.6);
+    transform-origin: center bottom;
   }
 
   /* Contact form card — looser inner padding so it can breathe */
