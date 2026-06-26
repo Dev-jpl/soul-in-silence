@@ -65,7 +65,7 @@ export default function ContactPage() {
           </p>
 
           {[
-            { label: 'Email', value: 'sns@gmail.com', href: 'mailto:sns@gmail.com' },
+            { label: 'Email', value: 'soulinsilence@gmail.com', href: 'mailto:soulinsilence@gmail.com' },
             { label: 'Based in', value: 'Manila, Philippines' },
             {
               label: 'Instagram',
