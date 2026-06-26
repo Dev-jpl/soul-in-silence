@@ -13,6 +13,7 @@ export const artistStatement = {
 export const cvData = {
   exhibitions: [
     { year: '2019', title: 'PASASALAMAT 2019', venue: 'Group Exhibition, Cevio Art House Gallery, Makati' },
+    { year: '2019', title: 'RSU Week — Guhit Pinas Romblon Art Exhibit', venue: 'Group Exhibition, Odiongan, Romblon' },
     { year: '2018', title: 'Art in the Park (under Cevio Art House Gallery)', venue: 'Group Exhibition, Makati' },
     { year: '2017', title: 'Odiongan Night Market', venue: 'Group Exhibition, Odiongan, Romblon' },
     { year: '2016', title: 'RSU Week — Art Exhibit', venue: 'Group Exhibition, Odiongan, Romblon' },
