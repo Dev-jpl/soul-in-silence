@@ -174,8 +174,10 @@ export default function ContactPage() {
                 'linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0) 35%, rgba(10,10,10,0) 65%, rgba(10,10,10,0.95) 100%), linear-gradient(to bottom, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0) 45%, rgba(10,10,10,0) 55%, rgba(10,10,10,0.9) 100%)',
             }}
           />
-          {/* Bottom-left text */}
-          <div style={{ position: 'absolute', left: '40px', bottom: '40px', zIndex: 1 }}>
+          {/* Overall dim */}
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.4)' }} />
+          {/* Bottom-left text — flush with the banner content edge (aligns with the section below) */}
+          <div className="contact-banner-text" style={{ position: 'absolute', left: 0, bottom: '40px', zIndex: 1 }}>
             <p
               style={{
                 fontSize: '10px',

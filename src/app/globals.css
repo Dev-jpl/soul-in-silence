@@ -378,12 +378,18 @@ body {
     padding: 32px 24px !important;
   }
 
-  /* Exhibit rows stack: Year → Title → venue */
+  /* Exhibit rows stack: Year → Title → venue, aligned to the container edge */
   .exhibit-row {
     grid-template-columns: 1fr !important;
     gap: 6px !important;
-    padding-left: 24px !important;
-    padding-right: 24px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Title aligns with the rows (no extra left padding) */
+  .exhibit-title {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   /* Drop the exhibitions background on mobile — list on plain dark page */

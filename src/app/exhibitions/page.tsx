@@ -68,7 +68,7 @@ export default function CVPage() {
             }}
           >
             {/* Title */}
-            <div style={{ padding: '0 48px', marginBottom: '72px' }}>
+            <div className="exhibit-title" style={{ padding: '0 48px', marginBottom: '72px' }}>
               <p
                 style={{
                   fontSize: '10px',
