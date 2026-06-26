@@ -210,9 +210,15 @@ body {
   }
 }
 
-/* Contact channels — hover shifts the value to the accent gold */
+/* Contact channel value links — hover shifts gold → cream */
 .contact-channel:hover {
+  color: #F0EDE8;
+}
+
+/* Social icon buttons */
+.social-icon:hover {
   color: #C4A882;
+  border-color: rgba(196, 168, 130, 0.5) !important;
 }
 
 /* Contact banner — desktop height is set inline (so Next's fill image

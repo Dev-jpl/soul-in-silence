@@ -45,37 +45,40 @@ const icons: Record<string, React.ReactNode> = {
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
     </svg>
   ),
+  location: (
+    <svg {...iconProps}>
+      <path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  ),
 }
 
-const channels = [
+const contactItems = [
   {
     icon: 'email',
-    label: 'Email',
+    title: 'Write to me',
+    description: 'I read and reply to every message personally.',
     value: 'soulinsilence@gmail.com',
     href: 'mailto:soulinsilence@gmail.com',
-    external: false,
   },
   {
-    icon: 'instagram',
-    label: 'Instagram',
-    value: '@soul.n.silence',
-    href: 'https://www.instagram.com/soul.n.silence/',
-    external: true,
-  },
-  {
-    icon: 'facebook',
-    label: 'Facebook',
-    value: 'Soul in Silence',
-    href: 'https://web.facebook.com/profile.php?id=61575343887300',
-    external: true,
+    icon: 'location',
+    title: 'Based in',
+    description: 'Working from the studio.',
+    value: 'Manila, Philippines',
   },
   {
     icon: 'phone',
-    label: 'Phone',
+    title: 'Call',
+    description: 'Mon–Sat, by appointment.',
     value: '0912 345 6789',
     href: 'tel:+639123456789',
-    external: false,
   },
+]
+
+const socials = [
+  { icon: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/soul.n.silence/' },
+  { icon: 'facebook', label: 'Facebook', href: 'https://web.facebook.com/profile.php?id=61575343887300' },
 ]
 
 export default function ContactPage() {
@@ -169,24 +172,9 @@ export default function ContactPage() {
           }}
         >
           {/* Left — contact channels */}
-          <div>
-            {channels.map(({ icon, label, value, href, external }) => (
-              <a
-                key={label}
-                href={href}
-                {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className="contact-channel"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '24px',
-                  padding: '24px 0',
-                  borderTop: '1px solid rgba(240,237,232,0.08)',
-                  textDecoration: 'none',
-                  color: '#F0EDE8',
-                  transition: 'color 0.2s',
-                }}
-              >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+            {contactItems.map(({ icon, title, description, value, href }) => (
+              <div key={title} style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
                 <span
                   aria-hidden
                   style={{
@@ -198,35 +186,63 @@ export default function ContactPage() {
                     border: '1px solid rgba(240,237,232,0.15)',
                     borderRadius: '50%',
                     color: '#C4A882',
+                    marginTop: '2px',
                   }}
                 >
                   {icons[icon]}
                 </span>
-                <span>
-                  <span
-                    style={{
-                      display: 'block',
-                      fontSize: '10px',
-                      letterSpacing: '0.16em',
-                      textTransform: 'uppercase',
-                      color: '#C4A882',
-                      marginBottom: '6px',
-                    }}
-                  >
-                    {label}
-                  </span>
-                  <span
+                <div>
+                  <p
                     style={{
                       fontFamily: 'var(--font-cormorant), Georgia, serif',
                       fontSize: '20px',
-                      fontWeight: 300,
+                      fontWeight: 400,
+                      color: '#F0EDE8',
+                      marginBottom: '4px',
                     }}
                   >
-                    {value}
-                  </span>
-                </span>
-              </a>
+                    {title}
+                  </p>
+                  <p style={{ fontSize: '13px', color: '#8C8580', lineHeight: 1.6, marginBottom: '10px' }}>
+                    {description}
+                  </p>
+                  {href ? (
+                    <a href={href} className="contact-channel" style={{ fontSize: '15px', color: '#C4A882', textDecoration: 'none' }}>
+                      {value}
+                    </a>
+                  ) : (
+                    <p style={{ fontSize: '15px', color: '#F0EDE8' }}>{value}</p>
+                  )}
+                </div>
+              </div>
             ))}
+
+            {/* Social links */}
+            <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
+              {socials.map(({ icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="social-icon"
+                  style={{
+                    width: '42px',
+                    height: '42px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '1px solid rgba(240,237,232,0.15)',
+                    borderRadius: '50%',
+                    color: '#8C8580',
+                    transition: 'color 0.2s, border-color 0.2s',
+                  }}
+                >
+                  {icons[icon]}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Right — carded form */}
