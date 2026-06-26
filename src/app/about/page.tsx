@@ -126,7 +126,7 @@ export default function AboutPage() {
       >
         {[
           { label: 'Based in', value: 'Manila\nPhilippines' },
-          { label: 'Practice', value: 'Oil Painting\nDigital\nDrawing\nAcrylic\nWatercolor' },
+          { label: 'Medium', value: 'Oil Painting\nDigital\nDrawing\nAcrylic\nWatercolor' },
           { label: 'Art Practice', value: 'Soul in Silence\nFounded 2020' },
         ].map(({ label, value }, i) => (
           <div
