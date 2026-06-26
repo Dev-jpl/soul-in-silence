@@ -92,6 +92,7 @@ export default function CVPage() {
             {cvData.exhibitions.map(({ year, title, venue }, i) => (
               <div
                 key={i}
+                className="exhibit-row"
                 style={{
                   display: 'grid',
                   gridTemplateColumns: '72px 1fr',
