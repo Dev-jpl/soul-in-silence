@@ -40,7 +40,7 @@ export default function CVPage() {
               position: 'absolute',
               inset: 0,
               background:
-                'linear-gradient(to right, rgba(10,10,10,1) 0%, rgba(10,10,10,0.45) 28%, rgba(10,10,10,0.45) 72%, rgba(10,10,10,1) 100%)',
+                'linear-gradient(to right, rgba(10,10,10,1) 0%, rgba(10,10,10,0.62) 28%, rgba(10,10,10,0.62) 72%, rgba(10,10,10,1) 100%)',
             }}
           />
 
