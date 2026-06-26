@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { works } from '@/content/works'
-import type { Artwork } from '@/content/works'
+import { useWorks, type Artwork } from '@/lib/worksStore'
 import ArtworkCard from '@/components/ArtworkCard'
 import PageHeader from '@/components/PageHeader'
 import PageTransition from '@/components/PageTransition'
@@ -22,6 +21,7 @@ function categoryMatch(artwork: Artwork, filter: Filter) {
 export default function WorksPage() {
   const [active, setActive] = useState<Filter>('All')
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
+  const { works } = useWorks()
   const filtered = works.filter((w) => categoryMatch(w, active))
 
   return (

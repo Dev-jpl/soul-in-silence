@@ -1,7 +1,16 @@
 'use client'
 
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import {
+  loadWorks,
+  saveWorks,
+  resetWorks,
+  uniqueSlug,
+  type Artwork,
+} from '@/lib/worksStore'
+
+const ADMIN_PASSWORD = 'SnS2025'
+const AUTH_KEY = 'admin_auth'
 
 export default function AdminDashboard() {
   const [isAuth, setIsAuth] = useState(false)
@@ -10,19 +19,16 @@ export default function AdminDashboard() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Check if already authenticated
-    if (localStorage.getItem('admin_auth')) {
-      setIsAuth(true)
-    }
+    // Auth state is kept in sessionStorage (cleared when the tab closes)
+    if (sessionStorage.getItem(AUTH_KEY)) setIsAuth(true)
     setMounted(true)
   }, [])
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    // Simple password check - in production, use proper auth
-    if (password === 'silencearts') {
+    if (password === ADMIN_PASSWORD) {
       setIsAuth(true)
-      localStorage.setItem('admin_auth', 'true')
+      sessionStorage.setItem(AUTH_KEY, 'true')
       setError('')
     } else {
       setError('Incorrect password')
@@ -30,9 +36,7 @@ export default function AdminDashboard() {
     }
   }
 
-  if (!mounted) {
-    return null
-  }
+  if (!mounted) return null
 
   if (!isAuth) {
     return (
@@ -55,27 +59,12 @@ export default function AdminDashboard() {
             border: '1px solid rgba(240,237,232,0.08)',
           }}
         >
-          <h1
-            style={{
-              fontSize: '24px',
-              color: '#F0EDE8',
-              marginBottom: '8px',
-              fontWeight: 400,
-              letterSpacing: '0.02em',
-            }}
-          >
+          <h1 style={{ fontSize: '24px', color: '#F0EDE8', marginBottom: '8px', fontWeight: 400, letterSpacing: '0.02em' }}>
             Admin Access
           </h1>
-          <p
-            style={{
-              fontSize: '13px',
-              color: '#8C8580',
-              marginBottom: '32px',
-            }}
-          >
+          <p style={{ fontSize: '13px', color: '#8C8580', marginBottom: '32px' }}>
             Soul in Silence • Artworks Management
           </p>
-
           <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div>
               <input
@@ -83,40 +72,11 @@ export default function AdminDashboard() {
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  background: '#0a0a0a',
-                  border: '1px solid rgba(240,237,232,0.15)',
-                  color: '#F0EDE8',
-                  fontSize: '14px',
-                  fontFamily: 'inherit',
-                  boxSizing: 'border-box',
-                }}
+                style={inputStyle}
               />
-              {error && (
-                <p style={{ color: '#ff6b6b', fontSize: '12px', marginTop: '8px' }}>
-                  {error}
-                </p>
-              )}
+              {error && <p style={{ color: '#ff6b6b', fontSize: '12px', marginTop: '8px' }}>{error}</p>}
             </div>
-            <button
-              type="submit"
-              style={{
-                padding: '12px 16px',
-                background: '#C4A882',
-                color: '#0a0a0a',
-                border: 'none',
-                fontSize: '13px',
-                fontWeight: 500,
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                cursor: 'pointer',
-                transition: 'opacity 0.2s',
-              }}
-              onMouseEnter={(e) => ((e.target as HTMLElement).style.opacity = '0.85')}
-              onMouseLeave={(e) => ((e.target as HTMLElement).style.opacity = '1')}
-            >
+            <button type="submit" style={primaryBtn}>
               Access Admin
             </button>
           </form>
@@ -129,25 +89,15 @@ export default function AdminDashboard() {
 }
 
 function AdminNav() {
-  const [currentPage, setCurrentPage] = useState<'dashboard' | 'artworks' | 'artist' | 'exhibits'>(
-    'dashboard'
-  )
+  const [currentPage, setCurrentPage] = useState<'dashboard' | 'artworks'>('dashboard')
 
   const handleLogout = () => {
-    localStorage.removeItem('admin_auth')
+    sessionStorage.removeItem(AUTH_KEY)
     window.location.reload()
   }
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: '#0a0a0a',
-        fontFamily: 'Inter, sans-serif',
-        color: '#F0EDE8',
-      }}
-    >
-      {/* Header */}
+    <div style={{ minHeight: '100vh', background: '#0a0a0a', fontFamily: 'Inter, sans-serif', color: '#F0EDE8' }}>
       <div
         style={{
           borderBottom: '1px solid rgba(240,237,232,0.08)',
@@ -157,9 +107,7 @@ function AdminNav() {
           alignItems: 'center',
         }}
       >
-        <h1 style={{ margin: 0, fontSize: '18px', fontWeight: 400 }}>
-          Soul in Silence • Admin
-        </h1>
+        <h1 style={{ margin: 0, fontSize: '18px', fontWeight: 400 }}>Soul in Silence • Admin</h1>
         <button
           onClick={handleLogout}
           style={{
@@ -178,20 +126,11 @@ function AdminNav() {
       </div>
 
       <div style={{ display: 'flex' }}>
-        {/* Sidebar */}
-        <div
-          style={{
-            width: '200px',
-            borderRight: '1px solid rgba(240,237,232,0.08)',
-            padding: '32px 0',
-          }}
-        >
+        <div style={{ width: '200px', borderRight: '1px solid rgba(240,237,232,0.08)', padding: '32px 0' }}>
           <nav style={{ display: 'flex', flexDirection: 'column' }}>
             {[
               { id: 'dashboard' as const, label: 'Dashboard' },
               { id: 'artworks' as const, label: 'Artworks' },
-              { id: 'artist' as const, label: 'Artist Info' },
-              { id: 'exhibits' as const, label: 'Exhibits' },
             ].map((item) => (
               <button
                 key={item.id}
@@ -200,18 +139,12 @@ function AdminNav() {
                   padding: '12px 24px',
                   background: currentPage === item.id ? 'rgba(196,168,130,0.1)' : 'transparent',
                   border: 'none',
-                  color:
-                    currentPage === item.id
-                      ? '#C4A882'
-                      : currentPage === item.id
-                        ? '#C4A882'
-                        : '#8C8580',
+                  color: currentPage === item.id ? '#C4A882' : '#8C8580',
                   fontSize: '13px',
                   textAlign: 'left',
                   cursor: 'pointer',
                   transition: 'all 0.2s',
-                  borderLeft:
-                    currentPage === item.id ? '2px solid #C4A882' : '2px solid transparent',
+                  borderLeft: currentPage === item.id ? '2px solid #C4A882' : '2px solid transparent',
                 }}
               >
                 {item.label}
@@ -220,12 +153,9 @@ function AdminNav() {
           </nav>
         </div>
 
-        {/* Content */}
         <div style={{ flex: 1, padding: '48px' }}>
           {currentPage === 'dashboard' && <DashboardPage />}
           {currentPage === 'artworks' && <ArtworksPage />}
-          {currentPage === 'artist' && <ArtistPage />}
-          {currentPage === 'exhibits' && <ExhibitsPage />}
         </div>
       </div>
     </div>
@@ -233,267 +163,218 @@ function AdminNav() {
 }
 
 function DashboardPage() {
+  const [artworks, setArtworks] = useState<Artwork[]>([])
+  useEffect(() => setArtworks(loadWorks()), [])
+  const featured = artworks.filter((a) => a.featured).length
+
   return (
     <div>
       <h2 style={{ fontSize: '28px', marginBottom: '32px', fontWeight: 400 }}>Dashboard</h2>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '24px',
-        }}
-      >
-        <Card title="Total Artworks" value="13" />
-        <Card title="Featured Works" value="3" />
-        <Card title="Last Updated" value="Today" />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
+        <Card title="Total Artworks" value={String(artworks.length)} />
+        <Card title="Featured Works" value={String(featured)} />
       </div>
     </div>
   )
 }
 
+const emptyForm: Artwork = {
+  slug: '',
+  title: '',
+  year: new Date().getFullYear(),
+  medium: '',
+  dimensions: '',
+  category: 'painting',
+  description: '',
+  image: '',
+  featured: false,
+}
+
 function ArtworksPage() {
-  const [artworks, setArtworks] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [editingId, setEditingId] = useState<number | null>(null)
-  const [editForm, setEditForm] = useState<any>(null)
+  const [artworks, setArtworks] = useState<Artwork[]>([])
+  const [editingSlug, setEditingSlug] = useState<string | null>(null) // null = closed, '' = adding new
+  const [form, setForm] = useState<Artwork | null>(null)
+  const [notice, setNotice] = useState('')
 
-  useEffect(() => {
-    fetchArtworks()
-  }, [])
+  useEffect(() => setArtworks(loadWorks()), [])
 
-  async function fetchArtworks() {
-    try {
-      const res = await fetch('/api/artworks')
-      const data = await res.json()
-      setArtworks(data)
-    } catch (err) {
-      setError('Failed to load artworks')
-      console.error(err)
-    } finally {
-      setLoading(false)
+  function persist(next: Artwork[]) {
+    setArtworks(next)
+    saveWorks(next)
+  }
+
+  function startAdd() {
+    setEditingSlug('')
+    setForm({ ...emptyForm })
+  }
+
+  function startEdit(artwork: Artwork) {
+    setEditingSlug(artwork.slug)
+    setForm({ ...artwork })
+  }
+
+  function closeModal() {
+    setEditingSlug(null)
+    setForm(null)
+  }
+
+  function save() {
+    if (!form) return
+    if (!form.title.trim()) {
+      setNotice('Title is required.')
+      return
     }
-  }
-
-  function startEdit(artwork: any) {
-    setEditingId(artwork.id)
-    setEditForm({ ...artwork })
-  }
-
-  async function saveEdit() {
-    if (!editForm) return
-
-    try {
-      const res = await fetch(`/api/artworks/${editingId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editForm),
-      })
-
-      if (res.ok) {
-        setArtworks(
-          artworks.map((a) => (a.id === editingId ? editForm : a))
-        )
-        setEditingId(null)
-        setEditForm(null)
-      }
-    } catch (err) {
-      setError('Failed to save artwork')
-      console.error(err)
+    if (editingSlug === '') {
+      // Adding
+      const slug = uniqueSlug(form.title, artworks)
+      persist([{ ...form, slug }, ...artworks])
+      setNotice('Artwork added.')
+    } else {
+      // Editing — keep slug stable
+      persist(artworks.map((a) => (a.slug === editingSlug ? { ...form, slug: editingSlug } : a)))
+      setNotice('Artwork updated.')
     }
+    closeModal()
+    setTimeout(() => setNotice(''), 3000)
   }
 
-  function cancelEdit() {
-    setEditingId(null)
-    setEditForm(null)
+  function remove(slug: string) {
+    if (!confirm('Delete this artwork? This affects only your browser until you export and commit.')) return
+    persist(artworks.filter((a) => a.slug !== slug))
   }
 
-  async function deleteArtwork(id: number) {
-    if (!confirm('Are you sure you want to delete this artwork?')) return
+  function exportJson() {
+    const json = JSON.stringify(artworks, null, 2)
+    const blob = new Blob([json], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'works.json'
+    a.click()
+    URL.revokeObjectURL(url)
+  }
 
-    try {
-      await fetch(`/api/artworks/${id}`, { method: 'DELETE' })
-      setArtworks(artworks.filter((a) => a.id !== id))
-    } catch (err) {
-      setError('Failed to delete artwork')
-      console.error(err)
-    }
+  function reset() {
+    if (!confirm('Reset to the published defaults? Your local changes will be cleared.')) return
+    resetWorks()
+    setArtworks(loadWorks())
+    setNotice('Reset to defaults.')
+    setTimeout(() => setNotice(''), 3000)
   }
 
   return (
     <div>
-      <div style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '28px', marginBottom: '8px', fontWeight: 400 }}>
-          Manage Artworks
-        </h2>
+      <div style={{ marginBottom: '24px' }}>
+        <h2 style={{ fontSize: '28px', marginBottom: '8px', fontWeight: 400 }}>Manage Artworks</h2>
         <p style={{ color: '#8C8580', margin: 0 }}>Add, edit, or delete your artwork entries</p>
       </div>
 
-      {error && (
+      <div
+        style={{
+          padding: '14px 18px',
+          background: 'rgba(196,168,130,0.08)',
+          border: '1px solid rgba(196,168,130,0.25)',
+          color: '#C4A882',
+          marginBottom: '24px',
+          fontSize: '12.5px',
+          lineHeight: 1.6,
+        }}
+      >
+        Changes are saved in this browser only. To publish them to everyone, click{' '}
+        <strong>Export JSON</strong>, then replace the array in <code>src/content/works.ts</code> and deploy.
+      </div>
+
+      {notice && (
         <div
           style={{
             padding: '12px 16px',
-            background: 'rgba(255,107,107,0.1)',
-            border: '1px solid rgba(255,107,107,0.3)',
-            color: '#ff6b6b',
+            background: 'rgba(76,175,80,0.1)',
+            border: '1px solid rgba(76,175,80,0.3)',
+            color: '#4caf50',
             marginBottom: '24px',
             fontSize: '13px',
           }}
         >
-          {error}
+          {notice}
         </div>
       )}
 
-      <button
-        style={{
-          padding: '12px 24px',
-          background: '#C4A882',
-          color: '#0a0a0a',
-          border: 'none',
-          fontSize: '13px',
-          fontWeight: 500,
-          letterSpacing: '0.06em',
-          textTransform: 'uppercase',
-          cursor: 'pointer',
-          marginBottom: '32px',
-        }}
-      >
-        + Add New Artwork
-      </button>
+      <div style={{ display: 'flex', gap: '12px', marginBottom: '32px', flexWrap: 'wrap' }}>
+        <button style={primaryBtn} onClick={startAdd}>
+          + Add New Artwork
+        </button>
+        <button style={ghostBtn} onClick={exportJson}>
+          Export JSON
+        </button>
+        <button style={ghostBtn} onClick={reset}>
+          Reset to Defaults
+        </button>
+      </div>
 
-      {loading ? (
-        <p style={{ color: '#8C8580' }}>Loading artworks...</p>
-      ) : (
-        <div
-          style={{
-            border: '1px solid rgba(240,237,232,0.08)',
-            borderRadius: '4px',
-            overflow: 'hidden',
-          }}
-        >
-          <table
-            style={{
-              width: '100%',
-              borderCollapse: 'collapse',
-              fontSize: '13px',
-            }}
-          >
-            <thead>
-              <tr
-                style={{
-                  background: 'rgba(240,237,232,0.02)',
-                  borderBottom: '1px solid rgba(240,237,232,0.08)',
-                }}
-              >
+      <div style={{ border: '1px solid rgba(240,237,232,0.08)', borderRadius: '4px', overflow: 'hidden' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+          <thead>
+            <tr style={{ background: 'rgba(240,237,232,0.02)', borderBottom: '1px solid rgba(240,237,232,0.08)' }}>
+              {['Title', 'Year', 'Category', 'Actions'].map((h, i) => (
                 <th
+                  key={h}
                   style={{
                     padding: '16px',
-                    textAlign: 'left',
+                    textAlign: i === 3 ? 'center' : 'left',
                     fontWeight: 500,
                     color: '#C4A882',
                   }}
                 >
-                  Title
+                  {h}
                 </th>
-                <th
-                  style={{
-                    padding: '16px',
-                    textAlign: 'left',
-                    fontWeight: 500,
-                    color: '#C4A882',
-                  }}
-                >
-                  Year
-                </th>
-                <th
-                  style={{
-                    padding: '16px',
-                    textAlign: 'left',
-                    fontWeight: 500,
-                    color: '#C4A882',
-                  }}
-                >
-                  Category
-                </th>
-                <th
-                  style={{
-                    padding: '16px',
-                    textAlign: 'center',
-                    fontWeight: 500,
-                    color: '#C4A882',
-                  }}
-                >
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {artworks.map((artwork) => (
-                <tr
-                  key={artwork.id}
-                  style={{
-                    borderBottom: '1px solid rgba(240,237,232,0.08)',
-                  }}
-                >
-                  <td style={{ padding: '16px', color: '#F0EDE8' }}>{artwork.title}</td>
-                  <td style={{ padding: '16px', color: '#8C8580' }}>{artwork.year}</td>
-                  <td style={{ padding: '16px', color: '#8C8580' }}>
-                    <span
-                      style={{
-                        padding: '4px 12px',
-                        background: 'rgba(196,168,130,0.1)',
-                        borderRadius: '2px',
-                        fontSize: '11px',
-                        textTransform: 'capitalize',
-                      }}
-                    >
-                      {artwork.category}
-                    </span>
-                  </td>
-                  <td
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {artworks.map((artwork) => (
+              <tr key={artwork.slug} style={{ borderBottom: '1px solid rgba(240,237,232,0.08)' }}>
+                <td style={{ padding: '16px', color: '#F0EDE8' }}>
+                  {artwork.title}
+                  {artwork.featured && (
+                    <span style={{ color: '#C4A882', marginLeft: '8px', fontSize: '11px' }}>★</span>
+                  )}
+                </td>
+                <td style={{ padding: '16px', color: '#8C8580' }}>{artwork.year}</td>
+                <td style={{ padding: '16px', color: '#8C8580' }}>
+                  <span
                     style={{
-                      padding: '16px',
-                      textAlign: 'center',
-                      display: 'flex',
-                      gap: '8px',
-                      justifyContent: 'center',
+                      padding: '4px 12px',
+                      background: 'rgba(196,168,130,0.1)',
+                      borderRadius: '2px',
+                      fontSize: '11px',
+                      textTransform: 'capitalize',
                     }}
                   >
-                    <button
-                      onClick={() => startEdit(artwork)}
-                      style={{
-                        padding: '4px 12px',
-                        background: 'transparent',
-                        border: '1px solid rgba(196,168,130,0.3)',
-                        color: '#C4A882',
-                        fontSize: '11px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteArtwork(artwork.id)}
-                      style={{
-                        padding: '4px 12px',
-                        background: 'transparent',
-                        border: '1px solid rgba(255,107,107,0.3)',
-                        color: '#ff6b6b',
-                        fontSize: '11px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+                    {artwork.category}
+                  </span>
+                </td>
+                <td style={{ padding: '16px', textAlign: 'center', display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                  <button onClick={() => startEdit(artwork)} style={editBtn}>
+                    Edit
+                  </button>
+                  <button onClick={() => remove(artwork.slug)} style={deleteBtn}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+            {artworks.length === 0 && (
+              <tr>
+                <td colSpan={4} style={{ padding: '24px', color: '#8C8580', textAlign: 'center' }}>
+                  No artworks yet. Click “Add New Artwork”.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
-      {editingId && editForm && (
+      {form && (
         <div
           style={{
             position: 'fixed',
@@ -503,8 +384,9 @@ function ArtworksPage() {
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 1000,
+            padding: '24px',
           }}
-          onClick={cancelEdit}
+          onClick={closeModal}
         >
           <div
             style={{
@@ -512,6 +394,7 @@ function ArtworksPage() {
               border: '1px solid rgba(240,237,232,0.08)',
               padding: '32px',
               maxWidth: '600px',
+              width: '100%',
               maxHeight: '90vh',
               overflowY: 'auto',
               borderRadius: '4px',
@@ -519,178 +402,83 @@ function ArtworksPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 style={{ fontSize: '20px', color: '#F0EDE8', marginBottom: '24px', fontWeight: 400 }}>
-              Edit Artwork
+              {editingSlug === '' ? 'Add Artwork' : 'Edit Artwork'}
             </h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div>
-                <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
-                  Title
-                </label>
-                <input
-                  type="text"
-                  value={editForm.title}
-                  onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    background: '#0a0a0a',
-                    border: '1px solid rgba(240,237,232,0.15)',
-                    color: '#F0EDE8',
-                    fontSize: '13px',
-                    boxSizing: 'border-box',
-                  }}
-                />
-              </div>
+              <FormField label="Title">
+                <input type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} style={modalInput} />
+              </FormField>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
-                    Year
-                  </label>
+                <FormField label="Year">
                   <input
                     type="number"
-                    value={editForm.year}
-                    onChange={(e) => setEditForm({ ...editForm, year: parseInt(e.target.value) })}
-                    style={{
-                      width: '100%',
-                      padding: '8px 12px',
-                      background: '#0a0a0a',
-                      border: '1px solid rgba(240,237,232,0.15)',
-                      color: '#F0EDE8',
-                      fontSize: '13px',
-                      boxSizing: 'border-box',
-                    }}
+                    value={form.year}
+                    onChange={(e) => setForm({ ...form, year: parseInt(e.target.value) || 0 })}
+                    style={modalInput}
                   />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
-                    Category
-                  </label>
+                </FormField>
+                <FormField label="Category">
                   <select
-                    value={editForm.category}
-                    onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
-                    style={{
-                      width: '100%',
-                      padding: '8px 12px',
-                      background: '#0a0a0a',
-                      border: '1px solid rgba(240,237,232,0.15)',
-                      color: '#F0EDE8',
-                      fontSize: '13px',
-                      boxSizing: 'border-box',
-                    }}
+                    value={form.category}
+                    onChange={(e) => setForm({ ...form, category: e.target.value as Artwork['category'] })}
+                    style={modalInput}
                   >
                     <option value="painting">Painting</option>
                     <option value="mixed-media">Mixed Media</option>
                     <option value="drawing">Drawing</option>
                   </select>
-                </div>
+                </FormField>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
-                  Medium
-                </label>
+              <FormField label="Medium">
+                <input type="text" value={form.medium} onChange={(e) => setForm({ ...form, medium: e.target.value })} style={modalInput} />
+              </FormField>
+
+              <FormField label="Dimensions">
                 <input
                   type="text"
-                  value={editForm.medium}
-                  onChange={(e) => setEditForm({ ...editForm, medium: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    background: '#0a0a0a',
-                    border: '1px solid rgba(240,237,232,0.15)',
-                    color: '#F0EDE8',
-                    fontSize: '13px',
-                    boxSizing: 'border-box',
-                  }}
+                  value={form.dimensions}
+                  placeholder="e.g. 100 × 80 cm"
+                  onChange={(e) => setForm({ ...form, dimensions: e.target.value })}
+                  style={modalInput}
                 />
-              </div>
+              </FormField>
 
-              <div>
-                <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
-                  Dimensions
-                </label>
+              <FormField label="Image path (in /public)">
                 <input
                   type="text"
-                  value={editForm.dimensions}
-                  onChange={(e) => setEditForm({ ...editForm, dimensions: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    background: '#0a0a0a',
-                    border: '1px solid rgba(240,237,232,0.15)',
-                    color: '#F0EDE8',
-                    fontSize: '13px',
-                    boxSizing: 'border-box',
-                  }}
+                  value={form.image}
+                  placeholder="/artworks/your-image.jpg"
+                  onChange={(e) => setForm({ ...form, image: e.target.value })}
+                  style={modalInput}
                 />
-              </div>
+              </FormField>
 
-              <div>
-                <label style={{ display: 'block', fontSize: '12px', color: '#C4A882', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 500 }}>
-                  Description
-                </label>
+              <FormField label="Description">
                 <textarea
-                  value={editForm.description}
-                  onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    background: '#0a0a0a',
-                    border: '1px solid rgba(240,237,232,0.15)',
-                    color: '#F0EDE8',
-                    fontSize: '13px',
-                    boxSizing: 'border-box',
-                    minHeight: '80px',
-                    resize: 'vertical',
-                  }}
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  style={{ ...modalInput, minHeight: '80px', resize: 'vertical' }}
                 />
-              </div>
+              </FormField>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <input
                   type="checkbox"
-                  checked={editForm.featured}
-                  onChange={(e) => setEditForm({ ...editForm, featured: e.target.checked })}
+                  checked={!!form.featured}
+                  onChange={(e) => setForm({ ...form, featured: e.target.checked })}
                   style={{ cursor: 'pointer' }}
                 />
-                <label style={{ fontSize: '12px', color: '#8C8580', cursor: 'pointer' }}>
-                  Featured on homepage
-                </label>
+                <label style={{ fontSize: '12px', color: '#8C8580', cursor: 'pointer' }}>Featured on homepage</label>
               </div>
 
               <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
-                <button
-                  onClick={saveEdit}
-                  style={{
-                    flex: 1,
-                    padding: '10px 16px',
-                    background: '#C4A882',
-                    color: '#0a0a0a',
-                    border: 'none',
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  Save Changes
+                <button onClick={save} style={{ ...primaryBtn, flex: 1 }}>
+                  Save
                 </button>
-                <button
-                  onClick={cancelEdit}
-                  style={{
-                    flex: 1,
-                    padding: '10px 16px',
-                    background: 'transparent',
-                    color: '#8C8580',
-                    border: '1px solid rgba(240,237,232,0.15)',
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    textTransform: 'uppercase',
-                  }}
-                >
+                <button onClick={closeModal} style={{ ...ghostBtn, flex: 1 }}>
                   Cancel
                 </button>
               </div>
@@ -702,246 +490,97 @@ function ArtworksPage() {
   )
 }
 
-function ArtistPage() {
-  const [artist, setArtist] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
-  const [message, setMessage] = useState('')
-
-  useEffect(() => {
-    fetchArtist()
-  }, [])
-
-  async function fetchArtist() {
-    try {
-      const res = await fetch('/api/artist')
-      const data = await res.json()
-      setArtist(data)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function saveArtist() {
-    if (!artist) return
-
-    setSaving(true)
-    try {
-      const res = await fetch('/api/artist', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(artist),
-      })
-
-      if (res.ok) {
-        setMessage('Changes saved successfully!')
-        setTimeout(() => setMessage(''), 3000)
-      } else {
-        setMessage('Failed to save changes')
-      }
-    } catch (err) {
-      setMessage('Error saving changes')
-      console.error(err)
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  if (loading) {
-    return (
-      <div>
-        <h2 style={{ fontSize: '28px', marginBottom: '32px', fontWeight: 400 }}>
-          Artist Information
-        </h2>
-        <p style={{ color: '#8C8580' }}>Loading...</p>
-      </div>
-    )
-  }
-
+function FormField({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <div style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '28px', marginBottom: '8px', fontWeight: 400 }}>
-          Artist Information
-        </h2>
-        <p style={{ color: '#8C8580', margin: 0 }}>Edit your artist bio and details</p>
-      </div>
-
-      {message && (
-        <div
-          style={{
-            padding: '12px 16px',
-            background: message.includes('successfully')
-              ? 'rgba(76,175,80,0.1)'
-              : 'rgba(255,107,107,0.1)',
-            border: message.includes('successfully')
-              ? '1px solid rgba(76,175,80,0.3)'
-              : '1px solid rgba(255,107,107,0.3)',
-            color: message.includes('successfully') ? '#4caf50' : '#ff6b6b',
-            marginBottom: '24px',
-            fontSize: '13px',
-          }}
-        >
-          {message}
-        </div>
-      )}
-
-      <div style={{ maxWidth: '600px' }}>
-        <div style={{ marginBottom: '24px' }}>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '12px',
-              color: '#C4A882',
-              marginBottom: '8px',
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em',
-              fontWeight: 500,
-            }}
-          >
-            Artist Name
-          </label>
-          <input
-            type="text"
-            value={artist?.name || ''}
-            onChange={(e) => setArtist({ ...artist, name: e.target.value })}
-            style={{
-              width: '100%',
-              padding: '12px 16px',
-              background: '#111111',
-              border: '1px solid rgba(240,237,232,0.15)',
-              color: '#F0EDE8',
-              fontSize: '14px',
-              fontFamily: 'inherit',
-              boxSizing: 'border-box',
-            }}
-          />
-        </div>
-
-        <div style={{ marginBottom: '24px' }}>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '12px',
-              color: '#C4A882',
-              marginBottom: '8px',
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em',
-              fontWeight: 500,
-            }}
-          >
-            Bio
-          </label>
-          <textarea
-            value={artist?.bio || ''}
-            onChange={(e) => setArtist({ ...artist, bio: e.target.value })}
-            style={{
-              width: '100%',
-              padding: '12px 16px',
-              background: '#111111',
-              border: '1px solid rgba(240,237,232,0.15)',
-              color: '#F0EDE8',
-              fontSize: '14px',
-              fontFamily: 'inherit',
-              boxSizing: 'border-box',
-              minHeight: '120px',
-              resize: 'vertical',
-            }}
-          />
-        </div>
-
-        <div style={{ marginBottom: '24px' }}>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '12px',
-              color: '#C4A882',
-              marginBottom: '8px',
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em',
-              fontWeight: 500,
-            }}
-          >
-            Artist Statement
-          </label>
-          <textarea
-            value={artist?.statement || ''}
-            onChange={(e) => setArtist({ ...artist, statement: e.target.value })}
-            style={{
-              width: '100%',
-              padding: '12px 16px',
-              background: '#111111',
-              border: '1px solid rgba(240,237,232,0.15)',
-              color: '#F0EDE8',
-              fontSize: '14px',
-              fontFamily: 'inherit',
-              boxSizing: 'border-box',
-              minHeight: '120px',
-              resize: 'vertical',
-            }}
-          />
-        </div>
-
-        <button
-          onClick={saveArtist}
-          disabled={saving}
-          style={{
-            padding: '12px 24px',
-            background: saving ? '#666666' : '#C4A882',
-            color: '#0a0a0a',
-            border: 'none',
-            fontSize: '13px',
-            fontWeight: 500,
-            letterSpacing: '0.06em',
-            textTransform: 'uppercase',
-            cursor: saving ? 'not-allowed' : 'pointer',
-            opacity: saving ? 0.6 : 1,
-          }}
-        >
-          {saving ? 'Saving...' : 'Save Changes'}
-        </button>
-      </div>
-    </div>
-  )
-}
-
-function ExhibitsPage() {
-  return (
-    <div>
-      <h2 style={{ fontSize: '28px', marginBottom: '32px', fontWeight: 400 }}>Exhibits</h2>
-      <div
+      <label
         style={{
-          padding: '48px',
-          background: '#111111',
-          border: '1px solid rgba(240,237,232,0.08)',
-          textAlign: 'center',
+          display: 'block',
+          fontSize: '12px',
+          color: '#C4A882',
+          marginBottom: '6px',
+          textTransform: 'uppercase',
+          fontWeight: 500,
         }}
       >
-        <p style={{ fontSize: '16px', color: '#8C8580', margin: 0 }}>
-          Coming Soon — Exhibit management module
-        </p>
-      </div>
+        {label}
+      </label>
+      {children}
     </div>
   )
 }
 
 function Card({ title, value }: { title: string; value: string }) {
   return (
-    <div
-      style={{
-        padding: '24px',
-        background: '#111111',
-        border: '1px solid rgba(240,237,232,0.08)',
-      }}
-    >
+    <div style={{ padding: '24px', background: '#111111', border: '1px solid rgba(240,237,232,0.08)' }}>
       <p style={{ margin: '0 0 12px 0', fontSize: '12px', color: '#8C8580', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 500 }}>
         {title}
       </p>
-      <p style={{ margin: 0, fontSize: '32px', color: '#C4A882', fontWeight: 400 }}>
-        {value}
-      </p>
+      <p style={{ margin: 0, fontSize: '32px', color: '#C4A882', fontWeight: 400 }}>{value}</p>
     </div>
   )
+}
+
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '12px 16px',
+  background: '#0a0a0a',
+  border: '1px solid rgba(240,237,232,0.15)',
+  color: '#F0EDE8',
+  fontSize: '14px',
+  fontFamily: 'inherit',
+  boxSizing: 'border-box',
+}
+
+const modalInput: React.CSSProperties = {
+  width: '100%',
+  padding: '8px 12px',
+  background: '#0a0a0a',
+  border: '1px solid rgba(240,237,232,0.15)',
+  color: '#F0EDE8',
+  fontSize: '13px',
+  fontFamily: 'inherit',
+  boxSizing: 'border-box',
+}
+
+const primaryBtn: React.CSSProperties = {
+  padding: '12px 24px',
+  background: '#C4A882',
+  color: '#0a0a0a',
+  border: 'none',
+  fontSize: '13px',
+  fontWeight: 500,
+  letterSpacing: '0.06em',
+  textTransform: 'uppercase',
+  cursor: 'pointer',
+}
+
+const ghostBtn: React.CSSProperties = {
+  padding: '12px 24px',
+  background: 'transparent',
+  color: '#8C8580',
+  border: '1px solid rgba(240,237,232,0.15)',
+  fontSize: '13px',
+  fontWeight: 500,
+  letterSpacing: '0.06em',
+  textTransform: 'uppercase',
+  cursor: 'pointer',
+}
+
+const editBtn: React.CSSProperties = {
+  padding: '4px 12px',
+  background: 'transparent',
+  border: '1px solid rgba(196,168,130,0.3)',
+  color: '#C4A882',
+  fontSize: '11px',
+  cursor: 'pointer',
+}
+
+const deleteBtn: React.CSSProperties = {
+  padding: '4px 12px',
+  background: 'transparent',
+  border: '1px solid rgba(255,107,107,0.3)',
+  color: '#ff6b6b',
+  fontSize: '11px',
+  cursor: 'pointer',
 }

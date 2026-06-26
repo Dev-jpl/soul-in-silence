@@ -1,30 +1,20 @@
-import type { Metadata } from 'next'
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import { works } from '@/content/works'
+import { useParams, notFound } from 'next/navigation'
+import { useWorks } from '@/lib/worksStore'
 import PageTransition from '@/components/PageTransition'
 
-interface Props {
-  params: Promise<{ slug: string }>
-}
+export default function WorkPage() {
+  const params = useParams<{ slug: string }>()
+  const slug = params?.slug
+  const { works, ready } = useWorks()
 
-export async function generateStaticParams() {
-  return works.map((w) => ({ slug: w.slug }))
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const artwork = works.find((w) => w.slug === slug)
-  if (!artwork) return {}
-  return {
-    title: `${artwork.title} — Soul in Silence · John Patrick Lachica`,
-    description: artwork.description,
+  if (!ready) {
+    return <div style={{ minHeight: '60vh' }} />
   }
-}
 
-export default async function WorkPage({ params }: Props) {
-  const { slug } = await params
   const index = works.findIndex((w) => w.slug === slug)
   if (index === -1) notFound()
 
@@ -69,13 +59,7 @@ export default async function WorkPage({ params }: Props) {
               aspectRatio: '4/5',
             }}
           >
-            <Image
-              src={artwork.image}
-              alt={artwork.title}
-              fill
-              priority
-              style={{ objectFit: 'contain' }}
-            />
+            <Image src={artwork.image} alt={artwork.title} fill priority style={{ objectFit: 'contain' }} />
           </div>
 
           {/* Info panel */}
@@ -107,7 +91,6 @@ export default async function WorkPage({ params }: Props) {
             <div style={{ borderTop: '1px solid rgba(240,237,232,0.08)', paddingTop: '28px', marginBottom: '28px' }}>
               {[
                 ['Medium', artwork.medium],
-                ['Dimensions', artwork.dimensions],
                 ['Year', String(artwork.year)],
               ].map(([label, value]) => (
                 <div
@@ -143,14 +126,7 @@ export default async function WorkPage({ params }: Props) {
               ))}
             </div>
 
-            <p
-              style={{
-                fontSize: '13px',
-                lineHeight: 2.0,
-                color: '#8C8580',
-                marginBottom: '40px',
-              }}
-            >
+            <p style={{ fontSize: '13px', lineHeight: 2.0, color: '#8C8580', marginBottom: '40px' }}>
               {artwork.description}
             </p>
 
@@ -184,10 +160,7 @@ export default async function WorkPage({ params }: Props) {
           }}
         >
           {prev ? (
-            <Link
-              href={`/works/${prev.slug}`}
-              style={{ textDecoration: 'none' }}
-            >
+            <Link href={`/works/${prev.slug}`} style={{ textDecoration: 'none' }}>
               <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8C8580', marginBottom: '8px' }}>
                 ← Previous
               </p>
@@ -195,12 +168,11 @@ export default async function WorkPage({ params }: Props) {
                 {prev.title}
               </p>
             </Link>
-          ) : <div />}
+          ) : (
+            <div />
+          )}
           {next ? (
-            <Link
-              href={`/works/${next.slug}`}
-              style={{ textDecoration: 'none', textAlign: 'right' }}
-            >
+            <Link href={`/works/${next.slug}`} style={{ textDecoration: 'none', textAlign: 'right' }}>
               <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8C8580', marginBottom: '8px' }}>
                 Next →
               </p>
@@ -208,7 +180,9 @@ export default async function WorkPage({ params }: Props) {
                 {next.title}
               </p>
             </Link>
-          ) : <div />}
+          ) : (
+            <div />
+          )}
         </div>
       </div>
     </PageTransition>

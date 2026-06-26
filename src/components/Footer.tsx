@@ -1,5 +1,3 @@
-import Logo from './Logo'
-
 export default function Footer() {
   return (
     <footer
@@ -25,9 +23,6 @@ export default function Footer() {
           color: '#8C8580',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', color: '#8C8580' }}>
-          <Logo />
-        </div>
         Soul in Silence · John Patrick Lachica
       </span>
       <span

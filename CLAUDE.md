@@ -124,7 +124,7 @@ pnpm lint
      medium: "Oil on canvas",
      dimensions: "100 × 80 cm",
      category: "painting", // 'painting' | 'mixed-media' | 'drawing'
-     imageUrl: "/artworks/filename.jpg",
+     image: "/artworks/filename.jpg",
      description: "Short description for grid",
      // Optional
      narrative?: "Longer narrative for detail page",
@@ -195,3 +195,31 @@ Filtering is client-side with smooth transitions.
 - Images should use Next.js `Image` component for optimization
 - CSS uses Tailwind utilities with custom color palette
 - Transitions are 300-500ms for intentional, gallery-like feel
+
+# CLAUDE.md
+
+## Project
+Soul in Silence — fine-art portfolio for Filipino visual artist 
+John Patrick Lachica. This is a gallery, not a web app.
+
+## Stack
+Next.js 16, TypeScript, Tailwind CSS, Framer Motion
+
+## Single Source of Truth
+- Artworks: src/content/works.ts
+- Bio + Statement + CV: src/content/statement.ts
+- Never duplicate content across files
+
+## Design Rules
+- Background: #0A0A0A always
+- Accent #C4A882 for labels only — never as fill
+- Fonts: Cormorant Garamond (headings) + Inter 300 (body)
+- No gradients, shadows, glassmorphism, or emojis in UI
+- Section padding minimum 80px vertical
+- Artwork is always the primary focus
+
+## Behavior
+- Flag anything that looks like SaaS, startup, or template
+- Ask before assuming on ambiguous requests
+- Delete dead code, don't leave it
+- No placeholder data visible on public pages

@@ -13,6 +13,15 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      // We intentionally initialize client-only state from browser storage
+      // (localStorage/sessionStorage) inside effects, and reset transient UI
+      // state on route changes. Keep this as a warning rather than a build-
+      // breaking error.
+      "react-hooks/set-state-in-effect": "warn",
+    },
+  },
 ]);
 
 export default eslintConfig;

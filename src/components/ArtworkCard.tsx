@@ -47,7 +47,7 @@ export default function ArtworkCard({ artwork, priority = false }: ArtworkCardPr
             letterSpacing: '0.06em',
           }}
         >
-          {artwork.medium} — {artwork.dimensions} — {artwork.year}
+          {artwork.medium} — {artwork.year}
         </p>
       </div>
     </Link>
