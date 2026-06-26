@@ -256,6 +256,11 @@ body {
   flex-wrap: wrap;
 }
 
+/* Line break that only applies on mobile */
+.br-mobile {
+  display: none;
+}
+
 /* Hero — raise the text block above dead-center on desktop */
 @media (min-width: 641px) {
   .hero-container {
@@ -290,6 +295,11 @@ body {
   .hero-img-mobile,
   .hero-scrim-mobile {
     display: block !important;
+  }
+
+  /* Mobile-only line break in the hero tagline */
+  .br-mobile {
+    display: inline;
   }
 
   /* Anchor the hero text below the top, in the dark negative space */
