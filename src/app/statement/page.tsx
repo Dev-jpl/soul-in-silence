@@ -52,7 +52,7 @@ export default function StatementPage() {
           }}
         >
           <Image
-            src="/images/about-portrait-3.webp"
+            src="/images/statement-portrait.webp"
             alt="John Patrick Lachica"
             fill
             sizes="(max-width: 760px) 100vw, 760px"
