@@ -148,7 +148,7 @@ export default function Home() {
               marginBottom: '44px',
             }}
           >
-            An art practice rooted in <span style={{ color: '#C4A882' }}>vulnerability</span>, <span style={{ color: '#C4A882' }}>resilience</span>, and the quiet landscapes of human emotion — where silence becomes a language, and feeling becomes form.
+            An art practice exploring the quiet landscapes of <span style={{ color: '#C4A882' }}>memory</span> and the <span style={{ color: '#C4A882' }}>human experience</span>—where silence becomes a language and emotion finds its form.
           </p>
 
           {/* CTA Button */}
