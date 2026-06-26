@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { useState, useEffect } from 'react'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -15,39 +16,27 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname()
+  const [open, setOpen] = useState(false)
+
+  // Close the mobile menu whenever the route changes
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
+
+  // Lock body scroll while the mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
+  const isActiveHref = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
-    <nav
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        background: 'rgba(10,10,10,0.92)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(240,237,232,0.08)',
-        padding: '0 48px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        height: '64px',
-      }}
-    >
-      <Link
-        href="/"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          fontFamily: 'var(--font-cormorant), Georgia, serif',
-          fontWeight: 300,
-          fontSize: '15px',
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-          color: '#F0EDE8',
-          textDecoration: 'none',
-        }}
-      >
+    <nav className="site-nav">
+      <Link href="/" className="site-nav__brand">
         <Image
           src="/images/logos/logo.png"
           alt="Soul in Silence owl mark"
@@ -59,36 +48,15 @@ export default function Navbar() {
         Soul in Silence
       </Link>
 
-      <ul style={{ display: 'flex', gap: '36px', listStyle: 'none' }}>
+      {/* Desktop links */}
+      <ul className="site-nav__links">
         {navLinks.map(({ href, label }) => {
-          const isActive =
-            href === '/' ? pathname === '/' : pathname.startsWith(href)
+          const isActive = isActiveHref(href)
           return (
-            <li
-              key={href}
-              style={{
-                fontSize: '11px',
-                letterSpacing: '0.16em',
-                textTransform: 'uppercase',
-              }}
-              onMouseEnter={(e) => {
-                const link = e.currentTarget.querySelector('a') as HTMLElement
-                if (link) link.style.color = '#F0EDE8'
-              }}
-              onMouseLeave={(e) => {
-                const link = e.currentTarget.querySelector('a') as HTMLElement
-                if (link)
-                  link.style.color = isActive ? '#F0EDE8' : '#8C8580'
-              }}
-            >
+            <li key={href} className="site-nav__item">
               <Link
                 href={href}
-                style={{
-                  color: isActive ? '#F0EDE8' : '#8C8580',
-                  textDecoration: 'none',
-                  transition: 'color 0.2s',
-                  display: 'block',
-                }}
+                className={isActive ? 'site-nav__link is-active' : 'site-nav__link'}
               >
                 {label}
               </Link>
@@ -96,6 +64,40 @@ export default function Navbar() {
           )
         })}
       </ul>
+
+      {/* Mobile hamburger */}
+      <button
+        type="button"
+        aria-label={open ? 'Close menu' : 'Open menu'}
+        aria-expanded={open}
+        className="site-nav__toggle"
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className={open ? 'site-nav__bar is-open-top' : 'site-nav__bar'} />
+        <span className={open ? 'site-nav__bar is-open-mid' : 'site-nav__bar'} />
+        <span className={open ? 'site-nav__bar is-open-bot' : 'site-nav__bar'} />
+      </button>
+
+      {/* Mobile menu overlay */}
+      <div className={open ? 'site-nav__menu is-open' : 'site-nav__menu'}>
+        <ul>
+          {navLinks.map(({ href, label }) => {
+            const isActive = isActiveHref(href)
+            return (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className={
+                    isActive ? 'site-nav__mobile-link is-active' : 'site-nav__mobile-link'
+                  }
+                >
+                  {label}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </nav>
   )
 }

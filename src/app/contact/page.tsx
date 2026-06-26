@@ -29,6 +29,7 @@ export default function ContactPage() {
         description="Inquiries, commissions, collaborations, and press."
       />
       <div
+        className="pad-x stack-mobile contact-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',

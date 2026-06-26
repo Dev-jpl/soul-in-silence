@@ -3,12 +3,15 @@ import Logo from './Logo'
 export default function Footer() {
   return (
     <footer
+      className="pad-x footer-bar"
       style={{
         borderTop: '1px solid rgba(240,237,232,0.08)',
         padding: '32px 48px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        gap: '16px',
+        flexWrap: 'wrap',
       }}
     >
       <span

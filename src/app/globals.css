@@ -42,3 +42,217 @@ body {
 
 /* Nav link active state */
 .nav-link-active { color: #F0EDE8 !important; }
+
+/* ============================================================
+   Navbar
+   ============================================================ */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(240, 237, 232, 0.08);
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.site-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f0ede8;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav__links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.site-nav__item {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.site-nav__link {
+  color: #8c8580;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: block;
+}
+
+.site-nav__link:hover,
+.site-nav__link.is-active {
+  color: #f0ede8;
+}
+
+/* Hamburger button — hidden on desktop */
+.site-nav__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 110;
+}
+
+.site-nav__bar {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: #f0ede8;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.site-nav__bar.is-open-top {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.site-nav__bar.is-open-mid {
+  opacity: 0;
+}
+.site-nav__bar.is-open-bot {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Mobile slide-down menu — hidden on desktop */
+.site-nav__menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .site-nav {
+    padding: 0 24px;
+  }
+
+  .site-nav__links {
+    display: none;
+  }
+
+  .site-nav__toggle {
+    display: flex;
+  }
+
+  .site-nav__menu {
+    display: block;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 105;
+  }
+
+  .site-nav__menu.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .site-nav__menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px;
+    gap: 4px;
+  }
+
+  .site-nav__mobile-link {
+    display: block;
+    padding: 18px 4px;
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: #8c8580;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(240, 237, 232, 0.06);
+    transition: color 0.2s;
+  }
+
+  .site-nav__mobile-link.is-active,
+  .site-nav__mobile-link:hover {
+    color: #f0ede8;
+  }
+}
+
+/* ============================================================
+   Mobile layout fixes (inline styles overridden with !important)
+   ============================================================ */
+@media (max-width: 640px) {
+  /* Reduce heavy section side padding */
+  .pad-x {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  /* Hero */
+  .hero-content {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    max-width: 100% !important;
+  }
+
+  .hero-title {
+    white-space: normal !important;
+    font-size: clamp(40px, 12vw, 60px) !important;
+  }
+
+  .hero-scroll {
+    display: none !important;
+  }
+
+  /* Two-column layouts collapse to a single column */
+  .stack-mobile {
+    grid-template-columns: 1fr !important;
+  }
+
+  .stack-mobile.contact-grid {
+    gap: 48px !important;
+  }
+
+  .stack-mobile.detail-grid {
+    gap: 40px !important;
+  }
+
+  /* Footer stacks and centers */
+  .footer-bar {
+    justify-content: center !important;
+    text-align: center;
+  }
+
+  /* Works filter/view bar wraps instead of overflowing */
+  .works-bar {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* Gallery grid → single column on phones */
+  .works-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

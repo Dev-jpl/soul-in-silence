@@ -13,7 +13,7 @@ export default function AboutPage() {
   return (
     <PageTransition>
       {/* Two-column: portrait + bio */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '80vh' }}>
+      <div className="stack-mobile" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '80vh' }}>
         <div
           style={{
             position: 'relative',
@@ -32,6 +32,7 @@ export default function AboutPage() {
         </div>
 
         <div
+          className="pad-x"
           style={{
             padding: '96px 64px',
             display: 'flex',

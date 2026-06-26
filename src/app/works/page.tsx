@@ -33,6 +33,7 @@ export default function WorksPage() {
 
       {/* Filter and view toggle bar */}
       <div
+        className="pad-x works-bar"
         style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -107,6 +108,7 @@ export default function WorksPage() {
 
       {/* Gallery - Grid or List view */}
       <div
+        className="pad-x works-grid"
         style={{
           padding: '48px',
           display: 'grid',

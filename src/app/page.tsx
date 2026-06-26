@@ -62,7 +62,7 @@ export default function Home() {
           }
         `}</style>
 
-        <div style={{ position: 'relative', zIndex: 2, padding: '0 48px', maxWidth: '560px' }}>
+        <div className="hero-content" style={{ position: 'relative', zIndex: 2, padding: '0 48px', maxWidth: '560px' }}>
           {/* Eyebrow with accent rule */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '30px' }}>
             <span style={{ width: '44px', height: '1px', background: '#C4A882', opacity: 0.7 }} />
@@ -81,6 +81,7 @@ export default function Home() {
 
           {/* Main Title */}
           <h1
+            className="hero-title"
             style={{
               fontFamily: 'var(--font-cormorant), Georgia, serif',
               fontSize: 'clamp(44px, 7vw, 92px)',
@@ -132,6 +133,7 @@ export default function Home() {
 
         {/* Scroll indicator — bottom-right, away from the subject */}
         <div
+          className="hero-scroll"
           style={{
             position: 'absolute',
             bottom: '48px',
@@ -177,6 +179,7 @@ export default function Home() {
 
       {/* Brand Philosophy */}
       <section
+        className="pad-x"
         style={{
           padding: '96px 48px',
           borderBottom: '1px solid rgba(240,237,232,0.08)',
@@ -287,6 +290,7 @@ export default function Home() {
       {/* Modules Section */}
       <section
         id="modules"
+        className="pad-x"
         style={{
           padding: '96px 48px',
         }}
@@ -495,6 +499,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section
+        className="pad-x"
         style={{
           padding: '80px 48px',
           borderTop: '1px solid rgba(240,237,232,0.08)',

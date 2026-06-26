@@ -7,6 +7,7 @@ interface PageHeaderProps {
 export default function PageHeader({ title, description, eyebrow }: PageHeaderProps) {
   return (
     <div
+      className="pad-x"
       style={{
         padding: '80px 48px 48px',
         borderBottom: '1px solid rgba(240,237,232,0.08)',

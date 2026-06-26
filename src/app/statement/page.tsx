@@ -14,6 +14,7 @@ export default function StatementPage() {
     <PageTransition>
       <PageHeader title="Artist Statement" eyebrow="Soul in Silence" />
       <div
+        className="pad-x"
         style={{
           maxWidth: '680px',
           margin: '0 auto',

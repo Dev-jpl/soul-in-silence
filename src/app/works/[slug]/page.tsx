@@ -34,7 +34,7 @@ export default async function WorkPage({ params }: Props) {
 
   return (
     <PageTransition>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '64px 48px' }}>
+      <div className="pad-x" style={{ maxWidth: '1200px', margin: '0 auto', padding: '64px 48px' }}>
         {/* Back */}
         <Link
           href="/works"
@@ -53,6 +53,7 @@ export default async function WorkPage({ params }: Props) {
         </Link>
 
         <div
+          className="stack-mobile detail-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 380px',

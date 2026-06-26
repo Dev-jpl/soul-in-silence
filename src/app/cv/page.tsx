@@ -88,6 +88,7 @@ export default function CVPage() {
     <PageTransition>
       <PageHeader title="Curriculum Vitae" eyebrow="John Patrick Lachica" />
       <div
+        className="pad-x"
         style={{
           maxWidth: '840px',
           margin: '0 auto',
