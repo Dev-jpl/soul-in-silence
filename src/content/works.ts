@@ -12,6 +12,18 @@ export type Artwork = {
 
 export const works: Artwork[] = [
   {
+    slug: 'untitled-14',
+    title: 'Untitled Series XIV',
+    year: 2024,
+    medium: 'Oil on Canvas',
+    dimensions: 'Variable',
+    category: 'painting',
+    featured: true,
+    description:
+      'A submerged figure dissolves into deep blue — manta forms drifting across the body like memory surfacing without warning. The work holds vulnerability and the quiet weight of the emotional interior.',
+    image: '/artworks/untitled-14.webp',
+  },
+  {
     slug: 'untitled-1',
     title: 'Untitled Series I',
     year: 2024,

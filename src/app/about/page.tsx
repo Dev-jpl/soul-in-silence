@@ -103,21 +103,6 @@ export default function AboutPage() {
             >
               Read Statement
             </Link>
-            <Link
-              href="/cv"
-              style={{
-                fontSize: '10px',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: '#8C8580',
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                borderBottom: '1px solid rgba(140,133,128,0.3)',
-              }}
-            >
-              View CV
-            </Link>
           </div>
         </div>
       </div>
