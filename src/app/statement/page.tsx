@@ -15,64 +15,74 @@ export default function StatementPage() {
     <PageTransition>
       <PageHeader title="Artist Statement" eyebrow="Soul in Silence" />
       <div
-        className="pad-x"
+        className="pad-x stack-mobile statement-grid"
         style={{
-          maxWidth: '680px',
+          maxWidth: '1080px',
           margin: '0 auto',
           padding: '80px 48px 120px',
+          display: 'grid',
+          gridTemplateColumns: '380px 1fr',
+          gap: '72px',
+          alignItems: 'start',
         }}
       >
-        <div
-          style={{
-            position: 'relative',
-            width: '100%',
-            aspectRatio: '3 / 4',
-            marginBottom: '64px',
-            overflow: 'hidden',
-            background: '#111111',
-          }}
-        >
-          <Image
-            src="/images/about-portrait-2.webp"
-            alt="John Patrick Lachica"
-            fill
-            sizes="(max-width: 680px) 100vw, 680px"
-            style={{ objectFit: 'cover', objectPosition: 'center top', opacity: 0.9 }}
-          />
-        </div>
-        {artistStatement.body.map((paragraph, i) => (
-          <p
-            key={i}
+        {/* Portrait — sticky alongside the text */}
+        <div className="statement-portrait">
+          <div
             style={{
-              fontFamily:
-                i === 0
-                  ? 'var(--font-cormorant), Georgia, serif'
-                  : undefined,
-              fontSize: i === 0 ? '28px' : '15px',
-              fontStyle: i === 0 ? 'italic' : 'normal',
-              fontWeight: 300,
-              lineHeight: i === 0 ? 1.6 : 2.1,
-              color: i === 0 ? '#F0EDE8' : '#8C8580',
-              marginBottom: i === 0 ? '56px' : '28px',
+              position: 'relative',
+              width: '100%',
+              aspectRatio: '3 / 4',
+              overflow: 'hidden',
+              background: '#111111',
             }}
           >
-            {paragraph}
+            <Image
+              src="/images/about-portrait-2.webp"
+              alt="John Patrick Lachica"
+              fill
+              sizes="(max-width: 640px) 100vw, 380px"
+              style={{ objectFit: 'cover', objectPosition: 'center top', opacity: 0.9 }}
+            />
+          </div>
+        </div>
+
+        {/* Statement text */}
+        <div>
+          {artistStatement.body.map((paragraph, i) => (
+            <p
+              key={i}
+              style={{
+                fontFamily:
+                  i === 0
+                    ? 'var(--font-cormorant), Georgia, serif'
+                    : undefined,
+                fontSize: i === 0 ? '28px' : '15px',
+                fontStyle: i === 0 ? 'italic' : 'normal',
+                fontWeight: 300,
+                lineHeight: i === 0 ? 1.6 : 2.1,
+                color: i === 0 ? '#F0EDE8' : '#8C8580',
+                marginBottom: i === 0 ? '56px' : '28px',
+              }}
+            >
+              {paragraph}
+            </p>
+          ))}
+          <p
+            style={{
+              fontFamily: 'var(--font-cormorant), Georgia, serif',
+              fontSize: '16px',
+              fontStyle: 'italic',
+              fontWeight: 300,
+              color: '#C4A882',
+              marginTop: '56px',
+              paddingTop: '40px',
+              borderTop: '1px solid rgba(240,237,232,0.08)',
+            }}
+          >
+            {artistStatement.closing}
           </p>
-        ))}
-        <p
-          style={{
-            fontFamily: 'var(--font-cormorant), Georgia, serif',
-            fontSize: '16px',
-            fontStyle: 'italic',
-            fontWeight: 300,
-            color: '#C4A882',
-            marginTop: '56px',
-            paddingTop: '40px',
-            borderTop: '1px solid rgba(240,237,232,0.08)',
-          }}
-        >
-          {artistStatement.closing}
-        </p>
+        </div>
       </div>
     </PageTransition>
   )

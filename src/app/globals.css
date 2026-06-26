@@ -200,6 +200,12 @@ body {
   }
 }
 
+/* Artist statement — portrait sticks alongside the text */
+.statement-portrait {
+  position: sticky;
+  top: 96px;
+}
+
 /* ============================================================
    Hero responsive artwork (portrait on mobile, landscape on desktop)
    ============================================================ */
@@ -263,6 +269,16 @@ body {
 
   .stack-mobile.detail-grid {
     gap: 40px !important;
+  }
+
+  .stack-mobile.statement-grid {
+    gap: 48px !important;
+  }
+
+  /* Cap the portrait height when stacked so it doesn't dominate */
+  .statement-portrait {
+    position: static;
+    max-width: 360px;
   }
 
   /* Footer stacks and centers */
