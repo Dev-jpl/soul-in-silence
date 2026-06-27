@@ -27,7 +27,7 @@ export default function TrackArtworkView({ slug, title }: Props) {
 
     track('artwork_view', { slug, title })
     if (supabase) {
-      supabase.rpc('increment_artwork_view', { p_slug: slug }).then(({ error }) => {
+      supabase.rpc('record_view', { p_kind: 'artwork', p_ref: slug }).then(({ error }) => {
         if (error) console.error('view count error', error.message)
       })
     }

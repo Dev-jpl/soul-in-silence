@@ -6,12 +6,34 @@ import { loadWorks, type Artwork } from '@/lib/worksStore'
 import { Card, ghostBtn } from './ui'
 
 type Tab = 'overview' | 'artworks' | 'pages'
+type Ev = { kind: string; ref: string; created_at: string }
+
+// Friendly names for the site's pages (path → name).
+const PAGE_NAMES: Record<string, string> = {
+  '/': 'Home',
+  '/works': 'Works',
+  '/about': 'About',
+  '/statement': 'Artist Statement',
+  '/exhibitions': 'Exhibitions',
+  '/contact': 'Contact',
+}
+
+function monthOptions() {
+  const opts = [{ value: 'all', label: 'All time' }]
+  const now = new Date()
+  for (let i = 0; i < 12; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1)
+    const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
+    opts.push({ value, label: d.toLocaleString('en-US', { month: 'long', year: 'numeric' }) })
+  }
+  return opts
+}
 
 export default function AnalyticsPage() {
   const [tab, setTab] = useState<Tab>('overview')
+  const [period, setPeriod] = useState('all')
   const [artworks, setArtworks] = useState<Artwork[]>([])
-  const [views, setViews] = useState<Record<string, number>>({})
-  const [pageViews, setPageViews] = useState<{ path: string; count: number }[]>([])
+  const [events, setEvents] = useState<Ev[]>([])
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -21,55 +43,47 @@ export default function AnalyticsPage() {
       return
     }
     supabase
-      .from('artwork_views')
-      .select('slug, count')
+      .from('view_events')
+      .select('kind, ref, created_at')
       .then(({ data, error }) => {
         if (error) {
           setError(error.message)
           return
         }
-        const map: Record<string, number> = {}
-        ;(data ?? []).forEach((r: { slug: string; count: number }) => {
-          map[r.slug] = r.count
-        })
-        setViews(map)
-      })
-    supabase
-      .from('page_views')
-      .select('path, count')
-      .then(({ data }) => {
-        if (data) setPageViews([...data].sort((a, b) => b.count - a.count))
+        setEvents((data ?? []) as Ev[])
       })
   }, [])
 
-  async function resetArtworkViews() {
+  async function reset(kind: 'artwork' | 'page') {
     if (!supabase) return
-    if (!confirm('Reset all artwork view counts to zero? This cannot be undone.')) return
-    const { error } = await supabase.rpc('reset_artwork_views')
+    if (!confirm(`Reset all ${kind} views? This cannot be undone.`)) return
+    const { error } = await supabase.rpc('reset_views', { p_kind: kind })
     if (error) {
       alert('Reset failed: ' + error.message)
       return
     }
-    setViews({})
+    setEvents((prev) => prev.filter((e) => e.kind !== kind))
   }
 
-  async function resetPageViews() {
-    if (!supabase) return
-    if (!confirm('Reset all page view counts to zero? This cannot be undone.')) return
-    const { error } = await supabase.rpc('reset_page_views')
-    if (error) {
-      alert('Reset failed: ' + error.message)
-      return
-    }
-    setPageViews([])
-  }
+  const filtered = events.filter((e) => period === 'all' || e.created_at.slice(0, 7) === period)
 
+  const artworkCounts: Record<string, number> = {}
+  const pageCounts: Record<string, number> = {}
+  filtered.forEach((e) => {
+    if (e.kind === 'artwork') artworkCounts[e.ref] = (artworkCounts[e.ref] ?? 0) + 1
+    else if (e.kind === 'page') pageCounts[e.ref] = (pageCounts[e.ref] ?? 0) + 1
+  })
+
+  const artworkRows = artworks
+    .map((a) => ({ label: a.title, value: artworkCounts[a.slug] ?? 0 }))
+    .sort((x, y) => y.value - x.value)
+  const pageRows = Object.entries(pageCounts)
+    .map(([path, value]) => ({ label: PAGE_NAMES[path] ?? path, sub: path, value }))
+    .sort((x, y) => y.value - x.value)
+
+  const totalArtworkViews = artworkRows.reduce((s, r) => s + r.value, 0)
+  const totalPageViews = pageRows.reduce((s, r) => s + r.value, 0)
   const featured = artworks.filter((a) => a.featured).length
-  const rankedArtworks = [...artworks]
-    .map((a) => ({ slug: a.slug, title: a.title, views: views[a.slug] ?? 0 }))
-    .sort((x, y) => y.views - x.views)
-  const totalArtworkViews = rankedArtworks.reduce((sum, r) => sum + r.views, 0)
-  const totalPageViews = pageViews.reduce((sum, r) => sum + r.count, 0)
 
   const tabs: { id: Tab; label: string }[] = [
     { id: 'overview', label: 'Overview' },
@@ -79,7 +93,28 @@ export default function AnalyticsPage() {
 
   return (
     <div>
-      <h2 style={{ fontSize: '28px', marginBottom: '24px', fontWeight: 400 }}>Analytics</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: '24px' }}>
+        <h2 style={{ fontSize: '28px', margin: 0, fontWeight: 400 }}>Analytics</h2>
+        <select
+          value={period}
+          onChange={(e) => setPeriod(e.target.value)}
+          style={{
+            padding: '8px 14px',
+            background: '#111111',
+            color: '#F0EDE8',
+            border: '1px solid rgba(240,237,232,0.15)',
+            fontSize: '13px',
+            fontFamily: 'inherit',
+            cursor: 'pointer',
+          }}
+        >
+          {monthOptions().map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: '4px', borderBottom: '1px solid rgba(240,237,232,0.08)', marginBottom: '32px' }}>
@@ -106,73 +141,76 @@ export default function AnalyticsPage() {
 
       {error && <p style={{ color: '#8C8580', fontSize: '13px', lineHeight: 1.7, marginBottom: '24px' }}>{error}</p>}
 
-      {/* Overview */}
       {tab === 'overview' && (
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '24px',
-          }}
-        >
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
           <Card title="Total Artworks" value={String(artworks.length)} />
           <Card title="Featured Works" value={String(featured)} />
-          <Card title="Artwork Views" value={String(totalArtworkViews)} />
-          <Card title="Page Views" value={String(totalPageViews)} />
+          <Card title="Artwork Views" value={totalArtworkViews.toLocaleString()} />
+          <Card title="Page Views" value={totalPageViews.toLocaleString()} />
         </div>
       )}
 
-      {/* Artworks */}
       {tab === 'artworks' && (
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h3 style={{ fontSize: '16px', fontWeight: 400, margin: 0, color: '#F0EDE8' }}>Views by artwork</h3>
-            {supabase && !error && (
-              <button onClick={resetArtworkViews} style={{ ...ghostBtn, padding: '8px 16px' }}>
-                Reset Views
-              </button>
-            )}
-          </div>
-          <ViewList rows={rankedArtworks.map((r) => ({ label: r.title, value: r.views }))} empty="No artwork views yet." />
+          <SectionHeader title="Views by artwork" onReset={supabase && !error ? () => reset('artwork') : undefined} />
+          <BarList rows={artworkRows} empty="No artwork views in this period." />
         </div>
       )}
 
-      {/* Pages */}
       {tab === 'pages' && (
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h3 style={{ fontSize: '16px', fontWeight: 400, margin: 0, color: '#F0EDE8' }}>Views by page</h3>
-            {supabase && !error && (
-              <button onClick={resetPageViews} style={{ ...ghostBtn, padding: '8px 16px' }}>
-                Reset Views
-              </button>
-            )}
-          </div>
-          <ViewList rows={pageViews.map((r) => ({ label: r.path, value: r.count }))} empty="No page views recorded yet." />
+          <SectionHeader title="Views by page" onReset={supabase && !error ? () => reset('page') : undefined} />
+          <BarList rows={pageRows} empty="No page views in this period." />
         </div>
       )}
     </div>
   )
 }
 
-function ViewList({ rows, empty }: { rows: { label: string; value: number }[]; empty: string }) {
-  if (rows.length === 0) return <p style={{ color: '#8C8580', fontSize: '13px' }}>{empty}</p>
+function SectionHeader({ title, onReset }: { title: string; onReset?: () => void }) {
   return (
-    <div style={{ border: '1px solid rgba(240,237,232,0.08)', borderRadius: '4px', overflow: 'hidden' }}>
-      {rows.map(({ label, value }) => (
-        <div
-          key={label}
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '14px 18px',
-            borderBottom: '1px solid rgba(240,237,232,0.06)',
-            fontSize: '13px',
-          }}
-        >
-          <span style={{ color: '#F0EDE8' }}>{label}</span>
-          <span style={{ color: '#C4A882', fontWeight: 500 }}>{value.toLocaleString()}</span>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+      <h3 style={{ fontSize: '16px', fontWeight: 400, margin: 0, color: '#F0EDE8' }}>{title}</h3>
+      {onReset && (
+        <button onClick={onReset} style={{ ...ghostBtn, padding: '8px 16px' }}>
+          Reset Views
+        </button>
+      )}
+    </div>
+  )
+}
+
+function BarList({
+  rows,
+  empty,
+}: {
+  rows: { label: string; sub?: string; value: number }[]
+  empty: string
+}) {
+  if (rows.length === 0) return <p style={{ color: '#8C8580', fontSize: '13px' }}>{empty}</p>
+  const max = Math.max(1, ...rows.map((r) => r.value))
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {rows.map((r) => (
+        <div key={r.label + (r.sub ?? '')}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '6px' }}>
+            <span>
+              <span style={{ color: '#F0EDE8', fontSize: '13px' }}>{r.label}</span>
+              {r.sub && <span style={{ color: '#8C8580', fontSize: '11px', marginLeft: '8px' }}>{r.sub}</span>}
+            </span>
+            <span style={{ color: '#C4A882', fontSize: '13px', fontWeight: 500 }}>{r.value.toLocaleString()}</span>
+          </div>
+          <div style={{ height: '6px', background: 'rgba(240,237,232,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
+            <div
+              style={{
+                height: '100%',
+                width: `${(r.value / max) * 100}%`,
+                background: '#C4A882',
+                borderRadius: '3px',
+                transition: 'width 0.3s',
+              }}
+            />
+          </div>
         </div>
       ))}
     </div>

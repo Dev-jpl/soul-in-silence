@@ -20,7 +20,7 @@ export default function PageViewTracker() {
 
     last.current = pathname
     if (supabase) {
-      supabase.rpc('increment_page_view', { p_path: pathname }).then(({ error }) => {
+      supabase.rpc('record_view', { p_kind: 'page', p_ref: pathname }).then(({ error }) => {
         if (error) console.error('page view error', error.message)
       })
     }
