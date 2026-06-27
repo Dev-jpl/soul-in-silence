@@ -163,10 +163,11 @@ export default function AnalyticsPage() {
 
       {tab === 'overview' && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
+          <Card title="Total Visits" value={(totalArtworkViews + totalPageViews).toLocaleString()} />
+          <Card title="Page Views" value={totalPageViews.toLocaleString()} />
+          <Card title="Artwork Views" value={totalArtworkViews.toLocaleString()} />
           <Card title="Total Artworks" value={String(artworks.length)} />
           <Card title="Featured Works" value={String(featured)} />
-          <Card title="Artwork Views" value={totalArtworkViews.toLocaleString()} />
-          <Card title="Page Views" value={totalPageViews.toLocaleString()} />
         </div>
       )}
 
