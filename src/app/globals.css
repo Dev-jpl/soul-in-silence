@@ -262,6 +262,11 @@ body {
   display: none;
 }
 
+/* Artwork detail: mobile-only meta line hidden on desktop */
+.detail-meta-mobile {
+  display: none;
+}
+
 /* Hero — raise the text block above dead-center on desktop */
 @media (min-width: 641px) {
   .hero-container {
@@ -393,6 +398,16 @@ body {
   .works-list-thumb {
     flex: none !important;
     width: 100% !important;
+  }
+
+  /* Artwork detail on mobile: drop the eyebrow + label/value rows,
+     show a simple "Year | Medium" line instead */
+  .detail-eyebrow-year,
+  .detail-rows {
+    display: none !important;
+  }
+  .detail-meta-mobile {
+    display: block !important;
   }
 
   /* About detail strip stacks vertically */

@@ -108,6 +108,7 @@ export default async function WorkPage({ params }: Props) {
           {/* Info panel */}
           <div style={{ paddingTop: '8px' }}>
             <p
+              className="detail-eyebrow-year"
               style={{
                 fontSize: '10px',
                 letterSpacing: '0.22em',
@@ -135,7 +136,21 @@ export default async function WorkPage({ params }: Props) {
               {artwork.description}
             </p>
 
-            <div style={{ borderTop: '1px solid rgba(240,237,232,0.08)' }}>
+            {/* Mobile-only meta line */}
+            <p
+              className="detail-meta-mobile"
+              style={{
+                fontSize: '12px',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: '#8C8580',
+              }}
+            >
+              {artwork.year} | {artwork.medium}
+              {artwork.dimensions && artwork.dimensions !== 'Variable' ? ` | ${artwork.dimensions}` : ''}
+            </p>
+
+            <div className="detail-rows" style={{ borderTop: '1px solid rgba(240,237,232,0.08)' }}>
               {[
                 ['Medium', artwork.medium] as [string, string],
                 ...(artwork.dimensions && artwork.dimensions !== 'Variable'
