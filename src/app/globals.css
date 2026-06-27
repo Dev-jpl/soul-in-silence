@@ -410,6 +410,15 @@ body {
     display: block !important;
   }
 
+  /* Artwork image goes full-bleed (edge to edge) on mobile */
+  .detail-image {
+    width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    aspect-ratio: auto !important;
+    min-height: 70vh;
+    margin-bottom: 24px;
+  }
+
   /* About detail strip stacks vertically */
   .about-details {
     grid-template-columns: 1fr !important;

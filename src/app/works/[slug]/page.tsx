@@ -96,6 +96,7 @@ export default async function WorkPage({ params }: Props) {
         >
           {/* Artwork image */}
           <div
+            className="detail-image"
             style={{
               position: 'relative',
               background: '#161616',
