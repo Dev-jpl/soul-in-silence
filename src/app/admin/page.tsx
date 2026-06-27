@@ -253,11 +253,11 @@ export default function AnalyticsPage() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
           <div>
             <SectionHeader title="Device" />
-            <BarList rows={breakdown('device')} empty="No data in this period." />
+            <PieChart rows={breakdown('device')} empty="No data in this period." />
           </div>
           <div>
             <SectionHeader title="Operating System" />
-            <BarList rows={breakdown('os')} empty="No data in this period." />
+            <PieChart rows={breakdown('os')} empty="No data in this period." />
           </div>
           <div>
             <SectionHeader title="Browser" />
@@ -282,6 +282,53 @@ function SectionHeader({ title, onReset }: { title: string; onReset?: () => void
           Reset Views
         </button>
       )}
+    </div>
+  )
+}
+
+const PIE_COLORS = ['#C4A882', '#8C8580', '#A9885F', '#5E5853', '#D8C9A8', '#736B62', '#3A3A3A']
+
+function PieChart({ rows, empty }: { rows: { label: string; value: number }[]; empty: string }) {
+  const total = rows.reduce((s, r) => s + r.value, 0)
+  if (total === 0) return <p style={{ color: '#8C8580', fontSize: '13px' }}>{empty}</p>
+
+  const cx = 80
+  const cy = 80
+  const r = 78
+  const slices = rows.map((row, i) => {
+    const before = rows.slice(0, i).reduce((s, x) => s + x.value, 0)
+    const frac = row.value / total
+    const start = -Math.PI / 2 + (before / total) * 2 * Math.PI
+    const end = -Math.PI / 2 + ((before + row.value) / total) * 2 * Math.PI
+    const x1 = cx + r * Math.cos(start)
+    const y1 = cy + r * Math.sin(start)
+    const x2 = cx + r * Math.cos(end)
+    const y2 = cy + r * Math.sin(end)
+    const large = end - start > Math.PI ? 1 : 0
+    const d = `M${cx},${cy} L${x1.toFixed(2)},${y1.toFixed(2)} A${r},${r} 0 ${large} 1 ${x2.toFixed(2)},${y2.toFixed(2)} Z`
+    return { d, color: PIE_COLORS[i % PIE_COLORS.length], label: row.label, value: row.value, pct: Math.round(frac * 100) }
+  })
+
+  return (
+    <div style={{ display: 'flex', gap: '32px', alignItems: 'center', flexWrap: 'wrap' }}>
+      <svg width="160" height="160" viewBox="0 0 160 160" style={{ flexShrink: 0 }}>
+        {rows.length === 1 ? (
+          <circle cx={cx} cy={cy} r={r} fill={PIE_COLORS[0]} />
+        ) : (
+          slices.map((s, i) => <path key={i} d={s.d} fill={s.color} />)
+        )}
+      </svg>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {slices.map((s, i) => (
+          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px' }}>
+            <span style={{ width: '10px', height: '10px', background: s.color, borderRadius: '2px', flexShrink: 0 }} />
+            <span style={{ color: '#F0EDE8' }}>{s.label}</span>
+            <span style={{ color: '#8C8580' }}>
+              {s.value.toLocaleString()} ({s.pct}%)
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
