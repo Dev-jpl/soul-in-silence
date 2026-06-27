@@ -5,8 +5,16 @@ import { supabase } from '@/lib/supabase'
 import { loadWorks, type Artwork } from '@/lib/worksStore'
 import { Card, ghostBtn } from './ui'
 
-type Tab = 'overview' | 'artworks' | 'pages'
-type Ev = { kind: string; ref: string; created_at: string }
+type Tab = 'overview' | 'artworks' | 'pages' | 'visitors'
+type Ev = {
+  kind: string
+  ref: string
+  created_at: string
+  os: string | null
+  device: string | null
+  browser: string | null
+  country: string | null
+}
 
 // Friendly names for the site's pages (path → name).
 const PAGE_NAMES: Record<string, string> = {
@@ -44,7 +52,7 @@ export default function AnalyticsPage() {
     }
     supabase
       .from('view_events')
-      .select('kind, ref, created_at')
+      .select('kind, ref, created_at, os, device, browser, country')
       .then(({ data, error }) => {
         if (error) {
           setError(error.message)
@@ -85,10 +93,22 @@ export default function AnalyticsPage() {
   const totalPageViews = pageRows.reduce((s, r) => s + r.value, 0)
   const featured = artworks.filter((a) => a.featured).length
 
+  const breakdown = (field: 'os' | 'device' | 'browser' | 'country') => {
+    const counts: Record<string, number> = {}
+    filtered.forEach((e) => {
+      const v = e[field] || 'Unknown'
+      counts[v] = (counts[v] ?? 0) + 1
+    })
+    return Object.entries(counts)
+      .map(([label, value]) => ({ label, value }))
+      .sort((x, y) => y.value - x.value)
+  }
+
   const tabs: { id: Tab; label: string }[] = [
     { id: 'overview', label: 'Overview' },
     { id: 'artworks', label: 'Artworks' },
     { id: 'pages', label: 'Pages' },
+    { id: 'visitors', label: 'Visitors' },
   ]
 
   return (
@@ -161,6 +181,27 @@ export default function AnalyticsPage() {
         <div>
           <SectionHeader title="Views by page" onReset={supabase && !error ? () => reset('page') : undefined} />
           <BarList rows={pageRows} empty="No page views in this period." />
+        </div>
+      )}
+
+      {tab === 'visitors' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+          <div>
+            <SectionHeader title="Device" />
+            <BarList rows={breakdown('device')} empty="No data in this period." />
+          </div>
+          <div>
+            <SectionHeader title="Operating System" />
+            <BarList rows={breakdown('os')} empty="No data in this period." />
+          </div>
+          <div>
+            <SectionHeader title="Browser" />
+            <BarList rows={breakdown('browser')} empty="No data in this period." />
+          </div>
+          <div>
+            <SectionHeader title="Country" />
+            <BarList rows={breakdown('country')} empty="No data in this period." />
+          </div>
         </div>
       )}
     </div>

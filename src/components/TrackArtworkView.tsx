@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { track } from '@vercel/analytics'
-import { supabase } from '@/lib/supabase'
+import { recordView } from '@/lib/views'
 
 interface Props {
   slug: string
@@ -26,11 +26,7 @@ export default function TrackArtworkView({ slug, title }: Props) {
     if (isLocal) return
 
     track('artwork_view', { slug, title })
-    if (supabase) {
-      supabase.rpc('record_view', { p_kind: 'artwork', p_ref: slug }).then(({ error }) => {
-        if (error) console.error('view count error', error.message)
-      })
-    }
+    recordView('artwork', slug)
   }, [slug, title])
 
   return null
