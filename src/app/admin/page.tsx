@@ -174,7 +174,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '4px', borderBottom: '1px solid rgba(240,237,232,0.08)', marginBottom: '32px' }}>
+      <div style={{ display: 'flex', gap: '4px', borderBottom: '1px solid rgba(240,237,232,0.08)', marginBottom: '32px', overflowX: 'auto' }}>
         {tabs.map((t) => (
           <button
             key={t.id}
@@ -189,6 +189,8 @@ export default function AnalyticsPage() {
               letterSpacing: '0.04em',
               cursor: 'pointer',
               marginBottom: '-1px',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
           >
             {t.label}
