@@ -14,6 +14,7 @@ type Ev = {
   device: string | null
   browser: string | null
   country: string | null
+  visitor: string | null
 }
 
 // Friendly names for the site's pages (path → name).
@@ -40,6 +41,7 @@ function monthOptions() {
 export default function AnalyticsPage() {
   const [tab, setTab] = useState<Tab>('overview')
   const [period, setPeriod] = useState('all')
+  const [days, setDays] = useState(30)
   const [artworks, setArtworks] = useState<Artwork[]>([])
   const [events, setEvents] = useState<Ev[]>([])
   const [error, setError] = useState('')
@@ -52,7 +54,7 @@ export default function AnalyticsPage() {
     }
     supabase
       .from('view_events')
-      .select('kind, ref, created_at, os, device, browser, country')
+      .select('kind, ref, created_at, os, device, browser, country, visitor')
       .then(({ data, error }) => {
         if (error) {
           setError(error.message)
@@ -73,6 +75,19 @@ export default function AnalyticsPage() {
     setEvents((prev) => prev.filter((e) => e.kind !== kind))
   }
 
+  async function resetAll() {
+    if (!supabase) return
+    if (!confirm('Reset ALL analytics (every view event)? This cannot be undone.')) return
+    const a = await supabase.rpc('reset_views', { p_kind: 'artwork' })
+    const p = await supabase.rpc('reset_views', { p_kind: 'page' })
+    const err = a.error || p.error
+    if (err) {
+      alert('Reset failed: ' + err.message)
+      return
+    }
+    setEvents([])
+  }
+
   const filtered = events.filter((e) => period === 'all' || e.created_at.slice(0, 7) === period)
 
   const artworkCounts: Record<string, number> = {}
@@ -91,7 +106,22 @@ export default function AnalyticsPage() {
 
   const totalArtworkViews = artworkRows.reduce((s, r) => s + r.value, 0)
   const totalPageViews = pageRows.reduce((s, r) => s + r.value, 0)
+  const uniqueVisitors = new Set(filtered.map((e) => e.visitor).filter(Boolean)).size
   const featured = artworks.filter((a) => a.featured).length
+
+  // Daily visit series for the last `days` days (counts all view events).
+  const dayCounts: Record<string, number> = {}
+  events.forEach((e) => {
+    const d = e.created_at.slice(0, 10)
+    dayCounts[d] = (dayCounts[d] ?? 0) + 1
+  })
+  const series: { date: string; value: number }[] = []
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date()
+    d.setDate(d.getDate() - i)
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    series.push({ date: key, value: dayCounts[key] ?? 0 })
+  }
 
   const breakdown = (field: 'os' | 'device' | 'browser' | 'country') => {
     const counts: Record<string, number> = {}
@@ -115,25 +145,32 @@ export default function AnalyticsPage() {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: '24px' }}>
         <h2 style={{ fontSize: '28px', margin: 0, fontWeight: 400 }}>Analytics</h2>
-        <select
-          value={period}
-          onChange={(e) => setPeriod(e.target.value)}
-          style={{
-            padding: '8px 14px',
-            background: '#111111',
-            color: '#F0EDE8',
-            border: '1px solid rgba(240,237,232,0.15)',
-            fontSize: '13px',
-            fontFamily: 'inherit',
-            cursor: 'pointer',
-          }}
-        >
-          {monthOptions().map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <select
+            value={period}
+            onChange={(e) => setPeriod(e.target.value)}
+            style={{
+              padding: '8px 14px',
+              background: '#111111',
+              color: '#F0EDE8',
+              border: '1px solid rgba(240,237,232,0.15)',
+              fontSize: '13px',
+              fontFamily: 'inherit',
+              cursor: 'pointer',
+            }}
+          >
+            {monthOptions().map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+          {supabase && !error && (
+            <button onClick={resetAll} style={{ ...ghostBtn, padding: '8px 16px', borderColor: 'rgba(255,107,107,0.4)', color: '#ff6b6b' }}>
+              Reset All
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Tabs */}
@@ -162,12 +199,39 @@ export default function AnalyticsPage() {
       {error && <p style={{ color: '#8C8580', fontSize: '13px', lineHeight: 1.7, marginBottom: '24px' }}>{error}</p>}
 
       {tab === 'overview' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
-          <Card title="Total Visits" value={(totalArtworkViews + totalPageViews).toLocaleString()} />
-          <Card title="Page Views" value={totalPageViews.toLocaleString()} />
-          <Card title="Artwork Views" value={totalArtworkViews.toLocaleString()} />
-          <Card title="Total Artworks" value={String(artworks.length)} />
-          <Card title="Featured Works" value={String(featured)} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '24px' }}>
+            <Card title="Total Visits" value={(totalArtworkViews + totalPageViews).toLocaleString()} />
+            <Card title="Unique Visitors" value={uniqueVisitors.toLocaleString()} />
+            <Card title="Page Views" value={totalPageViews.toLocaleString()} />
+            <Card title="Artwork Views" value={totalArtworkViews.toLocaleString()} />
+            <Card title="Total Artworks" value={String(artworks.length)} />
+          </div>
+
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 400, margin: 0, color: '#F0EDE8' }}>Visits — last {days} days</h3>
+              <div style={{ display: 'flex', gap: '6px' }}>
+                {[7, 14, 30, 90].map((d) => (
+                  <button
+                    key={d}
+                    onClick={() => setDays(d)}
+                    style={{
+                      padding: '6px 12px',
+                      background: days === d ? 'rgba(196,168,130,0.15)' : 'transparent',
+                      border: `1px solid ${days === d ? '#C4A882' : 'rgba(240,237,232,0.15)'}`,
+                      color: days === d ? '#C4A882' : '#8C8580',
+                      fontSize: '12px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {d}d
+                  </button>
+                ))}
+              </div>
+            </div>
+            <VisitsLineChart series={series} />
+          </div>
         </div>
       )}
 
@@ -218,6 +282,47 @@ function SectionHeader({ title, onReset }: { title: string; onReset?: () => void
           Reset Views
         </button>
       )}
+    </div>
+  )
+}
+
+function VisitsLineChart({ series }: { series: { date: string; value: number }[] }) {
+  const W = 700
+  const H = 180
+  const n = series.length
+  const max = Math.max(1, ...series.map((s) => s.value))
+  const total = series.reduce((s, d) => s + d.value, 0)
+  const points = series.map((s, i) => {
+    const x = n <= 1 ? 0 : (i / (n - 1)) * W
+    const y = H - (s.value / max) * (H - 8) - 4
+    return [x, y] as const
+  })
+  const line = points.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ')
+  const area = points.length ? `${line} L${W},${H} L0,${H} Z` : ''
+  const fmt = (d: string) => {
+    const [y, m, day] = d.split('-')
+    return new Date(Number(y), Number(m) - 1, Number(day)).toLocaleString('en-US', { month: 'short', day: 'numeric' })
+  }
+
+  return (
+    <div>
+      <p style={{ margin: '0 0 12px 0', fontSize: '13px', color: '#8C8580' }}>
+        <span style={{ color: '#C4A882', fontWeight: 500 }}>{total.toLocaleString()}</span> visits · peak {max.toLocaleString()}/day
+      </p>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        preserveAspectRatio="none"
+        width="100%"
+        height="180"
+        style={{ display: 'block', border: '1px solid rgba(240,237,232,0.08)', borderRadius: '4px', background: 'rgba(240,237,232,0.02)' }}
+      >
+        {area && <path d={area} fill="rgba(196,168,130,0.12)" />}
+        {line && <path d={line} fill="none" stroke="#C4A882" strokeWidth={2} vectorEffect="non-scaling-stroke" />}
+      </svg>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '11px', color: '#8C8580' }}>
+        <span>{n ? fmt(series[0].date) : ''}</span>
+        <span>{n ? fmt(series[n - 1].date) : ''}</span>
+      </div>
     </div>
   )
 }

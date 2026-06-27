@@ -38,10 +38,24 @@ async function getCountry(): Promise<string> {
   }
 }
 
-// Records a view event in Supabase with OS / device / browser / country context.
+// A stable per-browser id so we can count unique visitors.
+function getVisitorId(): string {
+  let id = localStorage.getItem('sns_vid')
+  if (!id) {
+    id =
+      typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID()
+        : Math.random().toString(36).slice(2) + Date.now().toString(36)
+    localStorage.setItem('sns_vid', id)
+  }
+  return id
+}
+
+// Records a view event in Supabase with OS / device / browser / country / visitor context.
 export function recordView(kind: 'artwork' | 'page', ref: string) {
   if (!supabase || typeof navigator === 'undefined') return
   const { os, device, browser } = parseUA(navigator.userAgent)
+  const visitor = getVisitorId()
   getCountry().then((country) => {
     supabase!
       .rpc('record_view', {
@@ -51,6 +65,7 @@ export function recordView(kind: 'artwork' | 'page', ref: string) {
         p_device: device,
         p_browser: browser,
         p_country: country,
+        p_visitor: visitor,
       })
       .then(({ error }) => {
         if (error) console.error('record_view error', error.message)
