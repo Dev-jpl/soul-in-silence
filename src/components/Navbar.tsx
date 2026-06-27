@@ -17,11 +17,19 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   // Close the mobile menu whenever the route changes
   useEffect(() => {
     setOpen(false)
   }, [pathname])
+
+  // Show the Admin link only when authenticated (re-checked on route change)
+  useEffect(() => {
+    setIsAdmin(!!sessionStorage.getItem('admin_auth'))
+  }, [pathname])
+
+  const links = isAdmin ? [...navLinks, { href: '/admin', label: 'Admin' }] : navLinks
 
   // Lock body scroll while the mobile menu is open
   useEffect(() => {
@@ -33,6 +41,9 @@ export default function Navbar() {
 
   const isActiveHref = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)
+
+  // No site navbar inside the admin
+  if (pathname?.startsWith('/admin')) return null
 
   return (
     <nav className={pathname === '/' ? 'site-nav site-nav--home' : 'site-nav'}>
@@ -51,7 +62,7 @@ export default function Navbar() {
 
       {/* Desktop links */}
       <ul className="site-nav__links">
-        {navLinks.map(({ href, label }) => {
+        {links.map(({ href, label }) => {
           const isActive = isActiveHref(href)
           return (
             <li key={href} className="site-nav__item">
@@ -83,7 +94,7 @@ export default function Navbar() {
       {/* Mobile menu overlay */}
       <div className={open ? 'site-nav__menu is-open' : 'site-nav__menu'}>
         <ul>
-          {navLinks.map(({ href, label }) => {
+          {links.map(({ href, label }) => {
             const isActive = isActiveHref(href)
             return (
               <li key={href}>

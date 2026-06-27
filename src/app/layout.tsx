@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import './globals.css'
+import { Analytics } from '@vercel/analytics/next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import PageViewTracker from '@/components/PageViewTracker'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -99,6 +101,8 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <Analytics />
+        <PageViewTracker />
       </body>
     </html>
   )

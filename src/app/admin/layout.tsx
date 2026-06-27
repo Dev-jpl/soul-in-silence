@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import AdminShell from './AdminShell'
 
 export const metadata: Metadata = {
   title: 'Admin • Soul in Silence',
@@ -13,15 +14,5 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <div>
-      <style>{`
-        body {
-          margin: 0;
-          padding: 0;
-        }
-      `}</style>
-      {children}
-    </div>
-  )
+  return <AdminShell>{children}</AdminShell>
 }

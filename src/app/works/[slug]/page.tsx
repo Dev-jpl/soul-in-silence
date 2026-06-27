@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { works } from '@/content/works'
 import PageTransition from '@/components/PageTransition'
+import SwipeNav from '@/components/SwipeNav'
+import TrackArtworkView from '@/components/TrackArtworkView'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -59,6 +61,8 @@ export default async function WorkPage({ params }: Props) {
 
   return (
     <PageTransition>
+      <SwipeNav prevSlug={prev?.slug} nextSlug={next?.slug} />
+      <TrackArtworkView slug={artwork.slug} title={artwork.title} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

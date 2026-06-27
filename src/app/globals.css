@@ -370,7 +370,12 @@ body {
     gap: 16px;
   }
 
-  /* Gallery on phones: grid view → 3 columns, list view → 1 */
+  /* Gallery on phones: edge-to-edge (no side padding), tight top/bottom */
+  .works-grid {
+    padding: 16px 0 !important;
+  }
+
+  /* Grid view → 3 columns, list view → 1 */
   .works-grid--grid {
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 4px !important;
