@@ -385,6 +385,16 @@ body {
     grid-template-columns: 1fr !important;
   }
 
+  /* List mode on mobile: image on top, details below */
+  .works-list-item {
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+  .works-list-thumb {
+    flex: none !important;
+    width: 100% !important;
+  }
+
   /* About detail strip stacks vertically */
   .about-details {
     grid-template-columns: 1fr !important;

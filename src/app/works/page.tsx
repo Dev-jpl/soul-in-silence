@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { works } from '@/content/works'
 import type { Artwork } from '@/content/works'
 import ArtworkCard from '@/components/ArtworkCard'
@@ -127,12 +128,16 @@ export default function WorksPage() {
         {filtered.map((artwork, i) => (
           <div
             key={artwork.slug}
+            className={viewMode === 'list' ? 'works-list-item' : undefined}
             style={{
               display: viewMode === 'list' ? 'flex' : 'block',
               gap: viewMode === 'list' ? '24px' : undefined,
             }}
           >
-            <div style={{ flex: viewMode === 'list' ? '0 0 200px' : undefined }}>
+            <div
+              className={viewMode === 'list' ? 'works-list-thumb' : undefined}
+              style={{ flex: viewMode === 'list' ? '0 0 200px' : undefined }}
+            >
               <ArtworkCard artwork={artwork} priority={i < 3} />
             </div>
             {viewMode === 'list' && (
@@ -162,12 +167,24 @@ export default function WorksPage() {
                   style={{
                     fontSize: '13px',
                     color: '#A8A8A8',
-                    margin: 0,
+                    margin: '0 0 14px 0',
                     lineHeight: 1.6,
                   }}
                 >
                   {artwork.description}
                 </p>
+                <Link
+                  href={`/works/${artwork.slug}`}
+                  style={{
+                    fontSize: '10px',
+                    letterSpacing: '0.16em',
+                    textTransform: 'uppercase',
+                    color: '#C4A882',
+                    textDecoration: 'none',
+                  }}
+                >
+                  See more →
+                </Link>
               </div>
             )}
           </div>

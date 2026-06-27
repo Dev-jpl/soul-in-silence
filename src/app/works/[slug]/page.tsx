@@ -125,16 +125,22 @@ export default async function WorkPage({ params }: Props) {
                 fontWeight: 300,
                 lineHeight: 1.1,
                 color: '#F0EDE8',
-                marginBottom: '32px',
+                marginBottom: '24px',
               }}
             >
               {artwork.title}
             </h1>
 
-            <div style={{ borderTop: '1px solid rgba(240,237,232,0.08)', paddingTop: '28px', marginBottom: '28px' }}>
+            <p style={{ fontSize: '14px', lineHeight: 2.0, color: '#8C8580', marginBottom: '32px' }}>
+              {artwork.description}
+            </p>
+
+            <div style={{ borderTop: '1px solid rgba(240,237,232,0.08)' }}>
               {[
-                ['Medium', artwork.medium],
-                ['Year', String(artwork.year)],
+                ['Medium', artwork.medium] as [string, string],
+                ...(artwork.dimensions && artwork.dimensions !== 'Variable'
+                  ? ([['Size', artwork.dimensions]] as [string, string][])
+                  : []),
               ].map(([label, value]) => (
                 <div
                   key={label}
@@ -168,10 +174,6 @@ export default async function WorkPage({ params }: Props) {
                 </div>
               ))}
             </div>
-
-            <p style={{ fontSize: '13px', lineHeight: 2.0, color: '#8C8580' }}>
-              {artwork.description}
-            </p>
           </div>
         </div>
 
