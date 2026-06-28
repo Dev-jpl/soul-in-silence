@@ -31,7 +31,7 @@ export default function Home() {
         <div style={{ position: 'absolute', inset: 0 }}>
           {/* Desktop / landscape artwork */}
           <Image
-            src="/images/hero.webp"
+            src="/images/contact-banner.webp"
             alt="Soul in Silence"
             fill
             priority
