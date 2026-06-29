@@ -72,14 +72,14 @@ export default function Home() {
           />
           {/* Overall dim */}
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.22)' }} />
-          {/* Fade to black on all sides (background only) */}
+          {/* Fade to black on all sides (background only) — wider, gradual on left/right */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
               pointerEvents: 'none',
               background:
-                'linear-gradient(to right, #000 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 86%, #000 100%), linear-gradient(to bottom, #000 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 86%, #000 100%)',
+                'linear-gradient(to right, #000 0%, rgba(0,0,0,0.55) 16%, rgba(0,0,0,0) 36%, rgba(0,0,0,0) 64%, rgba(0,0,0,0.55) 84%, #000 100%), linear-gradient(to bottom, #000 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 86%, #000 100%)',
             }}
           />
         </div>
