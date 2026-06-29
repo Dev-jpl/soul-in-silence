@@ -71,7 +71,7 @@ export default function Home() {
             }}
           />
           {/* Overall dim */}
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.31)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.22)' }} />
           {/* Fade to black on all sides (background only) */}
           <div
             style={{
