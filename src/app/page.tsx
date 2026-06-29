@@ -28,7 +28,22 @@ export default function Home() {
         }}
       >
         {/* Background Image */}
-        <div style={{ position: 'absolute', inset: 0, background: '#000' }}>
+        <div style={{ position: 'absolute', inset: 0, background: '#000', overflow: 'hidden' }}>
+          {/* Ambient blurred fill behind the artwork — softens/blurs the sides */}
+          <Image
+            src="/images/hero-art.webp"
+            alt=""
+            aria-hidden
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center',
+              filter: 'blur(28px)',
+              transform: 'scale(1.15)',
+              opacity: 0.5,
+            }}
+          />
           {/* Desktop artwork — zoomed out (contain) with a 20px black border */}
           <div className="hero-img-desktop" style={{ position: 'absolute', inset: '20px' }}>
             <Image
@@ -79,7 +94,7 @@ export default function Home() {
               inset: 0,
               pointerEvents: 'none',
               background:
-                'linear-gradient(to right, #000 0%, rgba(0,0,0,0.55) 16%, rgba(0,0,0,0) 36%, rgba(0,0,0,0) 64%, rgba(0,0,0,0.55) 84%, #000 100%), linear-gradient(to bottom, #000 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 86%, #000 100%)',
+                'radial-gradient(ellipse 72% 72% at center, rgba(0,0,0,0) 38%, rgba(0,0,0,0.6) 100%), linear-gradient(to right, #000 0%, rgba(0,0,0,0.55) 16%, rgba(0,0,0,0) 36%, rgba(0,0,0,0) 64%, rgba(0,0,0,0.55) 84%, #000 100%), linear-gradient(to bottom, #000 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 86%, #000 100%)',
             }}
           />
         </div>
