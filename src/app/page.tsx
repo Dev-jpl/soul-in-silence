@@ -29,22 +29,7 @@ export default function Home() {
       >
         {/* Background Image */}
         <div style={{ position: 'absolute', inset: 0, background: '#000', overflow: 'hidden' }}>
-          {/* Ambient blurred fill behind the artwork — softens/blurs the sides */}
-          <Image
-            src="/images/hero-art.webp"
-            alt=""
-            aria-hidden
-            fill
-            sizes="100vw"
-            style={{
-              objectFit: 'cover',
-              objectPosition: 'center',
-              filter: 'blur(28px)',
-              transform: 'scale(1.15)',
-              opacity: 0.5,
-            }}
-          />
-          {/* Desktop artwork — zoomed out (contain) with a 20px black border */}
+          {/* Desktop artwork — contained on solid black, 20px border */}
           <div className="hero-img-desktop" style={{ position: 'absolute', inset: '20px' }}>
             <Image
               src="/images/hero-art.webp"
@@ -54,7 +39,7 @@ export default function Home() {
               style={{ objectFit: 'contain', objectPosition: 'center center' }}
             />
           </div>
-          {/* Mobile artwork — same painting, zoomed out with a 20px black border */}
+          {/* Mobile artwork */}
           <div className="hero-img-mobile" style={{ position: 'absolute', inset: '20px' }}>
             <Image
               src="/images/hero-art.webp"
@@ -64,37 +49,24 @@ export default function Home() {
               style={{ objectFit: 'contain', objectPosition: 'center center' }}
             />
           </div>
-          {/* Desktop scrim: dark-left for text legibility, soft bottom,
-              letting the luminous center-right of the artwork breathe */}
+          {/* Subtle dark-left scrim so the title stays legible (desktop) */}
           <div
             className="hero-scrim-desktop"
             style={{
               position: 'absolute',
               inset: 0,
               background:
-                'linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.72) 22%, rgba(10,10,10,0.28) 46%, rgba(10,10,10,0) 68%), linear-gradient(to top, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0.12) 34%, rgba(10,10,10,0) 58%)',
+                'linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 28%, rgba(0,0,0,0) 55%)',
             }}
           />
-          {/* Mobile scrim: dark top for the title, clearing the figure below */}
+          {/* Subtle dark-top scrim (mobile) */}
           <div
             className="hero-scrim-mobile"
             style={{
               position: 'absolute',
               inset: 0,
               background:
-                'linear-gradient(to bottom, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.7) 22%, rgba(10,10,10,0.2) 42%, rgba(10,10,10,0) 60%), linear-gradient(to top, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0) 30%)',
-            }}
-          />
-          {/* Overall dim */}
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.22)' }} />
-          {/* Fade to black on all sides (background only) — wider, gradual on left/right */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              pointerEvents: 'none',
-              background:
-                'radial-gradient(ellipse 72% 72% at center, rgba(0,0,0,0) 38%, rgba(0,0,0,0.6) 100%), linear-gradient(to right, #000 0%, rgba(0,0,0,0.55) 16%, rgba(0,0,0,0) 36%, rgba(0,0,0,0) 64%, rgba(0,0,0,0.55) 84%, #000 100%), linear-gradient(to bottom, #000 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 86%, #000 100%)',
+                'linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 35%, rgba(0,0,0,0) 60%)',
             }}
           />
         </div>
