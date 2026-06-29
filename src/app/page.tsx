@@ -39,19 +39,16 @@ export default function Home() {
               style={{ objectFit: 'contain', objectPosition: 'center center' }}
             />
           </div>
-          {/* Mobile / portrait artwork */}
-          <Image
-            src="/images/hero-mobile.webp"
-            alt="Soul in Silence"
-            fill
-            priority
-            className="hero-img-mobile"
-            style={{
-              objectFit: 'cover',
-              objectPosition: 'center center',
-              opacity: 0.95,
-            }}
-          />
+          {/* Mobile artwork — same painting, zoomed out with a 20px black border */}
+          <div className="hero-img-mobile" style={{ position: 'absolute', inset: '20px' }}>
+            <Image
+              src="/images/hero-art.webp"
+              alt="Soul in Silence — original painting by John Patrick Lachica"
+              fill
+              priority
+              style={{ objectFit: 'contain', objectPosition: 'center center' }}
+            />
+          </div>
           {/* Desktop scrim: dark-left for text legibility, soft bottom,
               letting the luminous center-right of the artwork breathe */}
           <div
