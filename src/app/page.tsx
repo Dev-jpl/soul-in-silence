@@ -28,20 +28,17 @@ export default function Home() {
         }}
       >
         {/* Background Image */}
-        <div style={{ position: 'absolute', inset: 0 }}>
-          {/* Desktop / landscape artwork */}
-          <Image
-            src="/images/hero-art.webp"
-            alt="Soul in Silence — original painting by John Patrick Lachica"
-            fill
-            priority
-            className="hero-img-desktop"
-            style={{
-              objectFit: 'cover',
-              objectPosition: 'center center',
-              opacity: 0.92,
-            }}
-          />
+        <div style={{ position: 'absolute', inset: 0, background: '#000' }}>
+          {/* Desktop artwork — zoomed out (contain) with a 20px black border */}
+          <div className="hero-img-desktop" style={{ position: 'absolute', inset: '20px' }}>
+            <Image
+              src="/images/hero-art.webp"
+              alt="Soul in Silence — original painting by John Patrick Lachica"
+              fill
+              priority
+              style={{ objectFit: 'contain', objectPosition: 'center center' }}
+            />
+          </div>
           {/* Mobile / portrait artwork */}
           <Image
             src="/images/hero-mobile.webp"
@@ -78,6 +75,16 @@ export default function Home() {
           />
           {/* Overall dim */}
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.45)' }} />
+          {/* Fade to black on all sides (background only) */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              pointerEvents: 'none',
+              background:
+                'linear-gradient(to right, #000 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 86%, #000 100%), linear-gradient(to bottom, #000 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 86%, #000 100%)',
+            }}
+          />
         </div>
 
         <div className="hero-container" style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: '1320px', margin: '0 auto' }}>
