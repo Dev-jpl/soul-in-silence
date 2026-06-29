@@ -31,8 +31,8 @@ export default function Home() {
         <div style={{ position: 'absolute', inset: 0 }}>
           {/* Desktop / landscape artwork */}
           <Image
-            src="/images/contact-banner.webp"
-            alt="Soul in Silence"
+            src="/images/hero-art.webp"
+            alt="Soul in Silence — original painting by John Patrick Lachica"
             fill
             priority
             className="hero-img-desktop"

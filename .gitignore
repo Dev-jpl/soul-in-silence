@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Large source photos (optimized webp versions are committed)
 public/images/profile-photos/
+
+# Large source artwork (optimized webp is committed)
+public/images/backgrounds/*.JPG
